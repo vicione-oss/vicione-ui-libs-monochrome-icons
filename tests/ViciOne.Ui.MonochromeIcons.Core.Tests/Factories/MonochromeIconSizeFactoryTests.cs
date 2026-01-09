@@ -1,0 +1,35 @@
+﻿using System.Collections.Generic;
+using AwesomeAssertions;
+using ViciOne.Ui.MonochromeIcons.Core.Enums;
+using ViciOne.Ui.MonochromeIcons.Core.Factories;
+using Xunit;
+
+namespace ViciOne.Ui.MonochromeIcons.Core.Tests.Factories;
+
+public class MonochromeIconSizeFactoryTests
+{
+    [Fact]
+    public void ShouldReturnAllMonochromeIconSizes()
+    {
+        // Arrange
+        IReadOnlyCollection<MonochromeIconSize> expected =
+        [
+            MonochromeIconSize.Small,
+            MonochromeIconSize.SmallMedium,
+            MonochromeIconSize.Medium,
+            MonochromeIconSize.MediumLarge,
+            MonochromeIconSize.Large,
+        ];
+
+        // Act
+        var iconSizes = TypeSafeEnumFactory<MonochromeIconSize>.CreateAll();
+
+        // Assert
+        iconSizes.Count.Should().Be(expected.Count);
+
+        foreach (var iconSize in iconSizes)
+        {
+            expected.Should().Contain(iconSize);
+        }
+    }
+}

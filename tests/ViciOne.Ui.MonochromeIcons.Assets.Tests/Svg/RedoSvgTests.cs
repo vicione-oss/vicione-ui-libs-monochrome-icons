@@ -1,0 +1,188 @@
+// auto-generated code
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using AwesomeAssertions;
+using Svg;
+using ViciOne.Ui.MonochromeIcons.Assets.Extensions;
+using ViciOne.Ui.MonochromeIcons.Assets.Tests.Svg.Extensions;
+using ViciOne.Ui.MonochromeIcons.Core.Enums;
+using ViciOne.Ui.MonochromeIcons.Core.Extensions;
+using ViciOne.Ui.MonochromeIcons.Core.Factories;
+using Xunit;
+
+namespace ViciOne.Ui.MonochromeIcons.Assets.Tests.Svg;
+
+public sealed class RedoSvgTests
+{
+    public static readonly TheoryData<string> IconSizes =
+        new(TypeSafeEnumFactory<MonochromeIconSize>.CreateAll().Select(i => i.GetName()));
+
+    private readonly Dictionary<MonochromeIconSize, string> _svgMarkups = [];
+    private readonly Dictionary<MonochromeIconSize, SvgDocument> _svgDocuments = [];
+
+    public RedoSvgTests()
+    {
+        foreach (var iconSize in TypeSafeEnumFactory<MonochromeIconSize>.CreateAll())
+        {
+            var svgMarkup = MonochromeIconName.Redo.GetSvgMarkup(iconSize);
+            if (!string.IsNullOrEmpty(svgMarkup))
+            {
+                _svgMarkups[iconSize] = svgMarkup;
+                _svgDocuments[iconSize] = svgMarkup.ToSvgDocument();
+            }
+            else
+            {
+                // no markup returned, this means that the icon with the requested size
+                // does not exist, in this case we simply let the tests run green because
+                // the tests for size 32 take precedence as size 32 is the fallback size
+            }
+        }
+    }
+
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldNotHaveDTD(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgMarkups.TryGetValue(iconSizeTyped, out var svgMarkup))
+        {
+            // start directly with svg tag without DTD as recommended in https://www.w3.org/TR/SVG11/intro.html#NamespaceAndDTDIdentifiers
+            svgMarkup.Should().StartWith("<svg ");
+        }
+    }
+
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldBeMinified(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgMarkups.TryGetValue(iconSizeTyped, out var svgMarkup))
+        {
+            svgMarkup.Should().NotContainAny("\n", "\r\n");
+        }
+    }
+
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldHaveWidthPx(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgDocuments.TryGetValue(iconSizeTyped, out var svgDocument))
+        {
+            var expectedSizePx = iconSizeTyped.ToPixels();
+
+            svgDocument.Width.Should().Be(new SvgUnit(SvgUnitType.Pixel, expectedSizePx));
+        }
+    }
+
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldHaveHeightPx(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgDocuments.TryGetValue(iconSizeTyped, out var svgDocument))
+        {
+            var expectedSizePx = iconSizeTyped.ToPixels();
+
+            svgDocument.Height.Should().Be(new SvgUnit(SvgUnitType.Pixel, expectedSizePx));
+        }
+    }
+
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldHaveViewbox(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgDocuments.TryGetValue(iconSizeTyped, out var svgDocument))
+        {
+            var expectedSizePx = iconSizeTyped.ToPixels();
+
+            svgDocument.ViewBox.Should().Be(new SvgViewBox(0, 0, expectedSizePx, expectedSizePx));
+        }
+    }
+
+    // Version is deprecated, see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/version
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldNotHaveVersion(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgDocuments.TryGetValue(iconSizeTyped, out var svgDocument))
+            svgDocument.ContainsAttribute("version").Should().BeFalse();
+    }
+
+    // Targets optimization, not needed for displaying an icon
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldNotHaveTitle(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgDocuments.TryGetValue(iconSizeTyped, out var svgDocument))
+            svgDocument.Children.GetSvgElementOf<SvgTitle>().Should().BeNull();
+    }
+
+    // Targets optimization, not needed for displaying an icon
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldNotHaveIdAttribute(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgDocuments.TryGetValue(iconSizeTyped, out var svgDocument))
+            svgDocument.Descendants().Should().AllSatisfy(x => x.ID.Should().BeNull());
+    }
+
+    // Fill is ignored due to CSS rule "backgroundColor: currentcolor"
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldNotHaveFillAttributeWhenExists(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgDocuments.TryGetValue(iconSizeTyped, out var svgDocument))
+            svgDocument.Descendants().Should().AllSatisfy(x => x.Fill.Should().BeOneOf(SvgPaintServer.NotSet, null));
+    }
+
+    // Stroke is ignored due to CSS rule "backgroundColor: currentcolor"
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldNotHaveStokeAttributeWhenExists(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgDocuments.TryGetValue(iconSizeTyped, out var svgDocument))
+            svgDocument.Descendants().Should().AllSatisfy(x => x.Stroke.Should().BeOneOf(SvgPaintServer.NotSet, null));
+    }
+
+    // Disallows anything that we did not define before
+    [Theory, Trait("Category","Local")]
+    [MemberData(nameof(IconSizes))]
+    public void ShouldHaveSpecificElementsWhenExists(string iconSize)
+    {
+        var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
+
+        if (_svgDocuments.TryGetValue(iconSizeTyped, out var svgDocument))
+        {
+            // Arrange, Act
+            var descendants = svgDocument.Descendants().ToHashSet();
+
+            var groups = descendants.OfType<SvgGroup>();
+            var paths = descendants.OfType<SvgPath>();
+            var polygons = descendants.OfType<SvgPolygon>();
+            var rectangles = descendants.OfType<SvgRectangle>();
+            var circles = descendants.OfType<SvgCircle>();
+
+            // Assert
+            descendants.Except(groups).Except(paths).Except(polygons).Except(rectangles).Except(circles).Count().Should().Be(0);
+        }
+    }
+}

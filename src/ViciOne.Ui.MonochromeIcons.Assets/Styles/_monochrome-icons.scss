@@ -1,0 +1,7 @@
+﻿@use "variables";
+@use "modifiers";
+
+#{variables.$base-selector} .monochrome-icon {
+    display: inline-block;
+    text-align: initial; // ensures external CSS does not affect placement of scaled icons
+}

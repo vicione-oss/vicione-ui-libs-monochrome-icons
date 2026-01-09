@@ -1,0 +1,12 @@
+﻿@use "functions";
+
+@mixin include-svg($svg-base-url, $icon-size, $icon-name) {
+    // color mask image by default with the inherited font color
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentcolor_keyword
+    background-color: currentcolor;
+
+    $icon-url: functions.icon-url($svg-base-url, $icon-size, $icon-name);
+
+    -webkit-mask-image: $icon-url;
+    mask-image: $icon-url;
+}

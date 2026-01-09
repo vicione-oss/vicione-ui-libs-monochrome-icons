@@ -1,0 +1,17 @@
+﻿@using Shared.Components
+@using ViciOne.Ui.Blazor.Components.EditorLayout
+
+@inherits LayoutComponentBase
+
+<main>
+    <EditorLayout>
+        <Top>
+            <Header />
+        </Top>
+        <Center>
+            <div class="body-container">
+                @Body
+            </div>
+        </Center>
+    </EditorLayout>
+</main>

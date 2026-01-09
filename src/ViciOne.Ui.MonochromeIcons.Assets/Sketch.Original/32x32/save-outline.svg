@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dark-theme/icon/monochrome/32x32/save-outline</title>
+    <g id="dark-theme/icon/monochrome/32x32/save-outline" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M22.6666667,4 L28,9.33333333 L28,25.3333333 C28,26.8 26.8,28 25.3333333,28 L6.66666667,28 C5.18666667,28 4,26.8 4,25.3333333 L4,6.66666667 C4,5.2 5.18666667,4 6.66666667,4 L22.6666667,4 Z M22.252,5 L6.66666667,5 C5.74432385,5 5,5.74689936 5,6.66666667 L5,25.3333333 C5,26.2531006 5.74432385,27 6.66666667,27 L25.3333333,27 C26.2477153,27 27,26.2477153 27,25.3333333 L27,9.748 L22.252,5 Z M16,17 C18.2133333,17 20,18.7866667 20,21 C20,23.2133333 18.2133333,25 16,25 C13.7866667,25 12,23.2133333 12,21 C12,18.7866667 13.7866667,17 16,17 Z M20,7 L20,12 L7,12 L7,7 L20,7 Z" id="Icon" fill="#DEDEDE"></path>
+    </g>
+</svg>

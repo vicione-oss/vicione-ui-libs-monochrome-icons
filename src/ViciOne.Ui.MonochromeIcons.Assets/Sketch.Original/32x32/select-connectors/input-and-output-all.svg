@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dark-theme/icon/monochrome/32x32/select-connectors/input-and-ouput-all</title>
+    <g id="dark-theme/icon/monochrome/32x32/select-connectors/input-and-ouput-all" stroke="none" fill="none" fill-rule="evenodd">
+        <path d="M2,4 L9.5,4 L9.5,8.5 L2,8.5 Z M2,10 L9.5,10 L9.5,28 L2,28 Z M11,4 L21,4 L21,8.5 L11,8.5 Z M11,10 L21,10 L21,28 L11,28 Z M22.5,4 L30,4 L30,8.5 L22.5,8.5 Z M22.5,10 L30,10 L30,28 L22.5,28 Z" id="secondary" fill-opacity="0.3" fill="#FFFFFF"></path>
+        <path d="M2,4 L9.5,4 L9.5,8.5 L2,8.5 Z M2,10 L9.5,10 L9.5,28 L2,28 Z M22.5,4 L30,4 L30,8.5 L22.5,8.5 Z M22.5,10 L30,10 L30,28 L22.5,28 Z" id="primary" fill="#DEDEDE"></path>
+    </g>
+</svg>

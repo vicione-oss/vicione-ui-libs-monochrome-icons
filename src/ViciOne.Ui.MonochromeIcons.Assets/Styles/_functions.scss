@@ -1,0 +1,80 @@
+﻿@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+
+@function icon-url($svg-base-url, $icon-size, $icon-name) {
+    @return #{"url('" + $svg-base-url + "/" + $icon-size + "x" + $icon-size + "/" + $icon-name + ".svg')"}
+}
+
+@function filter-icon-variants($icon-variants, $icon-filters) {
+    $result: ();
+
+    // iterate through given filters ...
+    @each $icon-filter in $icon-filters {
+
+        // ... and for each filter take the icon name to ...
+        $icon-name: map.get($icon-filter, "name");
+
+        @if map.has-key($icon-variants, $icon-name) {
+
+            // ... iterate through each icon descriptors defined for the icon name ...
+            $icon-descriptors: map.get($icon-variants, $icon-name);
+
+            @each $icon-descriptor in $icon-descriptors {
+
+                // ... and include icon descriptor ...
+                $include-icon-variant: true;
+
+                // ... when we can find a match for each filter value
+                @each $icon-property-name, $icon-property-value in $icon-filter {
+
+                    @if $icon-property-name != "name" {
+                        @if map.has-key($icon-descriptor, $icon-property-name) {
+                            $item-descriptor-value: map.get($icon-descriptor, $icon-property-name);
+
+                            @if meta.type-of($icon-property-value) == "list" {
+                                @if not list.index($icon-property-value, $item-descriptor-value) {
+                                    $include-icon-variant: false;
+                                }
+
+                            } @else {
+
+                                @if ($item-descriptor-value != $icon-property-value) {
+                                    $include-icon-variant: false;
+                                }
+                            }
+                        } @else {
+                            $include-icon-variant: false;
+                        }
+                    }
+                }
+
+                @if ($include-icon-variant) {
+                    @if not map.has-key($result, $icon-name) {
+                        $result: map.set($result, $icon-name, ());
+                    }
+
+                    $included-icon-descriptors: map.get($result, $icon-name);
+                    $included-icon-descriptors: list.append($included-icon-descriptors, $icon-descriptor);
+
+                    $result: map.set($result, $icon-name, $included-icon-descriptors);
+                }
+            }
+        }
+    }
+
+    @return $result;
+}
+
+@function contains-item-descriptor-for-icon-size($icon-descriptors, $icon-size)
+{
+    @each $icon-descriptor in $icon-descriptors {
+        $contained-icon-size: map.get($icon-descriptor, "size");
+
+        @if ($contained-icon-size == $icon-size) {
+             @return true;
+        }
+    }
+
+    @return false;
+}

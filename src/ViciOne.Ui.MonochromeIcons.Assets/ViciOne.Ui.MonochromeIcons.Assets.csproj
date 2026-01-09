@@ -1,0 +1,368 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ViciOne.Ui.MonochromeIcons.Core\ViciOne.Ui.MonochromeIcons.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Styles/**/*.scss" Pack="true" PackagePath="scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ViciOne.Ui.MonochromeIcons.Assets.targets" PackagePath="build" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TempDir>obj/$(Configuration)/$(TargetFramework)/TempSanitizeSvg</TempDir>
+    <SketchIncomingDir>Sketch.Incoming</SketchIncomingDir>
+    <SketchOriginalDir>Sketch.Original</SketchOriginalDir>
+    <SketchSanitizedDir>Sketch.Sanitized</SketchSanitizedDir>
+  </PropertyGroup>
+
+  <!-- Create a temporary directory -->
+  <Target Name="CreateTempDirectory" BeforeTargets="CopySketchIncomingToTempDirectory">
+    <MakeDir Directories="$(TempDir)" />
+    <Message Text="Temporary directory created at $(TempDir)" Importance="high" />
+  </Target>
+
+  <!-- Copy new incoming files from folder 'Sketch.Incoming' to temporary directory -->
+  <Target Name="CopySketchIncomingToTempDirectory" BeforeTargets="SanitizeSvgs">
+    <ItemGroup>
+      <SketchIncomingSvg Include="$(SketchIncomingDir)/*x*/**/*.svg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <SketchIncomingSvg>
+        <TempFileForSanitize>$(TempDir)/%(RecursiveDir)%(Filename)%(Extension)</TempFileForSanitize>
+      </SketchIncomingSvg>
+    </ItemGroup>
+
+    <Message Text="Copy @(SketchIncomingSvg) to %(TempFileForSanitize)" Importance="high" Condition="Exists(%(Identity))" />
+
+    <Copy SourceFiles="@(SketchIncomingSvg)" DestinationFiles="%(TempFileForSanitize)" Condition="Exists(%(Identity))" SkipUnchangedFiles="true" />
+  </Target>
+
+  <!-- Remove unnecessary attributes and elements and save file back to disc -->
+  <UsingTask TaskName="RemoveUnnecessaryAttributesAndElements" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ToSanitizeSvg ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.Collections.Generic" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Linq" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Using Namespace="System.Xml" />
+      <Using Namespace="System.Xml.Linq" />
+
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        var sanitizeSvgFilename = ToSanitizeSvg.GetMetadata("FullPath");
+
+        var svgXml = XDocument.Load(sanitizeSvgFilename);
+        var svgRoot = svgXml.Root;
+
+        // Remove 'version'-attribute
+        var attribute = svgRoot?.Attribute("version");
+        attribute?.Remove();
+
+        var xmlNamespace = svgRoot?.Name.Namespace;
+
+        // Remove 'title'-element
+        var titleElement = svgRoot?.Element(xmlNamespace! + "title");
+        titleElement?.Remove();
+
+        void SanitizeTags(string tagName)
+        {
+          var elements = svgRoot?.Descendants(xmlNamespace! + tagName).ToList();
+          if (elements != null)
+          {
+              foreach (var element in elements)
+              {
+                  // remove 'stroke' attribute
+                  attribute = element.Attribute("stroke");
+                  attribute?.Remove();
+                  
+                  // remove 'fill' attribute
+                  attribute = element.Attribute("fill");
+                  attribute?.Remove();
+                  
+                  // remove 'id' attribute
+                  attribute = element.Attribute("id");
+                  attribute?.Remove();
+
+                  // self-closing tag
+                  if (!element.HasElements && string.IsNullOrEmpty(element.Value))
+                  {
+                      element.ReplaceWith(new XElement(element.Name, element.Attributes()));
+                  }
+              }
+          }
+        }
+
+        SanitizeTags("g");
+        SanitizeTags("path");
+        SanitizeTags("rect");
+        SanitizeTags("polygon");
+        SanitizeTags("circle");
+
+        // Save the edited svg-file
+        var settings = new XmlWriterSettings
+        {
+            OmitXmlDeclaration = true,
+            CloseOutput = true,
+            Indent = false
+        };
+        using (var writer = XmlWriter.Create(sanitizeSvgFilename, settings))
+        {
+            svgXml.Save(writer);
+        }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- Call task 'RemoveUnnecessaryAttributesAndElements'  -->
+  <Target Name="SanitizeSvgs" BeforeTargets="CopySanitizeFilesToSanitizeDirectory">
+    <Message Text="Remove unnecessary attributes and elements in %(SketchIncomingSvg.TempFileForSanitize)" Importance="high" Condition="Exists(%(SketchIncomingSvg.TempFileForSanitize))" />
+
+    <RemoveUnnecessaryAttributesAndElements ToSanitizeSvg="%(SketchIncomingSvg.TempFileForSanitize)" Condition="Exists(%(SketchIncomingSvg.TempFileForSanitize))" />
+  </Target>
+
+  <!-- Copy sanitized files from temporary directory to folder 'Sketch.Sanitized' -->
+  <Target Name="CopySanitizeFilesToSanitizeDirectory" BeforeTargets="CleanWwwRootDirectory">
+    <ItemGroup>
+      <SketchIncomingSvg>
+        <AssociatedFileInSketchSanitized>$(SketchSanitizedDir)/%(RecursiveDir)%(Filename)%(Extension)</AssociatedFileInSketchSanitized>
+      </SketchIncomingSvg>
+    </ItemGroup>
+
+    <Message Text="Copy %(SketchIncomingSvg.TempFileForSanitize) to %(SketchIncomingSvg.AssociatedFileInSketchSanitized)" Importance="high" Condition="Exists(%(SketchIncomingSvg.TempFileForSanitize))" />
+
+    <Copy SourceFiles="%(SketchIncomingSvg.TempFileForSanitize)" DestinationFiles="%(SketchIncomingSvg.AssociatedFileInSketchSanitized)" SkipUnchangedFiles="true" Condition="Exists(%(SketchIncomingSvg.TempFileForSanitize))" />
+  </Target>
+
+  <!-- Copy new svg-files from folder 'Sketch.Incoming' to folder 'Sketch.Original' -->
+  <Target Name="CopySketchIncomingToSketchOriginal" BeforeTargets="SyncronizeSketchSanitizedWithSketchOriginal" Condition="Exists(@(SketchIncomingSvg))">
+    <Message Text="Copy @(SketchIncomingSvg) to $(SketchOriginalDir)/%(RecursiveDir)" Importance="high" />
+
+    <Copy SourceFiles="@(SketchIncomingSvg)" DestinationFolder="$(SketchOriginalDir)/%(RecursiveDir)" SkipUnchangedFiles="false" />
+  </Target>
+
+  <UsingTask TaskName="RemoveEmptyDirectories" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <RootPath ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Linq" />
+
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          void DeleteEmptySubDirectories(string dir)
+          {
+            foreach (var subDir in Directory.GetDirectories(dir))
+            {
+              DeleteEmptySubDirectories(subDir);
+
+              if (Directory.GetFiles(subDir).Length == 0 && Directory.GetDirectories(subDir).Length == 0)
+              {
+                Directory.Delete(subDir, true);
+              }
+            }
+          }
+
+          DeleteEmptySubDirectories(RootPath);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- Synchronize the directory 'Sketch.Sanitized' with the directory 'Sketch.Original' -->
+  <Target Name="SyncronizeSketchSanitizedWithSketchOriginal" BeforeTargets="ImportSketch" DependsOnTargets="CopySanitizeFilesToSanitizeDirectory">
+    <ItemGroup>
+      <FilesInSketchSanitized Include="$(SketchSanitizedDir)/**/*" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <FilesInSketchSanitized>
+        <AssociatedFileInSketchOriginal>$(SketchOriginalDir)/%(RecursiveDir)%(Filename)%(Extension)</AssociatedFileInSketchOriginal>
+      </FilesInSketchSanitized>
+    </ItemGroup>
+
+    <Message Text="Delete %(FilesInSketchSanitized.Identity) because %(FilesInSketchSanitized.AssociatedFileInSketchOriginal) does not exist" Importance="high" Condition="!Exists(%(FilesInSketchSanitized.AssociatedFileInSketchOriginal))" />
+    <Delete Files="%(FilesInSketchSanitized.Identity)" Condition="!Exists(%(FilesInSketchSanitized.AssociatedFileInSketchOriginal))" />
+    <RemoveEmptyDirectories RootPath="$(SketchOriginalDir)" />
+    <RemoveEmptyDirectories RootPath="$(SketchSanitizedDir)" />
+  </Target>
+
+  <!-- Delete all files from folder 'wwwroot' -->
+  <Target Name="CleanWwwRootDirectory" BeforeTargets="ImportSketch">
+    <ItemGroup>
+      <FilesToDeleteInWwwRoot Include="wwwroot/**/*" />
+    </ItemGroup>
+
+    <Message Text="Delete %(FilesToDeleteInWwwRoot.Identity) from wwwroot" Importance="high" />
+    <Delete Files="@(FilesToDeleteInWwwRoot)" />
+
+    <ItemGroup>
+      <Content Remove="%(FilesToDeleteInWwwRoot.Identity)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Transform folder structure in 'Sketch.Sanitized' to 'wwwroot' -->
+  <UsingTask TaskName="UpdateStaticWebAssetsFromSketch" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <SourceFolder ParameterType="System.String" Required="true" />
+      <DestinationFolder ParameterType="System.String" Required="true" />
+      <SketchSvgs ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <StaticWebAssetSvgs ParameterType="System.String[]" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.Collections.Generic" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Linq" />
+      <Using Namespace="System.Text.RegularExpressions" />
+
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        var staticWebAssetSvgs = new List<string>();
+
+        var basePath = SourceFolder;
+        basePath = Regex.Escape(basePath).Replace("/", @"[/\\]");
+        var sketchSvgFilenames = SketchSvgs.Select(s => s.GetMetadata("FullPath"));
+        
+        foreach (var sketchSvgFilename in sketchSvgFilenames)
+        {
+          // https://regex101.com/r/Zrp4NI/1
+          var match = Regex.Match(sketchSvgFilename, @$"{basePath}[/\\](?'size'\d+)x\1[/\\](?'name'[\w-]+)(?:[/\\](?'property'[\w-]+))*\.svg$");
+          if (match.Success)
+          {
+            var iconSize = match.Groups["size"].Value;
+            var iconName = match.Groups["name"].Value;
+            var iconProperties = new List<string>();
+
+            foreach (var iconProperty in match.Groups["property"].Captures)
+              iconProperties.Add(iconProperty.ToString());
+
+            var staticWebAssetDirectory = Path.Combine(DestinationFolder, $"{iconSize}x{iconSize}");
+            var staticWebAssetSvgFilename = $"{iconName}{(iconProperties.Count > 0 ? "-" + string.Join("-", iconProperties) : string.Empty)}.svg";
+
+            if (!Directory.Exists(staticWebAssetDirectory))
+              Directory.CreateDirectory(staticWebAssetDirectory);
+
+            var staticWebAssetSvg = Path.Combine(staticWebAssetDirectory, staticWebAssetSvgFilename);
+            
+            File.Copy(sketchSvgFilename, staticWebAssetSvg, true);
+
+            staticWebAssetSvgs.Add(staticWebAssetSvg);
+          }
+          else 
+          {
+            throw new NotSupportedException($"{sketchSvgFilename} does not match regular expression");
+          }
+        }
+        
+        StaticWebAssetSvgs = staticWebAssetSvgs.ToArray();
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- Call task 'UpdateStaticWebAssetsFromSketch'  -->
+  <Target Name="ImportSketch" BeforeTargets="RemoveTempDirectory">
+    <ItemGroup>
+      <SketchSvg Include="$(SketchSanitizedDir)/**/*.svg" />
+    </ItemGroup>
+
+    <Message Text="Importing %(SketchSvg.FullPath)" Importance="high" />
+
+    <UpdateStaticWebAssetsFromSketch SketchSvgs="@(SketchSvg)" SourceFolder="$(SketchSanitizedDir)" DestinationFolder="$(ProjectDir)wwwroot">
+      <Output PropertyName="UpdateStaticWebAssets" TaskParameter="StaticWebAssetSvgs" />
+    </UpdateStaticWebAssetsFromSketch>
+
+    <ItemGroup>
+      <UpdatedStaticWebAsset Include="$(UpdateStaticWebAssets)" />
+    </ItemGroup>
+
+    <Message Text="Updated static web asset: %(UpdatedStaticWebAsset.Identity)" Importance="high" />
+
+    <ItemGroup>
+      <!--
+        Add a content item for each file in wwwwroot as @(Content) is passed to DiscoverStaticWebAssets task
+        in an early stage of the build. To avoid compile error "Two assets found targeting the same path" caussed
+        by already existing files in wwwwroot collected as Content items, we simply remove existing Content items
+        files in target CleanWwwRootDirectory.
+      -->
+      <Content Include="%(UpdatedStaticWebAsset.Identity)" />
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <ResolveStaticWebAssetsInputsDependsOn>IncludeGeneratedStaticWebAsset;$(ResolveStaticWebAssetsInputsDependsOn)</ResolveStaticWebAssetsInputsDependsOn>
+  </PropertyGroup>
+
+  <Target Name="IncludeGeneratedStaticWebAsset" Outputs="%(UpdatedStaticWebAsset.Identity)" DependsOnTargets="ImportSketch" Condition="'@(UpdatedStaticWebAsset)' != ''">
+    <!-- Skeleton adopted from https://github.com/dotnet/aspnetcore/blob/61e60dcf9436709a63e61da35417e2c4d30466ed/src/Components/CustomElements/src/Microsoft.AspNetCore.Components.CustomElements.csproj#L21 -->
+
+    <PropertyGroup>
+      <_UpdateStaticWebAssetRelativePath>$([MSBuild]::MakeRelative($(ProjectDir), %(UpdatedStaticWebAsset.Identity)))</_UpdateStaticWebAssetRelativePath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_CandidateAsset Include="%(UpdatedStaticWebAsset.Identity)" />
+      <_CandidateAsset>
+        <!-- 
+           https://regex101.com/r/PZZ45o
+           
+           wwwroot\foo.js -> foo.js
+        -->
+        <RelativePath>$([System.Text.RegularExpressions.Regex]::Replace($(_UpdateStaticWebAssetsRelativePath), '^wwwroot\\(.+)', '$1'))</RelativePath>
+      </_CandidateAsset>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_CandidateAssetIdentity>%(_CandidateAsset.Identity)</_CandidateAssetIdentity>
+    </PropertyGroup>
+
+    <DefineStaticWebAssets SourceType="Computed" SourceId="$(PackageId)" ContentRoot="$(MSBuildProjectDirectory)\wwwroot\" BasePath="$(StaticWebAssetBasePath)" CandidateAssets="@(_CandidateAsset)">
+
+      <Output TaskParameter="Assets" ItemName="_DefinedGeneratedStaticWebAsset" />
+    </DefineStaticWebAssets>
+
+    <DefineStaticWebAssetEndpoints CandidateAssets="@(_DefinedGeneratedStaticWebAsset)" ExistingEndpoints="@()" ContentTypeMappings="@(StaticWebAssetContentTypeMapping)">
+
+      <Output TaskParameter="Endpoints" ItemName="_DefinedGeneratedStaticWebAssetEndpoint" />
+    </DefineStaticWebAssetEndpoints>
+
+    <ItemGroup>
+      <StaticWebAsset Include="@(_DefinedGeneratedStaticWebAsset)" Condition="!@(StaticWebAsset-&gt;AnyHaveMetadataValue('Identity', $(_CandidateAssetIdentity)))" />
+      <StaticWebAssetEndpoint Include="@(_DefinedGeneratedStaticWebAssetEndpoint)" Condition="!@(StaticWebAssetEndpoint-&gt;AnyHaveMetadataValue('Identity', $(_CandidateAssetIdentity)))" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Delete temporary directory -->
+  <Target Name="RemoveTempDirectory" BeforeTargets="CleanIncomingDirectory">
+    <Message Text="Remove $(TempDir)" Importance="high" />
+
+    <RemoveDir Directories="$(TempDir)" />
+  </Target>
+
+  <!-- Delete sub-folders from folder 'Sketch.Incoming' -->
+  <Target Name="CleanIncomingDirectory" BeforeTargets="PreBuildEvent">
+    <ItemGroup>
+      <SketchIncomingSubDirectory Include="$([System.IO.Directory]::GetDirectories(`$(SketchIncomingDir)`))" />
+    </ItemGroup>
+
+    <Message Text="Delete %(SketchIncomingSubDirectory.Identity) from $(SketchIncomingDir)" Importance="high" Condition="Exists(%(SketchIncomingSubDirectory.Identity))" />
+
+    <RemoveDir Directories="%(SketchIncomingSubDirectory.Identity)" Condition="Exists(%(SketchIncomingSubDirectory.Identity))" />
+  </Target>
+</Project>

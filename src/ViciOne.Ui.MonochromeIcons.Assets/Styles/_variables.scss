@@ -1,0 +1,7 @@
+﻿@forward "variables.generated";
+
+$default-size: 32;
+
+$svg-base-url: "./monochrome-icons" !default; // value results from ${MonochromeIconSvgOutputFolder} defined in consumer .csproj
+
+$base-selector: null !default;

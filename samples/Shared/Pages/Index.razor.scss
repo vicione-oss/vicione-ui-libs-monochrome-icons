@@ -1,0 +1,44 @@
+﻿@use "../Styles/design/colors";
+@use "../Styles/functions";
+@use "../Styles/icons/monochrome-icons" with (
+    $svg-base-url: "./icons/monochrome-icons",
+    $base-selector: "::deep",
+    $icon-filters: functions.get-icon-filters()
+);
+
+.gallery {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 32px 32px;
+
+    $separator-height: 1px;
+
+    .gallery-item {
+        border: 2px solid colors.$border;
+        border-radius: 20px;
+        display: grid;
+        grid-template-rows: 80px $separator-height 100px;
+        place-items: center;
+        text-align: center;
+        width: 120px;
+
+        &.with-color {
+            color: dodgerblue;
+        }
+
+        ::deep .icon-outline {
+            outline: 1px solid colors.$border;
+        }
+
+        .separator {
+            border: $separator-height solid colors.$border;
+            height: $separator-height;
+            width: 100%;
+        }
+
+        span {
+            margin: 0px 5px;
+        }
+    }
+}

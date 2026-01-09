@@ -1,0 +1,211 @@
+﻿using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using AwesomeAssertions;
+using Xunit;
+
+namespace Shared.Tests;
+
+public sealed class MsBuildTargetTests
+{
+    [Fact]
+    public void ShouldExecuteTargetsOfAssetsPackage()
+    {
+        // Arrange
+        var assembly = typeof(MsBuildTargetTests).Assembly;
+        var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
+        if (assemblyDirectory is null)
+            Assert.Fail($"Failed to get directory for {assembly.Location}");
+
+        var clientProjectPath = Path.Combine(assemblyDirectory,
+            "..", "..", "..", "..", "..", "samples", "Shared");
+
+        var targetScssPath = Path.Combine(clientProjectPath, "Styles", "icons");
+        if (Directory.Exists(targetScssPath))
+            Directory.Delete(targetScssPath, true);
+
+        var targetSvgPath = Path.Combine(clientProjectPath, "wwwroot", "icons");
+        if (Directory.Exists(targetSvgPath))
+            Directory.Delete(targetSvgPath, true);
+
+        var expectedScssFiles = new[]
+        {
+            "_functions.scss",
+            "_index.scss",
+            "_mixins.scss",
+            "_modifiers.scss",
+            "_monochrome-icons.scss",
+            "_variables.generated.scss",
+            "_variables.generated.duplicate.scss",
+            "_variables.scss"
+        }.Select(expectedScssFile => Path.Combine(targetScssPath, "monochrome-icons", expectedScssFile));
+
+        var expectedSvgFiles16x16 = new[]
+        {
+            "chevron.svg"
+        }.Select(expectedSvgFile => Path.Combine(targetSvgPath, "monochrome-icons", "16x16", expectedSvgFile));
+
+        var expectedSvgFiles32x32 = new[]
+        {
+            "add-text-labels-solid.svg",
+            "add-user.svg",
+            "alarm-light.svg",
+            "alarm-solid.svg",
+            "align-bottom.svg",
+            "align-left.svg",
+            "align-right.svg",
+            "align-top.svg",
+            "align-top-by-lowest-element.svg",
+            "arrow-navigation-light-down.svg",
+            "arrow-navigation-light-left.svg",
+            "arrow-navigation-light-right.svg",
+            "arrow-navigation-light-up.svg",
+            "bug-light.svg",
+            "bug-solid.svg",
+            "check.svg",
+            "chevron.svg",
+            "close-medium.svg",
+            "close-slim.svg",
+            "cloud-solid-connection.svg",
+            "cluster-1.svg",
+            "cluster-2.svg",
+            "connectivity.svg",
+            "connector-add-to-container.svg",
+            "connector-cancel-publication.svg",
+            "connector-publish.svg",
+            "connector-remove-from-container.svg",
+            "container.svg",
+            "container-add.svg",
+            "container-dissolve-light.svg",
+            "container-dissolve-solid.svg",
+            "container-locked-action.svg",
+            "container-locked-user.svg",
+            "dataflow-light.svg",
+            "dataflow-solid.svg",
+            "data-switch.svg",
+            "delete.svg",
+            "distribute-horizontally.svg",
+            "distribute-vertically.svg",
+            "duplicate.svg",
+            "edit.svg",
+            "edit-host.svg",
+            "email.svg",
+            "error-full.svg",
+            "exit.svg",
+            "expander-light-down.svg",
+            "expander-light-left.svg",
+            "expander-light-right.svg",
+            "expander-light-top.svg",
+            "export.svg",
+            "external-link.svg",
+            "filter-light.svg",
+            "folder.svg",
+            "gear-light.svg",
+            "gear-solid.svg",
+            "general-menu.svg",
+            "hamburger-menu.svg",
+            "help-light.svg",
+            "help-solid.svg",
+            "home-light.svg",
+            "home-solid.svg",
+            "hide.svg",
+            "import.svg",
+            "info-outlined.svg",
+            "instructions.svg",
+            "json.svg",
+            "json-field.svg",
+            "json-field-in.svg",
+            "json-field-out.svg",
+            "json-in.svg",
+            "json-out.svg",
+            "key-light.svg",
+            "key-solid.svg",
+            "keyboard.svg",
+            "keychain-light.svg",
+            "keychain-solid.svg",
+            "language.svg",
+            "library.svg",
+            "local.svg",
+            "lock-active.svg",
+            "lock-text-labels-light.svg",
+            "lock-text-labels-solid.svg",
+            "lock.svg",
+            "minimap-light.svg",
+            "minus-slim.svg",
+            "move-to-new-container.svg",
+            "network-topology.svg",
+            "new.svg",
+            "new-in-wizard.svg",
+            "offline-light.svg",
+            "on-off.svg",
+            "open.svg",
+            "open-in-new-window.svg",
+            "paste.svg",
+            "permission-none.svg",
+            "permission-view-and-edit.svg",
+            "permission-view-only.svg",
+            "plus-slim.svg",
+            "properties.svg",
+            "published-connector-full.svg",
+            "redo.svg",
+            "refresh.svg",
+            "reload.svg",
+            "rtm-warning.svg",
+            "save-outline.svg",
+            "search.svg",
+            "search-and-tools.svg",
+            "select-all.svg",
+            "select-all-blocks.svg",
+            "select-connectors-input.svg",
+            "select-connectors-input-all.svg",
+            "select-connectors-input-and-output.svg",
+            "select-connectors-input-and-output-all.svg",
+            "select-connectors-output.svg",
+            "select-connectors-output-all.svg",
+            "show.svg",
+            "switch-off.svg",
+            "system-messages-light.svg",
+            "system-messages-solid.svg",
+            "system-settings-light.svg",
+            "system-settings-solid.svg",
+            "tagging.svg",
+            "test-tube-solid.svg",
+            "this-week.svg",
+            "time-out-light.svg",
+            "timer.svg",
+            "today.svg",
+            "toggle.svg",
+            "undo.svg",
+            "urgent.svg",
+            "user-interface-light.svg",
+            "user-light.svg",
+            "user-solid.svg",
+            "warning.svg",
+            "warning-full.svg",
+            "wizard.svg"
+        }.Select(expectedSvgFile => Path.Combine(targetSvgPath, "monochrome-icons", "32x32", expectedSvgFile));
+
+        var expectedSvgFiles = expectedSvgFiles16x16.Union(expectedSvgFiles32x32);
+
+        // Act
+        var processStartInfo = new ProcessStartInfo("dotnet", "build")
+        {
+            WorkingDirectory = clientProjectPath
+        };
+
+        var process = Process.Start(processStartInfo);
+        if (process is null)
+            Assert.Fail($"Failed to start process with {processStartInfo}");
+
+        var success = process.WaitForExit(30000);
+
+        // Assert
+        success.Should().BeTrue();
+
+        var copiedScssFiles = Directory.GetFiles(targetScssPath, "*", new EnumerationOptions { RecurseSubdirectories = true });
+        copiedScssFiles.Should().BeEquivalentTo(expectedScssFiles);
+
+        var copiedSvgFiles = Directory.GetFiles(targetSvgPath, "*", new EnumerationOptions { RecurseSubdirectories = true });
+        copiedSvgFiles.Should().BeEquivalentTo(expectedSvgFiles);
+    }
+}

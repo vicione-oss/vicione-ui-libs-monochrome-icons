@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dark-theme/icon/monochrome/32x32/general-menu</title>
+    <g id="dark-theme/icon/monochrome/32x32/general-menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M3,3 L9.5,3 L9.5,9.5 L3,9.5 Z M3,12.75 L9.5,12.75 L9.5,19.25 L3,19.25 Z M3,22.5 L9.5,22.5 L9.5,29 L3,29 Z M12.75,3 L19.25,3 L19.25,9.5 L12.75,9.5 Z M12.75,12.75 L19.25,12.75 L19.25,19.25 L12.75,19.25 Z M12.75,22.5 L19.25,22.5 L19.25,29 L12.75,29 Z M22.5,3 L29,3 L29,9.5 L22.5,9.5 Z M22.5,12.75 L29,12.75 L29,19.25 L22.5,19.25 Z M22.5,22.5 L29,22.5 L29,29 L22.5,29 Z" id="Icon" fill="#DEDEDE"></path>
+    </g>
+</svg>

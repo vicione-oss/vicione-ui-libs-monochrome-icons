@@ -1,0 +1,36 @@
+<Solution>
+  <Folder Name="/docs/">
+    <File Path="docs/csharp-coding-style.md" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/Client/Client.csproj" />
+    <Project Path="samples/Server/Server.csproj" />
+    <Project Path="samples/Shared/Shared.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path=".gitlab-ci.yml" />
+    <File Path=".globalconfig" />
+    <File Path="CHANGELOG.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="LICENSE.txt" />
+    <File Path="NuGet.Config" />
+    <File Path="README.md" />
+    <File Path="tests.runsettings" />
+    <File Path="VERSION" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/ViciOne.Ui.MonochromeIcons.Assets/ViciOne.Ui.MonochromeIcons.Assets.csproj" />
+    <Project Path="src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Components.csproj" />
+    <Project Path="src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Shared.Tests/Shared.Tests.csproj" />
+    <Project Path="tests/ViciOne.Ui.MonochromeIcons.Assets.Tests/ViciOne.Ui.MonochromeIcons.Assets.Tests.csproj" />
+    <Project Path="tests/ViciOne.Ui.MonochromeIcons.Components.Tests/ViciOne.Ui.MonochromeIcons.Components.Tests.csproj" />
+    <Project Path="tests/ViciOne.Ui.MonochromeIcons.Core.Tests/ViciOne.Ui.MonochromeIcons.Core.Tests.csproj" />
+  </Folder>
+</Solution>

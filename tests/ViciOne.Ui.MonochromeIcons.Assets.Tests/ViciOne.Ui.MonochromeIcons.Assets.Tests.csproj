@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Bunit" />
+    <PackageReference Include="AwesomeAssertions" />
+    <PackageReference Include="NTypewriter.SourceGenerator" />
+    <PackageReference Include="Svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ViciOne.Ui.MonochromeIcons.Assets\ViciOne.Ui.MonochromeIcons.Assets.csproj" />
+  </ItemGroup>
+
+  <!-- NTypewriter.SourceGenerator configuration -->
+  <ItemGroup>
+    <AdditionalFiles Include="Svg\Templates\SvgTests.cs.nt" />
+  </ItemGroup>
+
+  <Target Name="CopyGeneratedFiles" AfterTargets="Build;Rebuild">
+    <ItemGroup>
+      <GeneratedSvgTests Include="$(ProjectDir)Svg/*SvgTests.cs.tmp" />
+    </ItemGroup>
+
+    <Move SourceFiles="@(GeneratedSvgTests)" DestinationFiles="$(ProjectDir)Svg/%(Filename)" />
+  </Target>
+  
+  <ItemGroup>
+    <Compile Remove="Svg/*SvgTests.cs" />
+    <None Include="Svg/*SvgTests.cs" />
+  </ItemGroup>
+
+</Project>

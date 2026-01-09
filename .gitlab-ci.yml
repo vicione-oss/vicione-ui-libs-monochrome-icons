@@ -1,0 +1,103 @@
+default:
+  image: mcr.microsoft.com/dotnet/sdk:10.0.101
+
+include:
+  - project: 'acx/tooling/templates'
+    file: '/CI-Templates/v2/dotnet.yml'
+
+.clean_build_pack_install_assets: &clean_build_pack_install_assets
+  - !reference [.nuget_credentials]
+  - export SEMANTIC_VERSION=$(cat VERSION)
+  - dotnet clean src/ViciOne.Ui.MonochromeIcons.Components -c Release
+  - dotnet clean src/ViciOne.Ui.MonochromeIcons.Assets -c Release
+  - dotnet build src/ViciOne.Ui.MonochromeIcons.Components -c Release
+  - dotnet build src/ViciOne.Ui.MonochromeIcons.Assets -c Release
+  - dotnet pack --no-build -c Release -o "nuget" -p:PackageVersionSuffix="${CI_PIPELINE_ID}" --version-suffix="ci" "src/ViciOne.Ui.MonochromeIcons.Core"
+  - dotnet pack --no-build -c Release -o "nuget" -p:PackageVersionSuffix="${CI_PIPELINE_ID}" --version-suffix="ci" "src/ViciOne.Ui.MonochromeIcons.Components"
+  - dotnet pack --no-build -c Release -o "nuget" -p:PackageVersionSuffix="${CI_PIPELINE_ID}" --version-suffix="ci" "src/ViciOne.Ui.MonochromeIcons.Assets"
+  - dotnet add samples/Shared package ViciOne.Ui.MonochromeIcons.Core --version "${SEMANTIC_VERSION}.${CI_PIPELINE_ID}"
+  - dotnet add samples/Shared package ViciOne.Ui.MonochromeIcons.Components --version "${SEMANTIC_VERSION}.${CI_PIPELINE_ID}"
+  - dotnet add samples/Shared package ViciOne.Ui.MonochromeIcons.Assets --version "${SEMANTIC_VERSION}.${CI_PIPELINE_ID}"
+
+.install_nodejs: &install_nodejs
+  - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+  - apt update && apt install -y nodejs
+
+.install_npm_packages: &install_npm_packages
+  - cd samples/Shared
+  - npm install
+  - cd -
+
+before_script:
+  - *install_nodejs
+  - *install_npm_packages
+
+Build:
+  extends: .dotnet-build
+  script:
+    - *clean_build_pack_install_assets
+    - dotnet build samples/Server -c Release
+
+Tests:
+  extends: .dotnet-test-xunit
+  variables:
+    FILTER: 'Category!=Local'
+  before_script:
+    - *clean_build_pack_install_assets
+
+Deploy Core:
+  extends: .dotnet-deploy-nuget
+  variables:
+    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.csproj'
+    REPO: 'JFrogViciOne'
+
+Deploy Assets:
+  extends: .dotnet-deploy-nuget
+  variables:
+    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Assets/ViciOne.Ui.MonochromeIcons.Assets.csproj'
+    REPO: 'JFrogViciOne'
+
+Deploy Components:
+  extends: .dotnet-deploy-nuget
+  variables:
+    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Components.csproj'
+    REPO: 'JFrogViciOne'
+
+Release Core:
+  extends: .dotnet-release-nuget
+  variables:
+    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.csproj'
+    REPO: 'JFrogViciOne'
+
+Release Assets:
+  extends: .dotnet-release-nuget
+  variables:
+    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Assets/ViciOne.Ui.MonochromeIcons.Assets.csproj'
+    REPO: 'JFrogViciOne'
+
+Release Components:
+  extends: .dotnet-release-nuget
+  variables:
+    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Components.csproj'
+    REPO: 'JFrogViciOne'
+
+Publish Pages:
+  stage: release
+  pages: true
+  before_script:
+    - *install_nodejs
+    - *install_npm_packages
+  script:
+    - !reference [.nuget_credentials]
+    - *clean_build_pack_install_assets
+    - dotnet publish samples/Client -c Release -o artifacts
+    - mkdir public
+    - cp -R artifacts/wwwroot/* public
+    - echo "Publish Pages on \"$CI_PAGES_URL\""
+  rules:
+    - !reference [.rules_tag_manual]
+    - !reference [.rules_default_branch]
+  tags:
+    - linux
+    - docker
+    - x64

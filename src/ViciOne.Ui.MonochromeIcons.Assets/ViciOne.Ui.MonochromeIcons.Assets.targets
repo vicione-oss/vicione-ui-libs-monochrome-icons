@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Configuration defaults -->
+  <PropertyGroup>
+    <MonochromeIconSvgOutputFolder>$(MSBuildProjectDirectory)/wwwroot/monochrome-icons</MonochromeIconSvgOutputFolder>
+    <MonochromeIconScssOutputFolder>$(MSBuildProjectDirectory)/Styles/monochrome-icons</MonochromeIconScssOutputFolder>
+  </PropertyGroup>
+
+  <Target Name="BeforeMonochromeIconTargets" BeforeTargets="PreBuildEvent" />
+
+  <Target Name="CreateMonochromeIconVariantItems" BeforeTargets="PreBuildEvent" DependsOnTargets="BeforeMonochromeIconTargets" Condition="'@(MonochromeIcon)' != '' And '$(MonochromeIconSvgOutputFolder)' != ''">
+    <PropertyGroup>
+      <StaticWebAssetsPath>$(MSBuildThisFileDirectory)../staticwebassets</StaticWebAssetsPath>
+      <RelativeIconSvgOutputFolder>$(MonochromeIconSvgOutputFolder.Replace('$(MSBuildProjectDirectory)/', '').Replace('/', '\'))</RelativeIconSvgOutputFolder>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <!--
+        Transfrom item "MonochromeIcon" to item "IconVariant" ...
+        https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-items#BKMK_Transforming
+      -->
+      <IconVariant Include="%(MonochromeIcon.Size)">
+        <IconName>%(MonochromeIcon.Identity)</IconName>
+      </IconVariant>
+
+      <!--
+        ... to add metadata. We will use the metadata to do additional transforms and batching.
+      
+        https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-items#BKMK_ReferencingItemMetadata
+      -->
+      <IconVariant>
+        <IconFile>%(IconName).svg</IconFile>
+        <SizeFolder>%(Identity)x%(Identity)</SizeFolder>
+      </IconVariant>
+
+      <IconVariant>
+        <RequestedFile>$(StaticWebAssetsPath)/%(IconVariant.SizeFolder)/%(IconVariant.IconFile)</RequestedFile>
+      </IconVariant>
+
+      <IconVariant>
+        <!-- Fallback to default size of 32px when requested size does not exist as generated CSS size modifiers are relying on this size as a fallback -->
+        <SizeFolder Condition="!Exists(%(IconVariant.RequestedFile))">32x32</SizeFolder>
+      </IconVariant>
+
+      <IconVariant>
+        <SourceFile>$(StaticWebAssetsPath)/%(IconVariant.SizeFolder)/%(IconVariant.IconFile)</SourceFile>
+        <DestinationFolder>$(MonochromeIconSvgOutputFolder)/%(IconVariant.SizeFolder)</DestinationFolder>
+      </IconVariant>
+
+      <IconVariant>
+        <DestinationFile>$([MSBuild]::MakeRelative($(MSBuildProjectDirectory), '%(DestinationFolder)/%(IconVariant.IconFile)'))</DestinationFile>
+      </IconVariant>
+    </ItemGroup>
+  </Target>
+
+  <!--
+    The following target has an Outputs attribute to batch the target for each icon variant.
+
+    This is required to get the Condition in <Content Include=...> working as using %() or @() inside
+    intrinsic item function 'AnyHaveMetadataValue' is not supported.
+
+    https://learn.microsoft.com/en-us/visualstudio/msbuild/item-metadata-in-target-batching
+    https://learn.microsoft.com/en-us/visualstudio/msbuild/item-functions#intrinsic-item-functions
+  -->
+  <Target Name="CopyMonochromeIconSvg" Outputs="%(IconVariant.DestinationFile)" BeforeTargets="PreBuildEvent" DependsOnTargets="CreateMonochromeIconVariantItems">
+    <PropertyGroup>
+      <DestinationFile>%(IconVariant.DestinationFile)</DestinationFile>
+    </PropertyGroup>
+
+    <Copy SourceFiles="%(IconVariant.SourceFile)" DestinationFiles="$(DestinationFile)" />
+
+    <ItemGroup>
+      <!--
+        @(Content) is passed to DiscoverStaticWebAssets task in an early stage of the build, way before our copy steps will execute.
+        This results in the build system / targets / tasks not knowing about the file copied.
+        We fix this by adding a content item for the file copied.
+
+        An alternative to using a Condition is to use Inputs="%(IconVariant.SourceFile)" in target tag
+        which would result in a faster build because target would be executed only when %(IconVariant.SourceFile) changes.
+        For now, it feels more natural to always execute a copy to always have a fresh state in $(MonochromeIconSvgOutputFolder).
+      -->
+      <Content Include="$(DestinationFile)" Condition="!@(Content->AnyHaveMetadataValue('Identity', $(DestinationFile)))" />
+    </ItemGroup>
+
+  </Target>
+
+  <Target Name="CopyMonochromeIconScss" BeforeTargets="PreBuildEvent" DependsOnTargets="CreateMonochromeIconVariantItems" Condition="'@(MonochromeIcon)' != '' And '$(MonochromeIconScssOutputFolder)' != ''">
+    <ItemGroup>
+      <ScssFiles Include="$(MSBuildThisFileDirectory)../scss/**/*.scss" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(ScssFiles)" DestinationFolder="$(MonochromeIconScssOutputFolder)" />
+  </Target>
+
+  <UsingTask TaskName="EmitVariablesGeneratedScss" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <DestinationFolder ParameterType="System.String" Required="true" />
+      <IconNames ParameterType="System.String[]" Required="true" />
+      <IconVariants ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.Collections.Generic" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Linq" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+
+        var contents = new List<string>
+        {
+          "// auto-generated code",
+          "",
+          "@use \"functions\";",
+          "",
+          "$icon-filters: null !default;",
+          ""
+        };
+
+        contents.Add("$icon-variants: (");
+        {
+          var iconVariants = IconVariants.ToLookup(k => k.GetMetadata("IconName"), e => new { Size = e.ItemSpec, ActualSize = e.GetMetadata("ActualSize") });
+
+          var iconVariantMapItems = new List<string>();
+
+          foreach (var iconVariant in iconVariants)
+          {
+            var iconVariantMapItem = new List<string>();
+            iconVariantMapItem.Add($"    \"{iconVariant.Key}\": [");
+            iconVariantMapItem.AddRange(iconVariant.Select(v => {
+              var keyValuePairs = new Dictionary<string, object>
+              {
+                { "size", v.Size }
+              };
+              
+              if (v.ActualSize != string.Empty)
+                keyValuePairs.Add("actualSize", v.ActualSize);
+              
+              return $"        ({string.Join(", ", keyValuePairs.Select(p => $"\"{p.Key}\": {p.Value}"))})";
+            }));
+            iconVariantMapItem.Add($"    ]");
+            
+            iconVariantMapItems.Add(string.Join(Environment.NewLine, iconVariantMapItem));
+          }
+          
+          contents.Add(string.Join("," + Environment.NewLine, iconVariantMapItems));
+
+        }
+        contents.Add(");");
+
+        contents.AddRange([
+          "",
+          "@if $icon-filters {",
+          "  $icon-variants: functions.filter-icon-variants($icon-variants, $icon-filters);",
+          "}"
+        ]);
+
+        File.WriteAllText(DestinationFolder + "/_variables.generated.scss",
+            string.Join(Environment.NewLine, contents));
+
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="AfterCopyMonochromeIconScss" BeforeTargets="PreBuildEvent" DependsOnTargets="CopyMonochromeIconSvg;CopyMonochromeIconScss" Condition="'@(MonochromeIcon)' != ''">
+    <ItemGroup>
+      <IconVariant>
+        <ActualSize Condition="!Exists(%(IconVariant.RequestedFile))">32</ActualSize>
+      </IconVariant>
+    </ItemGroup>
+
+    <EmitVariablesGeneratedScss DestinationFolder="$(MonochromeIconScssOutputFolder)" IconNames="@(MonochromeIcon)" IconVariants="@(IconVariant)" />
+  </Target>
+
+  <Target Name="AfterMonochromeIconTargets" BeforeTargets="PreBuildEvent" DependsOnTargets="AfterCopyMonochromeIconScss" />
+
+</Project>

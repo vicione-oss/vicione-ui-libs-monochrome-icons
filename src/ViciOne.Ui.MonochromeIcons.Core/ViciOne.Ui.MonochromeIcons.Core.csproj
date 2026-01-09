@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <Content Include="ViciOne.Ui.MonochromeIcons.Core.targets" PackagePath="build" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,60 @@
+﻿@using Shared.Models
+@using ViciOne.Ui.Blazor.Components.Button
+@using ViciOne.Ui.Blazor.Components.SearchBox
+@using ViciOne.Ui.Blazor.Components.Switch
+@using ViciOne.Ui.Blazor.Components.Switch.Enums
+@using ViciOne.Ui.MonochromeIcons.Core.Enums
+@using ViciOne.Ui.MonochromeIcons.Core.Extensions
+@using ViciOne.Ui.MonochromeIcons.Core.Factories
+
+<h1>Monochrome Icons</h1>
+
+<div class="header-bar">
+    <div class="header-section separator">
+        <label>Icon Style</label>
+        <div class="section-content-container">
+            @foreach (var iconStyle in Enum.GetValues<IconStyle>())
+            {
+                <button class="select-button @(GalleryOptions.IconStyle == iconStyle ? "selected" : null)"
+                        @onclick="@(() => SetIconStyle(iconStyle))">
+                    @iconStyle
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="header-section separator" style="--min-button-width: 150px">
+        <label for="iconSize">Icon size</label>
+        <div class="section-content-container">
+            @foreach (var iconSize in TypeSafeEnumFactory<MonochromeIconSize>.CreateAll())
+            {
+                <button class="select-button @(GalleryOptions.IconSize == iconSize ? "selected" : null)" 
+                        @onclick="@(() => SetIconSize(iconSize))">
+                    @string.Format("{0} {1}x{1}", iconSize, iconSize.ToPixels())
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="header-section separator">
+        <label>Filter</label>
+        <div class="section-content-container">
+            <SearchBox @bind-Text="@GalleryOptions.FilterText" />
+            <Button Text="Clear" OnClick="@ClearFilter" />
+        </div>
+    </div>
+
+    <div class="header-section separator">
+        <label >Show Icon Border</label>
+        <div class="section-content-container">
+            <Switch @bind-Value="@GalleryOptions.IsIconOutlineActive" />
+        </div>
+    </div>
+
+    <div class="header-section">
+        <label>Colored Icons</label>
+        <div class="section-content-container">
+            <Switch @bind-Value="@GalleryOptions.AreIconsColored" />
+        </div>
+    </div>
+</div>

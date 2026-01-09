@@ -1,0 +1,86 @@
+@use "../Styles/design/colors";
+
+h1 {
+    text-align: center;
+}
+
+.header-bar {
+    $gap: 16px;
+    --min-button-width: 100px;
+    border-bottom: 2px solid colors.$border;
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    width: 98vw;
+
+    @media(max-width: 2060px) {
+        --min-button-width: 150px;
+        align-items: center;
+        flex-direction: column;
+        justify-content: initial;
+    }
+
+    .select-button {
+        $button-color: colors.$background-dark;
+        background-color: colors.$background-light;
+        border-radius: 16px;
+        color: inherit;
+        height: 32px;
+        min-width: var(--min-button-width);
+        border: 1px solid colors.$background-light;
+
+        &:hover:not(.selected) {
+            background-color: colors.$background-light-hover;
+            cursor: pointer;
+        }
+
+        &.selected {
+            background-color: colors.$accent;
+            color: colors.$theme;
+            font-weight: bold;
+        }
+    }
+
+    .header-section {
+        display: grid;
+        grid-gap: $gap;
+        grid-template-columns: max-content max-content;
+        align-items: center;
+
+        @media(max-width: 2060px) {
+            grid-template-columns: 150px 815px;
+        }
+
+        @media(max-width: 1000px) {
+            grid-template-columns: 150px 150px;
+        }
+
+        &.separator {
+            border-right: 1px solid colors.$border;
+            margin-right: $gap;
+            padding-right: $gap;
+
+            @media(max-width: 2060px) {
+                border-bottom: 1px solid colors.$border;
+                border-right: none;
+                margin-bottom: $gap;
+                margin-right: initial;
+                padding-bottom: $gap;
+                padding-right: initial;
+            }
+        }
+
+        .section-content-container {
+            display: flex;
+            flex-direction: row;
+            gap: $gap;
+
+            @media(max-width: 1000px) {
+                flex-direction: column;
+            }
+        }
+    }
+}

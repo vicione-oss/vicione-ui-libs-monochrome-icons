@@ -1,0 +1,68 @@
+@use "variables";
+@use "functions";
+@use "mixins";
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
+
+#{variables.$base-selector} .monochrome-icon {
+
+    @each $icon-name, $icon-descriptors in variables.$icon-variants {
+
+        $icon-descriptors-contain-items-descriptor-for-default-icon-size: functions.contains-item-descriptor-for-icon-size($icon-descriptors, variables.$default-size);
+
+        @each $icon-descriptor in $icon-descriptors {
+
+            $icon-size: map.get($icon-descriptor, "size");
+
+            $icon-actualSize: map.get($icon-descriptor, "actualSize");
+            @if ($icon-actualSize == null) {
+                $icon-actualSize: $icon-size;
+            }
+
+            $icon-scale: math.div($icon-size, $icon-actualSize);
+
+            $size-selector: null;
+            $important-flag: null;
+
+            @if ($icon-size != variables.$default-size) {
+                // icon does not have default size, therefore we apply a size selector ...
+                $size-selector: ".size-" + $icon-size;
+
+                $important-flag: "!important";
+            }
+
+            &.monochrome-icon-#{$icon-name}#{$size-selector} {
+                // ... state icon size explicitly to override the HTML element defaults
+                width: #{$icon-size}px #{$important-flag};
+                height: #{$icon-size}px #{$important-flag};
+
+                @if ($icon-scale != 1) {
+                    // scaling means overflow, hence we hide it to ensure icon flows correctly e.g. with text
+                    overflow: hidden;
+                }
+
+                &:before {
+                    @if (($size-selector and not $icon-descriptors-contain-items-descriptor-for-default-icon-size) or (not $size-selector)) {
+                        // we inject the icon as content ...
+                        content: "";
+                        display: inline-block;
+
+                        // ... with the actual size...
+                        width: #{$icon-actualSize}px;
+                        height: #{$icon-actualSize}px;
+
+                        // ... as svg ...
+                        @include mixins.include-svg(variables.$svg-base-url, $icon-actualSize, $icon-name);
+                    }
+
+                    @if ($icon-scale != 1) {
+                        // ... with scaling
+                        transform-origin: top left;
+                        transform: scale($icon-scale);
+                    }
+                }
+            }
+        }
+    }
+}
