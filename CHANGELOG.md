@@ -1,6 +1,8 @@
 # Changelog
 
-## 4.1.0 - Unreleased
+## 4.1.0 - 2026-01-19
+
+- Updated package project URL to reflect the migration to gitlab.com
 
 ## 4.0.1 - 2026-01-09
 
