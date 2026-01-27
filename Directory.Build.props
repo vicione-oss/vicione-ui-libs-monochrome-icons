@@ -81,6 +81,11 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
+    <!-- Provide run settings for tests -->
+    <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests')) And $(MSBuildProjectDirectory.Contains('tests'))">
+        <RunSettingsFilePath>$(MSBuildThisFileDirectory)tests\tests.runsettings</RunSettingsFilePath>
+    </PropertyGroup>
+
     <ItemGroup Condition="$(MSBuildProjectDirectory.Contains('src'))">
         <None Include="$(MSBuildThisFileDirectory)LICENSE.txt" Pack="true" PackagePath=""/>
         <None Include="README.md" Pack="true" PackagePath="\" />
