@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dark-theme/icon/monochrome/32x32/template-badge</title>
+    <g id="dark-theme/icon/monochrome/32x32/template-badge" stroke="none" fill="none" transform="translate(0, 0)" fill-rule="evenodd">
+        <circle id="secondary" fill="#D8D8D8" cx="26" cy="6" r="6"></circle>
+        <path d="M27,14 L27,29 L16,29 L16,14 L27,14 Z M19.0453327,5.19896395 L8,5.2 C7.5581722,5.2 7.2,5.5581722 7.2,6 L7.2,26 C7.2,26.4418278 7.5581722,26.8 8,26.8 L15,26.8 L15,28 L8,28 C6.8954305,28 6,27.1045695 6,26 L6,6 C6,4.8954305 6.38430237,4 8,4 L19.2898925,3.99995367 C19.1747956,4.38667499 19.0922187,4.78740216 19.0453327,5.19896395 Z M24.9716797,17.46875 L18.0224609,17.46875 L18.0224609,18.8925781 L20.6005859,18.8925781 L20.6005859,26 L22.3583984,26 L22.3583984,18.8925781 L24.9716797,18.8925781 L24.9716797,17.46875 Z" id="primary" fill="#DEDEDE"></path>
+    </g>
+</svg>

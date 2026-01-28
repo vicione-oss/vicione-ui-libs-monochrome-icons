@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.2.0 - 2026-01-28
+
+- Added icon `add`, `all-predecessors`, `all-predecessors-and-successors`, `all-successors`, `attached`, `bring-forward`, `check-circled-light`, `clear`, `collapse-all`, `column-chooser-editor`, `column-chooser-menu`, `connector-dragging-connector-in`, `connector-dragging-connector-out`, `dataflow-jump-into`, `dummy-icon`, `expand-all`, `filter-solid-input`, `filter-solid-output`, `group-by-category`, `invert`, `move-down`, `move-left`, `move-right`, `move-up`, `onboarding`, `predecessor`, `published-connector-dragging`, `selected`, `send-backward`, `several-to-back`, `several-to-front`, `sort-children`, `sort-default`, `sort-uncheck-all`, `successor-and-predecessor`, `successor`, `template-badge`, `template-editor`, `template-management`, `zoom-100` and `zoom-to-fit`
+- Updated icon `search`
+
 ## 4.1.0 - 2026-01-19
 
 - Updated package project URL to reflect the migration to gitlab.com
