@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dark-theme/icon/monochrome/32x32/collapse-all</title>
+    <g id="dark-theme/icon/monochrome/32x32/collapse-all" stroke="none" fill="none" fill-rule="evenodd">
+        <path d="M28,20 L28,28 L20,28 L20,20 L28,20 Z M26.4130738,23.370219 L21.2585935,23.370219 L21.2585935,24.6588391 L26.4130738,24.6588391 L26.4130738,23.370219 Z M19,21.999 L19,23.999 L12,24 L12,22 L19,21.999 Z M25,17 L25,19 L19,19 L19,19.999 L7,20 L7,17 L25,17 Z M28,13 L28,15 L12,15 L12,13 L28,13 Z M28,9 L28,11 L12,11 L12,9 L28,9 Z M25,4 L25,7 L7,7 L7,4 L25,4 Z" id="Icon" fill="#DEDEDE"></path>
+    </g>
+</svg>
