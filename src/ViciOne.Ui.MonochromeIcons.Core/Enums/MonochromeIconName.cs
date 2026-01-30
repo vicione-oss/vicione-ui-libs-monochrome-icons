@@ -89,6 +89,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName HomeSolid = new(nameof(HomeSolid));
     public static readonly MonochromeIconName Import = new(nameof(Import));
     public static readonly MonochromeIconName InfoOutlined = new(nameof(InfoOutlined));
+    public static readonly MonochromeIconName InstallPendingLight = new(nameof(InstallPendingLight));
     public static readonly MonochromeIconName Instructions = new(nameof(Instructions));
     public static readonly MonochromeIconName Invert = new(nameof(Invert));
     public static readonly MonochromeIconName Json = new(nameof(Json));
@@ -174,6 +175,9 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName Today = new(nameof(Today));
     public static readonly MonochromeIconName Toggle = new(nameof(Toggle));
     public static readonly MonochromeIconName Undo = new(nameof(Undo));
+    public static readonly MonochromeIconName UninstallLight = new(nameof(UninstallLight));
+    public static readonly MonochromeIconName UninstallPendingLight = new(nameof(UninstallPendingLight));
+    public static readonly MonochromeIconName UpdateAvailableLight = new(nameof(UpdateAvailableLight));
     public static readonly MonochromeIconName Urgent = new(nameof(Urgent));
     public static readonly MonochromeIconName UserInterfaceLight = new(nameof(UserInterfaceLight));
     public static readonly MonochromeIconName UserLight = new(nameof(UserLight));
