@@ -85,6 +85,7 @@
     <MonochromeIconName Include="home-solid" />
     <MonochromeIconName Include="import" />
     <MonochromeIconName Include="info-outlined" />
+    <MonochromeIconName Include="install-pending-light" />
     <MonochromeIconName Include="instructions" />
     <MonochromeIconName Include="invert" />
     <MonochromeIconName Include="json" />
@@ -170,6 +171,9 @@
     <MonochromeIconName Include="today" />
     <MonochromeIconName Include="toggle" />
     <MonochromeIconName Include="undo" />
+    <MonochromeIconName Include="uninstall-light" />
+    <MonochromeIconName Include="uninstall-pending-light" />
+    <MonochromeIconName Include="update-available-light" />
     <MonochromeIconName Include="urgent" />
     <MonochromeIconName Include="user-interface-light" />
     <MonochromeIconName Include="user-light" />
