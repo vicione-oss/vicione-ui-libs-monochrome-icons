@@ -9,7 +9,7 @@ namespace ViciOne.Ui.MonochromeIcons.Core.Tests.Extensions;
 public sealed class MonochromeIconNameExtensionsTests
 {
     [Fact]
-    public void ShouldReturnBaseAndNameModifierCssClass()
+    public void Should_return_base_and_name_modifier_css_class()
     {
         // Arrange
         var iconName = MonochromeIconName.Container;
@@ -25,7 +25,7 @@ public sealed class MonochromeIconNameExtensionsTests
     }
 
     [Fact]
-    public void ShouldReturnSizeModifierCssClass()
+    public void Should_return_size_modifier_css_class()
     {
         // Arrange
         var iconName = MonochromeIconName.Container;
@@ -39,7 +39,7 @@ public sealed class MonochromeIconNameExtensionsTests
     }
 
     [Fact]
-    public void ShouldReturnSvgPath()
+    public void Should_return_svg_path()
     {
         // Arrange
         const string ContentRoot = "foo";

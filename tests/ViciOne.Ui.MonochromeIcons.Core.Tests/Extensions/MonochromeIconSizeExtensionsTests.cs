@@ -12,7 +12,7 @@ public sealed class MonochromeIconSizeExtensionsTests
 
     [Theory]
     [MemberData(nameof(IconSizes))]
-    public void AssertToPixelResult(string iconSize)
+    public void Assert_to_pixel_result(string iconSize)
     {
         // Arrange
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
@@ -25,7 +25,7 @@ public sealed class MonochromeIconSizeExtensionsTests
     }
 
     [Fact]
-    public void AssertToModifierCssClassResult()
+    public void Assert_to_modifier_css_class_result()
     {
         // Arrange
         var iconSizes = TypeSafeEnumFactory<MonochromeIconSize>.CreateAll();

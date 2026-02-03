@@ -14,10 +14,10 @@ public sealed class MonochromeIconTests
     public static readonly TheoryData<string> IconSizes = [.. TypeSafeEnumFactory<MonochromeIconSize>.CreateAll().GetNames()];
 
     [Fact]
-    public void ShouldRenderComponent()
+    public void Should_render_component()
     {
         // Arrange
-        using var ctx = new TestContext();
+        using var ctx = new Bunit.TestContext();
 
         // Act
         var renderedComponent = ctx.RenderComponent<MonochromeIcon>(b => b
@@ -29,11 +29,11 @@ public sealed class MonochromeIconTests
 
     [Theory]
     [MemberData(nameof(IconNames))]
-    public void ShouldRenderIcon(string iconName)
+    public void Should_render_icon(string iconName)
     {
         // Arrange
         var iconNameTyped = TypeSafeEnumFactory<MonochromeIconName>.Create(iconName);
-        using var ctx = new TestContext();
+        using var ctx = new Bunit.TestContext();
 
         // Act
         var renderedComponent = ctx.RenderComponent<MonochromeIcon>(b => b
@@ -47,12 +47,12 @@ public sealed class MonochromeIconTests
 
     [Theory]
     [MemberData(nameof(IconSizes))]
-    public void AssertSizeModifier(string iconSize)
+    public void Assert_size_modifier(string iconSize)
     {
         // Arrange
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
-        using var ctx = new TestContext();
+        using var ctx = new Bunit.TestContext();
 
         var sizeModifier = $"size-{iconSizeTyped.ToPixels()}";
         var shouldRenderSizeModifier = iconSizeTyped != MonochromeIconSize.Medium;
@@ -72,10 +72,10 @@ public sealed class MonochromeIconTests
     }
 
     [Fact]
-    public void ShouldRenderCssClass()
+    public void Should_render_css_class()
     {
         // Arrange
-        using var ctx = new TestContext();
+        using var ctx = new Bunit.TestContext();
 
         const string CssClass1 = "shiny";
         const string CssClass2 = "flashy";

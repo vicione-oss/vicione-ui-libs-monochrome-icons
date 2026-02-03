@@ -12,7 +12,7 @@ public sealed class StringExtensionsTests
     [InlineData("CamelCaseString", "camel-case-string")]
     [InlineData("Cluster1", "cluster-1")]
     [InlineData("Cluster1Two3", "cluster-1-two-3")]
-    public void AssertToDashCaseResult(string givenValue, string expectedValue)
+    public void Assert_to_dash_case_result(string givenValue, string expectedValue)
     {
         // Act
         var result = givenValue.ToDashCase();
@@ -22,7 +22,7 @@ public sealed class StringExtensionsTests
     }
 
     [Fact]
-    public void AssertToSpaceSeparatedResult()
+    public void Assert_to_space_separated_result()
     {
         // Arrange
         var values = new List<string> { "A", "B" };
