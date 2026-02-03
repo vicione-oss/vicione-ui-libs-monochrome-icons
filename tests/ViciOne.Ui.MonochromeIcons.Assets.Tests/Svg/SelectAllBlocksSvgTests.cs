@@ -43,7 +43,7 @@ public sealed class SelectAllBlocksSvgTests
 
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldNotHaveDTD(string iconSize)
+    public void Should_not_have_dtd(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -56,7 +56,7 @@ public sealed class SelectAllBlocksSvgTests
 
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldBeMinified(string iconSize)
+    public void Should_be_minified(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -68,7 +68,7 @@ public sealed class SelectAllBlocksSvgTests
 
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldHaveWidthPx(string iconSize)
+    public void Should_have_width_px(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -82,7 +82,7 @@ public sealed class SelectAllBlocksSvgTests
 
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldHaveHeightPx(string iconSize)
+    public void Should_have_height_px(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -96,7 +96,7 @@ public sealed class SelectAllBlocksSvgTests
 
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldHaveViewbox(string iconSize)
+    public void Should_have_viewbox(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -111,7 +111,7 @@ public sealed class SelectAllBlocksSvgTests
     // Version is deprecated, see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/version
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldNotHaveVersion(string iconSize)
+    public void Should_not_have_version(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -122,7 +122,7 @@ public sealed class SelectAllBlocksSvgTests
     // Targets optimization, not needed for displaying an icon
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldNotHaveTitle(string iconSize)
+    public void Should_not_have_title(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -133,7 +133,7 @@ public sealed class SelectAllBlocksSvgTests
     // Targets optimization, not needed for displaying an icon
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldNotHaveIdAttribute(string iconSize)
+    public void Should_not_have_id_attribute(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -144,7 +144,7 @@ public sealed class SelectAllBlocksSvgTests
     // Fill is ignored due to CSS rule "backgroundColor: currentcolor"
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldNotHaveFillAttributeWhenExists(string iconSize)
+    public void Should_not_have_fill_attribute_when_exists(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -155,7 +155,7 @@ public sealed class SelectAllBlocksSvgTests
     // Stroke is ignored due to CSS rule "backgroundColor: currentcolor"
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldNotHaveStokeAttributeWhenExists(string iconSize)
+    public void Should_not_have_stoke_attribute_when_exists(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -166,7 +166,7 @@ public sealed class SelectAllBlocksSvgTests
     // Disallows anything that we did not define before
     [Theory, Trait("Category","Local")]
     [MemberData(nameof(IconSizes))]
-    public void ShouldHaveSpecificElementsWhenExists(string iconSize)
+    public void Should_have_specific_elements_when_exists(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 

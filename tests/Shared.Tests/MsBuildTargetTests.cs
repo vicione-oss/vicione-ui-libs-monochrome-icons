@@ -9,7 +9,7 @@ namespace Shared.Tests;
 public sealed class MsBuildTargetTests
 {
     [Fact]
-    public void ShouldExecuteTargetsOfAssetsPackage()
+    public void Should_execute_targets_of_assets_package()
     {
         // Arrange
         var assembly = typeof(MsBuildTargetTests).Assembly;

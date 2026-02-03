@@ -9,7 +9,7 @@ namespace ViciOne.Ui.MonochromeIcons.Core.Tests.Factories;
 public class MonochromeIconNameFactoryTests
 {
     [Fact]
-    public void ShouldReturnAllMonochromeIconNames()
+    public void Should_return_all_monochrome_icon_names()
     {
         // Arrange
         IReadOnlyCollection<MonochromeIconName> expected =

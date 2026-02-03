@@ -13,7 +13,7 @@ public sealed class MonochromeIconNameExtensionsTests
 
     [Theory]
     [MemberData(nameof(IconNames))]
-    public void AssertGetSvgMarkupResult(string iconName)
+    public void Assert_get_svg_markup_result(string iconName)
     {
         // Arrange
         var iconNameTyped = TypeSafeEnumFactory<MonochromeIconName>.Create(iconName);

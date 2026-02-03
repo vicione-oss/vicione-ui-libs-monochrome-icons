@@ -24,3 +24,9 @@ public class Bar
     private Foo? _that; // prefer nullable type
 }
 ```
+
+### Test methods
+
+- Test method names should use [snake case](https://en.wikipedia.org/wiki/Snake_case) pattern.
+
+  > The Test Explorer replaces underlines with spaces because of [`our configuration`](https://gitlab.com/vicione-oss/vicione/ui-libs/monochrome-icons/-/blob/master/tests/xunit.runner.json?ref_type=heads#L4) of [`methodDisplayOptions`](https://xunit.net/docs/runsettings#MethodDisplayOptions). As a result, test names like `Should_return_access_level_requirement` are displayed as formulated sentences like `Should return access level requirement`.

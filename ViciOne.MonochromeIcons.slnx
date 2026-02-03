@@ -28,6 +28,7 @@
     <Project Path="src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <File Path="tests/xunit.runner.json" />
     <Project Path="tests/Shared.Tests/Shared.Tests.csproj" />
     <Project Path="tests/ViciOne.Ui.MonochromeIcons.Assets.Tests/ViciOne.Ui.MonochromeIcons.Assets.Tests.csproj" />
     <Project Path="tests/ViciOne.Ui.MonochromeIcons.Components.Tests/ViciOne.Ui.MonochromeIcons.Components.Tests.csproj" />
