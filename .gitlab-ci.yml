@@ -17,6 +17,10 @@ include:
   - dotnet pack --no-build -c Release -o nuget -p:PackageVersion=${PACKAGE_VERSION} src/ViciOne.Ui.MonochromeIcons.Assets
   - sed -i "s|<MonochromeIconsVersion>.*</MonochromeIconsVersion>|<MonochromeIconsVersion>${PACKAGE_VERSION}</MonochromeIconsVersion>|g" Directory.Packages.props
 
+.adjust_tests_runssettings: &adjust_tests_runssettings
+  - cp -f tests/tests.runsettings ./tests.runsettings
+  - sed -i "s|<ResultsDirectory>\.\./artifacts/tests</ResultsDirectory>|<ResultsDirectory>artifacts/tests</ResultsDirectory>|g" ./tests.runsettings
+
 .install_nodejs: &install_nodejs
   - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
   - apt update && apt install -y nodejs
@@ -42,6 +46,7 @@ Tests:
     FILTER: 'Category!=Local'
   before_script:
     - *clean_build_pack_install_assets
+    - *adjust_tests_runssettings
 
 Deploy Core:
   extends: .dotnet-deploy-nuget
