@@ -2,7 +2,7 @@
 
 ## 4.3.0 - [Unreleased]
 
-- Added icon `install-pending-light`, `uninstall-pending-light`, `uninstall-light`, `update-available-light`
+- Added icon `install-pending-light`, `send-light.svg`, `send-solid.svg`, `uninstall-pending-light`, `uninstall-light`, `update-available-light`, `update-light.svg` and `wifi.svg`
 
 ## 4.2.0 - 2026-01-28
 
