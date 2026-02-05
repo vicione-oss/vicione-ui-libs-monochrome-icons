@@ -147,6 +147,8 @@
     <MonochromeIconName Include="select-connectors-output-all" />
     <MonochromeIconName Include="selected" />
     <MonochromeIconName Include="send-backward" />
+    <MonochromeIconName Include="send-light" />
+    <MonochromeIconName Include="send-solid" />
     <MonochromeIconName Include="several-to-back" />
     <MonochromeIconName Include="several-to-front" />
     <MonochromeIconName Include="show" />
@@ -174,12 +176,14 @@
     <MonochromeIconName Include="uninstall-light" />
     <MonochromeIconName Include="uninstall-pending-light" />
     <MonochromeIconName Include="update-available-light" />
+    <MonochromeIconName Include="update-light" />
     <MonochromeIconName Include="urgent" />
     <MonochromeIconName Include="user-interface-light" />
     <MonochromeIconName Include="user-light" />
     <MonochromeIconName Include="user-solid" />
     <MonochromeIconName Include="warning" />
     <MonochromeIconName Include="warning-full" />
+    <MonochromeIconName Include="wifi" />
     <MonochromeIconName Include="wizard" />
     <MonochromeIconName Include="zoom-100" />
     <MonochromeIconName Include="zoom-to-fit" />

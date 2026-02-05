@@ -151,6 +151,8 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName SelectConnectorsOutputAll = new(nameof(SelectConnectorsOutputAll));
     public static readonly MonochromeIconName Selected = new(nameof(Selected));
     public static readonly MonochromeIconName SendBackward = new(nameof(SendBackward));
+    public static readonly MonochromeIconName SendLight = new(nameof(SendLight));
+    public static readonly MonochromeIconName SendSolid = new(nameof(SendSolid));
     public static readonly MonochromeIconName SeveralToBack = new(nameof(SeveralToBack));
     public static readonly MonochromeIconName SeveralToFront = new(nameof(SeveralToFront));
     public static readonly MonochromeIconName Show = new(nameof(Show));
@@ -178,12 +180,14 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName UninstallLight = new(nameof(UninstallLight));
     public static readonly MonochromeIconName UninstallPendingLight = new(nameof(UninstallPendingLight));
     public static readonly MonochromeIconName UpdateAvailableLight = new(nameof(UpdateAvailableLight));
+    public static readonly MonochromeIconName UpdateLight = new(nameof(UpdateLight));
     public static readonly MonochromeIconName Urgent = new(nameof(Urgent));
     public static readonly MonochromeIconName UserInterfaceLight = new(nameof(UserInterfaceLight));
     public static readonly MonochromeIconName UserLight = new(nameof(UserLight));
     public static readonly MonochromeIconName UserSolid = new(nameof(UserSolid));
     public static readonly MonochromeIconName Warning = new(nameof(Warning));
     public static readonly MonochromeIconName WarningFull = new(nameof(WarningFull));
+    public static readonly MonochromeIconName Wifi = new(nameof(Wifi));
     public static readonly MonochromeIconName Wizard = new(nameof(Wizard));
     public static readonly MonochromeIconName Zoom100 = new(nameof(Zoom100));
     public static readonly MonochromeIconName ZoomToFit = new(nameof(ZoomToFit));
