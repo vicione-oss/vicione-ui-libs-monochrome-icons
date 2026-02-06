@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Styles/**/*.scss" Pack="true" PackagePath="scss" />
+    <Content Include="Styles\**\*.scss" Pack="true" PackagePath="scss" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TempDir>obj/$(Configuration)/$(TargetFramework)/TempSanitizeSvg</TempDir>
+    <TempDir>obj\$(Configuration)\$(TargetFramework)\TempSanitizeSvg</TempDir>
     <SketchIncomingDir>Sketch.Incoming</SketchIncomingDir>
     <SketchOriginalDir>Sketch.Original</SketchOriginalDir>
     <SketchSanitizedDir>Sketch.Sanitized</SketchSanitizedDir>
@@ -32,12 +32,24 @@
   <!-- Copy new incoming files from folder 'Sketch.Incoming' to temporary directory -->
   <Target Name="CopySketchIncomingToTempDirectory" BeforeTargets="SanitizeSvgs">
     <ItemGroup>
-      <SketchIncomingSvg Include="$(SketchIncomingDir)/*x*/**/*.svg" />
+      <SketchIncomingSvg Include="$(SketchIncomingDir)\*x*\**\*.svg" Exclude="$(SketchIncomingDir)\*x*\base-shape\**\*.svg" />
     </ItemGroup>
 
     <ItemGroup>
+      <BaseShapeSvg Include="$(SketchIncomingDir)\*x*\base-shape\**\*.svg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <BaseShapeSvg>
+        <BaseDir>$([MSBuild]::NormalizePath(%(BaseShapeSvg.RootDir)%(BaseShapeSvg.Directory)..))</BaseDir>
+      </BaseShapeSvg>
+    </ItemGroup>
+
+    <Message Text="Skip base shape: $([MSBuild]::MakeRelative(%(BaseShapeSvg.BaseDir), %(BaseShapeSvg.FullPath)))" Importance="high" Condition="Exists(%(BaseShapeSvg.Identity))" />
+
+    <ItemGroup>
       <SketchIncomingSvg>
-        <TempFileForSanitize>$(TempDir)/%(RecursiveDir)%(Filename)%(Extension)</TempFileForSanitize>
+        <TempFileForSanitize>$(TempDir)\%(RecursiveDir)%(Filename)%(Extension)</TempFileForSanitize>
       </SketchIncomingSvg>
     </ItemGroup>
 
@@ -138,7 +150,7 @@
   <Target Name="CopySanitizeFilesToSanitizeDirectory" BeforeTargets="CleanWwwRootDirectory">
     <ItemGroup>
       <SketchIncomingSvg>
-        <AssociatedFileInSketchSanitized>$(SketchSanitizedDir)/%(RecursiveDir)%(Filename)%(Extension)</AssociatedFileInSketchSanitized>
+        <AssociatedFileInSketchSanitized>$(SketchSanitizedDir)\%(RecursiveDir)%(Filename)%(Extension)</AssociatedFileInSketchSanitized>
       </SketchIncomingSvg>
     </ItemGroup>
 
@@ -149,9 +161,9 @@
 
   <!-- Copy new svg-files from folder 'Sketch.Incoming' to folder 'Sketch.Original' -->
   <Target Name="CopySketchIncomingToSketchOriginal" BeforeTargets="SyncronizeSketchSanitizedWithSketchOriginal" Condition="Exists(@(SketchIncomingSvg))">
-    <Message Text="Copy @(SketchIncomingSvg) to $(SketchOriginalDir)/%(RecursiveDir)" Importance="high" />
+    <Message Text="Copy %(SketchIncomingSvg.Identity) to $(SketchOriginalDir)\%(RecursiveDir)" Importance="high" />
 
-    <Copy SourceFiles="@(SketchIncomingSvg)" DestinationFolder="$(SketchOriginalDir)/%(RecursiveDir)" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(SketchIncomingSvg)" DestinationFolder="$(SketchOriginalDir)\%(RecursiveDir)" SkipUnchangedFiles="false" />
   </Target>
 
   <UsingTask TaskName="RemoveEmptyDirectories" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
@@ -187,12 +199,12 @@
   <!-- Synchronize the directory 'Sketch.Sanitized' with the directory 'Sketch.Original' -->
   <Target Name="SyncronizeSketchSanitizedWithSketchOriginal" BeforeTargets="ImportSketch" DependsOnTargets="CopySanitizeFilesToSanitizeDirectory">
     <ItemGroup>
-      <FilesInSketchSanitized Include="$(SketchSanitizedDir)/**/*" />
+      <FilesInSketchSanitized Include="$(SketchSanitizedDir)\**\*" />
     </ItemGroup>
 
     <ItemGroup>
       <FilesInSketchSanitized>
-        <AssociatedFileInSketchOriginal>$(SketchOriginalDir)/%(RecursiveDir)%(Filename)%(Extension)</AssociatedFileInSketchOriginal>
+        <AssociatedFileInSketchOriginal>$(SketchOriginalDir)\%(RecursiveDir)%(Filename)%(Extension)</AssociatedFileInSketchOriginal>
       </FilesInSketchSanitized>
     </ItemGroup>
 
@@ -205,10 +217,10 @@
   <!-- Delete all files from folder 'wwwroot' -->
   <Target Name="CleanWwwRootDirectory" BeforeTargets="ImportSketch">
     <ItemGroup>
-      <FilesToDeleteInWwwRoot Include="wwwroot/**/*" />
+      <FilesToDeleteInWwwRoot Include="wwwroot\**\*" />
     </ItemGroup>
 
-    <Message Text="Delete %(FilesToDeleteInWwwRoot.Identity) from wwwroot" Importance="high" />
+    <Message Text="Delete %(FilesToDeleteInWwwRoot.Identity)" Importance="high" />
     <Delete Files="@(FilesToDeleteInWwwRoot)" />
 
     <ItemGroup>
@@ -279,10 +291,10 @@
   <!-- Call task 'UpdateStaticWebAssetsFromSketch'  -->
   <Target Name="ImportSketch" BeforeTargets="RemoveTempDirectory">
     <ItemGroup>
-      <SketchSvg Include="$(SketchSanitizedDir)/**/*.svg" />
+      <SketchSvg Include="$(SketchSanitizedDir)\**\*.svg" />
     </ItemGroup>
 
-    <Message Text="Importing %(SketchSvg.FullPath)" Importance="high" />
+    <Message Text="Importing $([MSBuild]::MakeRelative($(ProjectDir), %(SketchSvg.FullPath)))" Importance="high" />
 
     <UpdateStaticWebAssetsFromSketch SketchSvgs="@(SketchSvg)" SourceFolder="$(SketchSanitizedDir)" DestinationFolder="$(ProjectDir)wwwroot">
       <Output PropertyName="UpdateStaticWebAssets" TaskParameter="StaticWebAssetSvgs" />
@@ -292,7 +304,7 @@
       <UpdatedStaticWebAsset Include="$(UpdateStaticWebAssets)" />
     </ItemGroup>
 
-    <Message Text="Updated static web asset: %(UpdatedStaticWebAsset.Identity)" Importance="high" />
+    <Message Text="Updated static web asset: $([MSBuild]::MakeRelative($(ProjectDir), %(UpdatedStaticWebAsset.Identity)))" Importance="high" />
 
     <ItemGroup>
       <!--
