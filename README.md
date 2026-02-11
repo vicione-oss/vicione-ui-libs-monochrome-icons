@@ -9,10 +9,8 @@ This repository contains icons with monochrome characteristic. An icon has a nam
 ## Get started
 
 - Clone repository
-- Open console at `samples/Shared`
-- Run `npm install`
-- Change directory to root directory of cloned repository
-- Open console at root directory of cloned repository
+- Open console at root of cloned repository
+- Run `npm i`
 - Run `dotnet build src/ViciOne.Ui.MonochromeIcons.Assets`
 - Run the sample application
 
