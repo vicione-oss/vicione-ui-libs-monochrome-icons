@@ -1,0 +1,10 @@
+﻿{
+  "name": "vicione-monochrome-icon-root",
+  "private": true,
+  "workspaces": [
+    "samples/Shared"
+  ],
+  "scripts": {
+    "build": "npm --workspaces --if-present run build"
+  }
+}
