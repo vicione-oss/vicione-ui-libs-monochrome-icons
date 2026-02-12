@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Shared.Models;
 using Shared.Services;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;
+using ViciOne.Ui.MonochromeIcons.Core.Extensions;
 using ViciOne.Ui.MonochromeIcons.Core.Factories;
 
 namespace Shared.Pages;
@@ -37,9 +38,24 @@ public sealed partial class Index : ComponentBase, IDisposable
     private void UpdateCurrentIcons()
     {
         if (string.IsNullOrWhiteSpace(GalleryOptions.FilterText))
+        {
             _currentIcons = GetIconsForCurrentStyle();
-        else
-            _currentIcons = [.. GetIconsForCurrentStyle().Where(i => i.GetName().Contains(GalleryOptions.FilterText, StringComparison.OrdinalIgnoreCase))];
+
+            return;
+        }
+
+        var filterText = GalleryOptions.FilterText.Trim();
+
+        _currentIcons =
+        [
+            .. GetIconsForCurrentStyle().Where(i =>
+            {
+                var iconName = i.GetName();
+
+                return iconName.Contains(filterText, StringComparison.OrdinalIgnoreCase) ||
+                    iconName.ToDashCase().Contains(filterText, StringComparison.OrdinalIgnoreCase);
+            })
+        ];
     }
 
     private IReadOnlyCollection<MonochromeIconName> GetIconsForCurrentStyle()
