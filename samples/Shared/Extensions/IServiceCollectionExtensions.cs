@@ -7,6 +7,7 @@ public static class IServiceCollectionExtensions
 {
     public static IServiceCollection AddGalleryOptions(this IServiceCollection services)
     {
+        services.AddScoped<GalleryFilter>();
         services.AddScoped<GalleryOptions>();
 
         return services;
