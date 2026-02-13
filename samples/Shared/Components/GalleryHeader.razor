@@ -15,8 +15,8 @@
         <div class="section-content-container">
             @foreach (var iconStyle in Enum.GetValues<IconStyle>())
             {
-                <button class="select-button @(GalleryOptions.IconStyle == iconStyle ? "selected" : null)"
-                        @onclick="@(() => SetIconStyle(iconStyle))">
+                <button class="select-button @(Filter.IconStyles.Contains(iconStyle) ? "selected" : null)"
+                        @onclick="@(() => Filter.Toggle(iconStyle))">
                     @iconStyle
                 </button>
             }
@@ -28,8 +28,8 @@
         <div class="section-content-container">
             @foreach (var iconSize in TypeSafeEnumFactory<MonochromeIconSize>.CreateAll())
             {
-                <button class="select-button @(GalleryOptions.IconSize == iconSize ? "selected" : null)" 
-                        @onclick="@(() => SetIconSize(iconSize))">
+                <button class="select-button @(Filter.IconSizes.Contains(iconSize) ? "selected" : null)"
+                        @onclick="@(() => Filter.Toggle(iconSize))">
                     @string.Format("{0} {1}x{1}", iconSize, iconSize.ToPixels())
                 </button>
             }
@@ -39,22 +39,22 @@
     <div class="header-section separator">
         <label>Filter</label>
         <div class="section-content-container">
-            <SearchBox @bind-Text="@GalleryOptions.FilterText" />
-            <Button Text="Clear" OnClick="@ClearFilter" />
+            <SearchBox @bind-Text="@Filter.Text" />
+            <Button Text="Clear" OnClick="@ClearFilterText" />
         </div>
     </div>
 
     <div class="header-section separator">
         <label >Show Icon Border</label>
         <div class="section-content-container">
-            <Switch @bind-Value="@GalleryOptions.IsIconOutlineActive" />
+            <Switch @bind-Value="@Options.IsIconOutlineActive" />
         </div>
     </div>
 
     <div class="header-section">
         <label>Colored Icons</label>
         <div class="section-content-container">
-            <Switch @bind-Value="@GalleryOptions.AreIconsColored" />
+            <Switch @bind-Value="@Options.AreIconsColored" />
         </div>
     </div>
 </div>

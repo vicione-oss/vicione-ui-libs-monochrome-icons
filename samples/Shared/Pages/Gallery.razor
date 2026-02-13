@@ -1,0 +1,33 @@
+﻿@page "/"
+
+@using ViciOne.Ui.MonochromeIcons.Components
+@using ViciOne.Ui.MonochromeIcons.Core.Enums
+@using ViciOne.Ui.MonochromeIcons.Core.Extensions
+@using ViciOne.Ui.MonochromeIcons.Core.Factories
+
+<div class="gallery">
+    @{
+        IEnumerable<MonochromeIconSize> iconSizes = TypeSafeEnumFactory<MonochromeIconSize>.CreateAll();
+
+        if (Filter.IconSizes.Count > 0)
+            iconSizes = iconSizes.Intersect(Filter.IconSizes);
+
+        iconSizes = iconSizes.OrderBy(s => s.ToPixels());
+
+        foreach (var iconName in _currentIcons)
+        {
+            foreach (var iconSize in iconSizes)
+            {
+                <div class="gallery-item @(Options.AreIconsColored ? "with-color" : null)">
+
+                    <MonochromeIcon CssClass="@(Options.IsIconOutlineActive ? "icon-outline" : null)"
+                                    Name="@iconName"
+                                    Size="@iconSize" />
+
+                    <div class="separator"></div>
+                    <span>@iconName.ToString().ToDashCase()</span>
+                </div>
+            }
+        }
+    }
+</div>
