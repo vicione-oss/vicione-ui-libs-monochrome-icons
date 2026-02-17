@@ -3,6 +3,7 @@
     <File Path="docs/csharp-coding-style.md" />
   </Folder>
   <Folder Name="/samples/">
+    <File Path="samples/.editorconfig" />
     <Project Path="samples/Client/Client.csproj" />
     <Project Path="samples/Server/Server.csproj" />
     <Project Path="samples/Shared/Shared.csproj" />
@@ -23,11 +24,13 @@
     <File Path="VERSION" />
   </Folder>
   <Folder Name="/src/">
+    <File Path="src/.editorconfig" />
     <Project Path="src/ViciOne.Ui.MonochromeIcons.Assets/ViciOne.Ui.MonochromeIcons.Assets.csproj" />
     <Project Path="src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Components.csproj" />
     <Project Path="src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <File Path="tests/.editorconfig" />
     <File Path="tests/tests.runsettings" />
     <File Path="tests/xunit.runner.json" />
     <Project Path="tests/Shared.Tests/Shared.Tests.csproj" />
