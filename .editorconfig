@@ -291,7 +291,7 @@ dotnet_diagnostic.CA1802.severity = suggestion # Use Literals Where Appropriate
 dotnet_diagnostic.CA1805.severity = suggestion # Do not initialize unnecessarily
 dotnet_diagnostic.CA1806.severity = suggestion # Do not ignore method results
 dotnet_diagnostic.CA1810.severity = suggestion # Initialize reference type static fields inline
-dotnet_diagnostic.CA1812.severity = silent # Avoid uninstantiated internal classes (changed to silent because often classes are used in DI scope where code analysis reports false positives, this is currently an open issue at https://github.com/dotnet/roslyn-analyzers/issues/6561)
+dotnet_diagnostic.CA1812.severity = warning # Avoid uninstantiated internal classes
 dotnet_diagnostic.CA1813.severity = silent # Avoid unsealed attributes
 dotnet_diagnostic.CA1814.severity = silent # Prefer jagged arrays over multidimensional
 dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator equals on value types
@@ -487,11 +487,11 @@ dotnet_diagnostic.IDE0017.severity = suggestion # Use object initializers
 dotnet_diagnostic.IDE0018.severity = suggestion # Inline variable declaration
 dotnet_diagnostic.IDE0019.severity = suggestion # Use pattern matching to avoid `as` followed by a `null` check
 dotnet_diagnostic.IDE0020.severity = suggestion # Use pattern matching to avoid `is` check followed by a cast (with variable)
-dotnet_diagnostic.IDE0021.severity = warning # Use expression body for constructors
-dotnet_diagnostic.IDE0022.severity = warning # Use expression body for methods
+dotnet_diagnostic.IDE0021.severity = suggestion # Use expression body for constructors
+dotnet_diagnostic.IDE0022.severity = suggestion # Use expression body for methods
 dotnet_diagnostic.IDE0023.severity = suggestion # Use expression body for conversion operators
 dotnet_diagnostic.IDE0024.severity = suggestion # Use expression body for operators
-dotnet_diagnostic.IDE0025.severity = warning # Use expression body for properties
+dotnet_diagnostic.IDE0025.severity = suggestion # Use expression body for properties
 dotnet_diagnostic.IDE0026.severity = suggestion # Use expression body for indexers
 dotnet_diagnostic.IDE0027.severity = suggestion # Use expression body for accessors
 dotnet_diagnostic.IDE0028.severity = suggestion # Use collection initializers
@@ -775,8 +775,3 @@ dotnet_diagnostic.CA1707.severity = none # Identifiers should not contain unders
 dotnet_diagnostic.CA1861.severity = none # Avoid constant arrays as arguments
 dotnet_diagnostic.CA2326.severity = none # Do not use TypeNameHandling values other than None
 dotnet_diagnostic.CA2327.severity = none # Do not use insecure JsonSerializerSettings
-
-# Customization
-# =====================
-[*.targets]
-indent_size = 2

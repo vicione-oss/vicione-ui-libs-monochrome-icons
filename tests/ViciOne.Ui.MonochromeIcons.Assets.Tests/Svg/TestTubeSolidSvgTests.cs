@@ -17,7 +17,7 @@ namespace ViciOne.Ui.MonochromeIcons.Assets.Tests.Svg;
 public sealed class TestTubeSolidSvgTests
 {
     public static readonly TheoryData<string> IconSizes =
-        new(TypeSafeEnumFactory<MonochromeIconSize>.CreateAll().Select(i => i.GetName()));
+        [.. (TypeSafeEnumFactory<MonochromeIconSize>.CreateAll().Select(i => i.GetName()))];
 
     private readonly Dictionary<MonochromeIconSize, string> _svgMarkups = [];
     private readonly Dictionary<MonochromeIconSize, SvgDocument> _svgDocuments = [];
@@ -41,7 +41,7 @@ public sealed class TestTubeSolidSvgTests
         }
     }
 
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_not_have_dtd(string iconSize)
     {
@@ -54,7 +54,7 @@ public sealed class TestTubeSolidSvgTests
         }
     }
 
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_be_minified(string iconSize)
     {
@@ -66,7 +66,7 @@ public sealed class TestTubeSolidSvgTests
         }
     }
 
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_have_width_px(string iconSize)
     {
@@ -80,7 +80,7 @@ public sealed class TestTubeSolidSvgTests
         }
     }
 
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_have_height_px(string iconSize)
     {
@@ -94,7 +94,7 @@ public sealed class TestTubeSolidSvgTests
         }
     }
 
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_have_viewbox(string iconSize)
     {
@@ -109,7 +109,7 @@ public sealed class TestTubeSolidSvgTests
     }
 
     // Version is deprecated, see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/version
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_not_have_version(string iconSize)
     {
@@ -120,7 +120,7 @@ public sealed class TestTubeSolidSvgTests
     }
 
     // Targets optimization, not needed for displaying an icon
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_not_have_title(string iconSize)
     {
@@ -131,7 +131,7 @@ public sealed class TestTubeSolidSvgTests
     }
 
     // Targets optimization, not needed for displaying an icon
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_not_have_id_attribute(string iconSize)
     {
@@ -142,7 +142,7 @@ public sealed class TestTubeSolidSvgTests
     }
 
     // Fill is ignored due to CSS rule "backgroundColor: currentcolor"
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_not_have_fill_attribute_when_exists(string iconSize)
     {
@@ -153,7 +153,7 @@ public sealed class TestTubeSolidSvgTests
     }
 
     // Stroke is ignored due to CSS rule "backgroundColor: currentcolor"
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_not_have_stoke_attribute_when_exists(string iconSize)
     {
@@ -164,7 +164,7 @@ public sealed class TestTubeSolidSvgTests
     }
 
     // Disallows anything that we did not define before
-    [Theory, Trait("Category","Local")]
+    [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
     public void Should_have_specific_elements_when_exists(string iconSize)
     {
