@@ -139,6 +139,7 @@ public sealed class MsBuildTargetTests
             "json-field-out.svg",
             "json-in.svg",
             "json-out.svg",
+            "kebab-menu.svg",
             "key-light.svg",
             "key-solid.svg",
             "keyboard.svg",

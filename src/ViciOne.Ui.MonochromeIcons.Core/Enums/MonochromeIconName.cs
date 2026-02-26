@@ -98,6 +98,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName JsonFieldOut = new(nameof(JsonFieldOut));
     public static readonly MonochromeIconName JsonIn = new(nameof(JsonIn));
     public static readonly MonochromeIconName JsonOut = new(nameof(JsonOut));
+    public static readonly MonochromeIconName KebabMenu = new(nameof(KebabMenu));
     public static readonly MonochromeIconName KeyLight = new(nameof(KeyLight));
     public static readonly MonochromeIconName KeySolid = new(nameof(KeySolid));
     public static readonly MonochromeIconName Keyboard = new(nameof(Keyboard));

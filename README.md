@@ -42,6 +42,9 @@ This repository contains icons with monochrome characteristic. An icon has a nam
   > The tests provided ensure that the imported icons meet predefined specifications.
   > When a test fails, its name indicates what specific issue is detected, for example `ShouldBeMinified` means `.svg` needs to be minified. Fix the associated `.svg` file in [src/ViciOne.Ui.MonochromeIcons.Assets/Sketch](src/ViciOne.Ui.MonochromeIcons.Assets/Sketch) and re-run tests until all tests pass. This is a manual operation until [Sanitize SVGs via MSBuild task](https://git.nsc-gmbh.de/vo-ui/vo-monochrome-icons/-/issues/11) is implemented.
 
+- Add the new icon(s) to [`MsBuildTargetTests.cs`](tests/Shared.Tests/MsBuildTargetTests.cs)
+- Add the new icon(s) to [`MonochromeIconNameFactoryTests.cs`](tests/ViciOne.Ui.MonochromeIcons.Core.Tests/Factories/MonochromeIconNameFactoryTests.cs)
+- Update [`CHANGELOG.md`](CHANGELOG.md)
 - Commit changes
 - Create merge request
 - Deploy NuGet package via the jobs provided in the merge request

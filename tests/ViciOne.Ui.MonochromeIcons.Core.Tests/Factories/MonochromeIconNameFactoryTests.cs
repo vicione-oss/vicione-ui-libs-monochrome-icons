@@ -106,6 +106,7 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.JsonFieldOut,
             MonochromeIconName.JsonIn,
             MonochromeIconName.JsonOut,
+            MonochromeIconName.KebabMenu,
             MonochromeIconName.KeyLight,
             MonochromeIconName.KeySolid,
             MonochromeIconName.Keyboard,
