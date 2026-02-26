@@ -94,6 +94,7 @@
     <MonochromeIconName Include="json-field-out" />
     <MonochromeIconName Include="json-in" />
     <MonochromeIconName Include="json-out" />
+    <MonochromeIconName Include="kebab-menu" />
     <MonochromeIconName Include="key-light" />
     <MonochromeIconName Include="key-solid" />
     <MonochromeIconName Include="keyboard" />
