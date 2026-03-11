@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.5.0 - Unreleased
+
+- Update to .NET `10.0.4`
+
 ## 4.4.0 - 2026-03-11
 
 - Added icon `calendar-light`, `calendar-solid`, `database-server`, `favorite-light-default`, `favorite-solid-default`, `filter-solid`, `filter-solid-close`, `full-size-exit-light`, `full-size-light`, `info-light`, `info-solid`, `navigate-light`, `navigate-solid`, `server-light`, `server-network-light`, `server-network-solid`, `server-solid`, `today-light`, `today-solid`, `topology-application-light`, `topology-engine-light`, `topology-folder-network-light`
@@ -45,7 +49,7 @@
 ## 3.7.0 - 2025-10-15
 
 - Optimized file size for icon `chevron`, `expander-light-down`, `expander-light-left`, `expander-light-right`, `expander-light-top` and `permission-view-and-edit`
-- Update to .NET 9.0.10
+- Update to .NET `9.0.10`
 - Removed obsolete icon `dataflow` and `top-by-lowest-element`
 
 ## 3.6.1 - 2025-09-02
