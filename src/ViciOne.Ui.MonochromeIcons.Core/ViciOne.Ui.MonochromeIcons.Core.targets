@@ -23,6 +23,8 @@
     <MonochromeIconName Include="bring-forward" />
     <MonochromeIconName Include="bug-light" />
     <MonochromeIconName Include="bug-solid" />
+    <MonochromeIconName Include="calendar-light" />
+    <MonochromeIconName Include="calendar-solid" />
     <MonochromeIconName Include="check" />
     <MonochromeIconName Include="check-circled-light" />
     <MonochromeIconName Include="chevron" />
@@ -48,6 +50,7 @@
     <MonochromeIconName Include="container-dissolve-solid" />
     <MonochromeIconName Include="container-locked-action" />
     <MonochromeIconName Include="container-locked-user" />
+    <MonochromeIconName Include="database-server" />
     <MonochromeIconName Include="dataflow-jump-into" />
     <MonochromeIconName Include="dataflow-light" />
     <MonochromeIconName Include="dataflow-solid" />
@@ -69,10 +72,16 @@
     <MonochromeIconName Include="expander-light-top" />
     <MonochromeIconName Include="export" />
     <MonochromeIconName Include="external-link" />
+    <MonochromeIconName Include="favorite-light-default" />
+    <MonochromeIconName Include="favorite-solid-default" />
     <MonochromeIconName Include="filter-light" />
+    <MonochromeIconName Include="filter-solid" />
+    <MonochromeIconName Include="filter-solid-close" />
     <MonochromeIconName Include="filter-solid-input" />
     <MonochromeIconName Include="filter-solid-output" />
     <MonochromeIconName Include="folder" />
+    <MonochromeIconName Include="full-size-exit-light" />
+    <MonochromeIconName Include="full-size-light" />
     <MonochromeIconName Include="gear-light" />
     <MonochromeIconName Include="gear-solid" />
     <MonochromeIconName Include="general-menu" />
@@ -84,7 +93,9 @@
     <MonochromeIconName Include="home-light" />
     <MonochromeIconName Include="home-solid" />
     <MonochromeIconName Include="import" />
+    <MonochromeIconName Include="info-light" />
     <MonochromeIconName Include="info-outlined" />
+    <MonochromeIconName Include="info-solid" />
     <MonochromeIconName Include="install-pending-light" />
     <MonochromeIconName Include="instructions" />
     <MonochromeIconName Include="invert" />
@@ -114,6 +125,8 @@
     <MonochromeIconName Include="move-right" />
     <MonochromeIconName Include="move-to-new-container" />
     <MonochromeIconName Include="move-up" />
+    <MonochromeIconName Include="navigate-light" />
+    <MonochromeIconName Include="navigate-solid" />
     <MonochromeIconName Include="network-topology" />
     <MonochromeIconName Include="new" />
     <MonochromeIconName Include="new-in-wizard" />
@@ -150,6 +163,10 @@
     <MonochromeIconName Include="send-backward" />
     <MonochromeIconName Include="send-light" />
     <MonochromeIconName Include="send-solid" />
+    <MonochromeIconName Include="server-light" />
+    <MonochromeIconName Include="server-network-light" />
+    <MonochromeIconName Include="server-network-solid" />
+    <MonochromeIconName Include="server-solid" />
     <MonochromeIconName Include="several-to-back" />
     <MonochromeIconName Include="several-to-front" />
     <MonochromeIconName Include="show" />
@@ -172,7 +189,12 @@
     <MonochromeIconName Include="time-out-light" />
     <MonochromeIconName Include="timer" />
     <MonochromeIconName Include="today" />
+    <MonochromeIconName Include="today-light" />
+    <MonochromeIconName Include="today-solid" />
     <MonochromeIconName Include="toggle" />
+    <MonochromeIconName Include="topology-application-light" />
+    <MonochromeIconName Include="topology-engine-light" />
+    <MonochromeIconName Include="topology-folder-network-light" />
     <MonochromeIconName Include="undo" />
     <MonochromeIconName Include="uninstall-light" />
     <MonochromeIconName Include="uninstall-pending-light" />
