@@ -1,5 +1,7 @@
 # Changelog
 
+## 4.4.0 - Unreleased
+
 ## 4.3.0 - 2026-02-26
 
 - Added icon `install-pending-light`, `send-light.svg`, `send-solid.svg`, `uninstall-pending-light`, `uninstall-light`, `update-available-light`, `update-light.svg`, `wifi.svg` and `kebab-menu`
