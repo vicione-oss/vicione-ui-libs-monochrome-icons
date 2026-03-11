@@ -1,6 +1,8 @@
 # Changelog
 
-## 4.4.0 - Unreleased
+## 4.4.0 - 2026-03-11
+
+- Added icon `calendar-light`, `calendar-solid`, `database-server`, `favorite-light-default`, `favorite-solid-default`, `filter-solid`, `filter-solid-close`, `full-size-exit-light`, `full-size-light`, `info-light`, `info-solid`, `navigate-light`, `navigate-solid`, `server-light`, `server-network-light`, `server-network-solid`, `server-solid`, `today-light`, `today-solid`, `topology-application-light`, `topology-engine-light`, `topology-folder-network-light`
 
 ## 4.3.0 - 2026-02-26
 
