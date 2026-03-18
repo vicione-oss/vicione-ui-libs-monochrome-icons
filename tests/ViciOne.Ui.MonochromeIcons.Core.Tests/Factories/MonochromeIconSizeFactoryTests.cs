@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using AwesomeAssertions;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;
 using ViciOne.Ui.MonochromeIcons.Core.Factories;
@@ -15,6 +15,7 @@ public class MonochromeIconSizeFactoryTests
         IReadOnlyCollection<MonochromeIconSize> expected =
         [
             MonochromeIconSize.Small,
+            MonochromeIconSize.SmallPlus2,
             MonochromeIconSize.SmallMedium,
             MonochromeIconSize.Medium,
             MonochromeIconSize.MediumLarge,

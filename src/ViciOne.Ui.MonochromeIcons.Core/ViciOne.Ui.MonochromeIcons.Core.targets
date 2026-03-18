@@ -214,6 +214,7 @@
 
   <ItemGroup>
     <MonochromeIconSize Include="16" />
+    <MonochromeIconSize Include="18" />
     <MonochromeIconSize Include="24" />
     <MonochromeIconSize Include="32" />
     <MonochromeIconSize Include="48" />

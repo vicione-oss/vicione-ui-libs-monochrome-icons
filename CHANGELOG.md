@@ -1,8 +1,9 @@
 # Changelog
 
-## 4.5.0 - Unreleased
+## 4.5.0 - 2026-03-18
 
 - Update to .NET `10.0.4`
+- `MonochromeIconSize`, added `SmallPlus2` to allow an icon size of 18px
 
 ## 4.4.0 - 2026-03-11
 
