@@ -1,4 +1,4 @@
-﻿namespace ViciOne.Ui.MonochromeIcons.Core.Enums;
+namespace ViciOne.Ui.MonochromeIcons.Core.Enums;
 
 /// <summary>
 /// Defines icon sizes for the Monochrome Icon set.
@@ -9,6 +9,11 @@ public readonly record struct MonochromeIconSize : ITypeSafeEnumImplementation<M
     /// 16 x 16 pixel
     /// </summary>
     public static readonly MonochromeIconSize Small = new(nameof(Small));
+
+    /// <summary>
+    /// 18 x 18 pixel
+    /// </summary>
+    public static readonly MonochromeIconSize SmallPlus2 = new(nameof(SmallPlus2));
 
     /// <summary>
     /// 24 x 24 pixel

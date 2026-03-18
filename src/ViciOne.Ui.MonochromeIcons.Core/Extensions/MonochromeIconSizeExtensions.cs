@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;
 
 namespace ViciOne.Ui.MonochromeIcons.Core.Extensions;
@@ -11,6 +11,7 @@ public static class MonochromeIconSizeExtensions
     private static readonly Dictionary<MonochromeIconSize, int> s_pixels = new()
     {
         { MonochromeIconSize.Small, 16 },
+        { MonochromeIconSize.SmallPlus2, 18 },
         { MonochromeIconSize.SmallMedium, 24 },
         { MonochromeIconSize.Medium, 32 },
         { MonochromeIconSize.MediumLarge, 48 },
