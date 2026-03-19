@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <MonochromeIconsVersion>4.5.0</MonochromeIconsVersion>
+    <MonochromeIconsVersion>4.6.0</MonochromeIconsVersion>
     <DotNetVersion>10.0.4</DotNetVersion>
   </PropertyGroup>
   <ItemGroup>

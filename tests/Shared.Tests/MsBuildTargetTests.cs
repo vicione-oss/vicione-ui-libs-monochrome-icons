@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using AwesomeAssertions;
@@ -252,6 +252,7 @@ public sealed class MsBuildTargetTests
             "warning.svg",
             "warning-full.svg",
             "wifi.svg",
+            "wifi-off.svg",
             "wizard.svg",
             "zoom-100.svg",
             "zoom-to-fit.svg"
