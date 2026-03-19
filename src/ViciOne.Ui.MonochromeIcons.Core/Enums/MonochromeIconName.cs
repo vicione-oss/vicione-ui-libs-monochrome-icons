@@ -1,4 +1,4 @@
-﻿namespace ViciOne.Ui.MonochromeIcons.Core.Enums;
+namespace ViciOne.Ui.MonochromeIcons.Core.Enums;
 
 /// <summary>
 /// Defines icon names for the Monochrome Icon set.
@@ -211,6 +211,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName Warning = new(nameof(Warning));
     public static readonly MonochromeIconName WarningFull = new(nameof(WarningFull));
     public static readonly MonochromeIconName Wifi = new(nameof(Wifi));
+    public static readonly MonochromeIconName WifiOff = new(nameof(WifiOff));
     public static readonly MonochromeIconName Wizard = new(nameof(Wizard));
     public static readonly MonochromeIconName Zoom100 = new(nameof(Zoom100));
     public static readonly MonochromeIconName ZoomToFit = new(nameof(ZoomToFit));

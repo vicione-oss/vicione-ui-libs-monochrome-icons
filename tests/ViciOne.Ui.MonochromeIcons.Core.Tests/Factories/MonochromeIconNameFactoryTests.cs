@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using AwesomeAssertions;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;
 using ViciOne.Ui.MonochromeIcons.Core.Factories;
@@ -219,6 +219,7 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.Warning,
             MonochromeIconName.WarningFull,
             MonochromeIconName.Wifi,
+            MonochromeIconName.WifiOff,
             MonochromeIconName.Wizard,
             MonochromeIconName.Zoom100,
             MonochromeIconName.ZoomToFit,

@@ -207,6 +207,7 @@
     <MonochromeIconName Include="warning" />
     <MonochromeIconName Include="warning-full" />
     <MonochromeIconName Include="wifi" />
+    <MonochromeIconName Include="wifi-off" />
     <MonochromeIconName Include="wizard" />
     <MonochromeIconName Include="zoom-100" />
     <MonochromeIconName Include="zoom-to-fit" />

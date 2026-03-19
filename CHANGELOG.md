@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.6.0 - 2026-03-19
+
+- Added icon `wifi-off`
+
 ## 4.5.0 - 2026-03-18
 
 - Update to .NET `10.0.4`
