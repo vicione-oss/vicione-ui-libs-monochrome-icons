@@ -29,6 +29,7 @@
     <MonochromeIconName Include="check-circled-light" />
     <MonochromeIconName Include="chevron" />
     <MonochromeIconName Include="clear" />
+    <MonochromeIconName Include="close-circle-solid" />
     <MonochromeIconName Include="close-medium" />
     <MonochromeIconName Include="close-slim" />
     <MonochromeIconName Include="cloud-solid-connection" />
@@ -64,6 +65,8 @@
     <MonochromeIconName Include="edit-host" />
     <MonochromeIconName Include="email" />
     <MonochromeIconName Include="error-full" />
+    <MonochromeIconName Include="error-light" />
+    <MonochromeIconName Include="error-solid" />
     <MonochromeIconName Include="exit" />
     <MonochromeIconName Include="expand-all" />
     <MonochromeIconName Include="expander-light-down" />
@@ -206,6 +209,8 @@
     <MonochromeIconName Include="user-solid" />
     <MonochromeIconName Include="warning" />
     <MonochromeIconName Include="warning-full" />
+    <MonochromeIconName Include="warning-light" />
+    <MonochromeIconName Include="warning-solid" />
     <MonochromeIconName Include="wifi" />
     <MonochromeIconName Include="wifi-off" />
     <MonochromeIconName Include="wizard" />
