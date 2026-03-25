@@ -164,7 +164,9 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.Redo,
             MonochromeIconName.Refresh,
             MonochromeIconName.Reload,
+#pragma warning disable CS0618 // Type or member is obsolete
             MonochromeIconName.RtmWarning,
+#pragma warning restore CS0618 // Type or member is obsolete
             MonochromeIconName.SaveOutline,
             MonochromeIconName.Search,
             MonochromeIconName.SearchAndTools,

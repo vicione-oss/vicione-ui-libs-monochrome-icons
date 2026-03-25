@@ -3,7 +3,7 @@
 ## 4.7.0 - Unreleased
 
 - Added icon `close-circle-solid`, `error-light`, `error-solid`, `warning-light` and `warning-solid`
-- Marked `error-full` `warning` and `warning-full` as obsolete
+- Marked `error-full`, `rtm-warning`, `warning` and `warning-full` as obsolete
 
 ## 4.6.0 - 2026-03-19
 

@@ -157,6 +157,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName Redo = new(nameof(Redo));
     public static readonly MonochromeIconName Refresh = new(nameof(Refresh));
     public static readonly MonochromeIconName Reload = new(nameof(Reload));
+    [Obsolete("Use " + nameof(WarningLight) + " instead")]
     public static readonly MonochromeIconName RtmWarning = new(nameof(RtmWarning));
     public static readonly MonochromeIconName SaveOutline = new(nameof(SaveOutline));
     public static readonly MonochromeIconName Search = new(nameof(Search));
