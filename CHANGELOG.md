@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.7.0 - 2026-03-26
+
+- Added icon `close-circle-solid`, `error-light`, `error-solid`, `warning-light` and `warning-solid`
+- Marked `error-full`, `rtm-warning`, `warning` and `warning-full` as obsolete
+
 ## 4.6.0 - 2026-03-19
 
 - Added icon `wifi-off`

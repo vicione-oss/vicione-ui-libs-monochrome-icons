@@ -14,6 +14,7 @@ using Xunit;
 
 namespace ViciOne.Ui.MonochromeIcons.Assets.Tests.Svg;
 
+#pragma warning disable CS0618 // 'RtmWarning' is obsolete
 public sealed class RtmWarningSvgTests
 {
     public static readonly TheoryData<string> IconSizes =
@@ -186,3 +187,4 @@ public sealed class RtmWarningSvgTests
         }
     }
 }
+#pragma warning restore CS0618 // 'RtmWarning' is obsolete

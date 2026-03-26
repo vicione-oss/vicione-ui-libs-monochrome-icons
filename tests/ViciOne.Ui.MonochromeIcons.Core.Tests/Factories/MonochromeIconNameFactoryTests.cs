@@ -41,6 +41,7 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.CheckCircledLight,
             MonochromeIconName.Chevron,
             MonochromeIconName.Clear,
+            MonochromeIconName.CloseCircleSolid,
             MonochromeIconName.CloseMedium,
             MonochromeIconName.CloseSlim,
             MonochromeIconName.CloudSolidConnection,
@@ -75,7 +76,11 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.Edit,
             MonochromeIconName.EditHost,
             MonochromeIconName.Email,
+#pragma warning disable CS0618 // Type or member is obsolete
             MonochromeIconName.ErrorFull,
+#pragma warning restore CS0618 // Type or member is obsolete
+            MonochromeIconName.ErrorLight,
+            MonochromeIconName.ErrorSolid,
             MonochromeIconName.Exit,
             MonochromeIconName.ExpandAll,
             MonochromeIconName.ExpanderLightDown,
@@ -159,7 +164,9 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.Redo,
             MonochromeIconName.Refresh,
             MonochromeIconName.Reload,
+#pragma warning disable CS0618 // Type or member is obsolete
             MonochromeIconName.RtmWarning,
+#pragma warning restore CS0618 // Type or member is obsolete
             MonochromeIconName.SaveOutline,
             MonochromeIconName.Search,
             MonochromeIconName.SearchAndTools,
@@ -216,8 +223,12 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.UserInterfaceLight,
             MonochromeIconName.UserLight,
             MonochromeIconName.UserSolid,
+#pragma warning disable CS0618 // Type or member is obsolete
             MonochromeIconName.Warning,
             MonochromeIconName.WarningFull,
+#pragma warning restore CS0618 // Type or member is obsolete
+            MonochromeIconName.WarningLight,
+            MonochromeIconName.WarningSolid,
             MonochromeIconName.Wifi,
             MonochromeIconName.WifiOff,
             MonochromeIconName.Wizard,

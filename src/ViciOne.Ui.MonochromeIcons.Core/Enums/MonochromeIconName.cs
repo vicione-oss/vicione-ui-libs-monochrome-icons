@@ -1,3 +1,5 @@
+using System;
+
 namespace ViciOne.Ui.MonochromeIcons.Core.Enums;
 
 /// <summary>
@@ -33,6 +35,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName CheckCircledLight = new(nameof(CheckCircledLight));
     public static readonly MonochromeIconName Chevron = new(nameof(Chevron));
     public static readonly MonochromeIconName Clear = new(nameof(Clear));
+    public static readonly MonochromeIconName CloseCircleSolid = new(nameof(CloseCircleSolid));
     public static readonly MonochromeIconName CloseMedium = new(nameof(CloseMedium));
     public static readonly MonochromeIconName CloseSlim = new(nameof(CloseSlim));
     public static readonly MonochromeIconName CloudSolidConnection = new(nameof(CloudSolidConnection));
@@ -67,7 +70,10 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName Edit = new(nameof(Edit));
     public static readonly MonochromeIconName EditHost = new(nameof(EditHost));
     public static readonly MonochromeIconName Email = new(nameof(Email));
+    [Obsolete("Use " + nameof(ErrorSolid) + " instead")]
     public static readonly MonochromeIconName ErrorFull = new(nameof(ErrorFull));
+    public static readonly MonochromeIconName ErrorLight = new(nameof(ErrorLight));
+    public static readonly MonochromeIconName ErrorSolid = new(nameof(ErrorSolid));
     public static readonly MonochromeIconName Exit = new(nameof(Exit));
     public static readonly MonochromeIconName ExpandAll = new(nameof(ExpandAll));
     public static readonly MonochromeIconName ExpanderLightDown = new(nameof(ExpanderLightDown));
@@ -151,6 +157,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName Redo = new(nameof(Redo));
     public static readonly MonochromeIconName Refresh = new(nameof(Refresh));
     public static readonly MonochromeIconName Reload = new(nameof(Reload));
+    [Obsolete("Use " + nameof(WarningLight) + " instead")]
     public static readonly MonochromeIconName RtmWarning = new(nameof(RtmWarning));
     public static readonly MonochromeIconName SaveOutline = new(nameof(SaveOutline));
     public static readonly MonochromeIconName Search = new(nameof(Search));
@@ -208,8 +215,12 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName UserInterfaceLight = new(nameof(UserInterfaceLight));
     public static readonly MonochromeIconName UserLight = new(nameof(UserLight));
     public static readonly MonochromeIconName UserSolid = new(nameof(UserSolid));
+    [Obsolete("Use " + nameof(WarningLight) + " instead")]
     public static readonly MonochromeIconName Warning = new(nameof(Warning));
+    [Obsolete("Use " + nameof(WarningSolid) + " instead")]
     public static readonly MonochromeIconName WarningFull = new(nameof(WarningFull));
+    public static readonly MonochromeIconName WarningLight = new(nameof(WarningLight));
+    public static readonly MonochromeIconName WarningSolid = new(nameof(WarningSolid));
     public static readonly MonochromeIconName Wifi = new(nameof(Wifi));
     public static readonly MonochromeIconName WifiOff = new(nameof(WifiOff));
     public static readonly MonochromeIconName Wizard = new(nameof(Wizard));
