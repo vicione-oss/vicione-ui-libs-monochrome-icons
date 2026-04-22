@@ -65,6 +65,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName Delete = new(nameof(Delete));
     public static readonly MonochromeIconName DistributeHorizontally = new(nameof(DistributeHorizontally));
     public static readonly MonochromeIconName DistributeVertically = new(nameof(DistributeVertically));
+    public static readonly MonochromeIconName DragHandleVertical = new(nameof(DragHandleVertical));
     public static readonly MonochromeIconName DummyIcon = new(nameof(DummyIcon));
     public static readonly MonochromeIconName Duplicate = new(nameof(Duplicate));
     public static readonly MonochromeIconName Edit = new(nameof(Edit));

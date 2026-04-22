@@ -71,6 +71,7 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.Delete,
             MonochromeIconName.DistributeHorizontally,
             MonochromeIconName.DistributeVertically,
+            MonochromeIconName.DragHandleVertical,
             MonochromeIconName.DummyIcon,
             MonochromeIconName.Duplicate,
             MonochromeIconName.Edit,

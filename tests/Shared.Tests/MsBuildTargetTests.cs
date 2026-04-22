@@ -104,6 +104,7 @@ public sealed class MsBuildTargetTests
             "delete.svg",
             "distribute-horizontally.svg",
             "distribute-vertically.svg",
+            "drag-handle-vertical.svg",
             "dummy-icon.svg",
             "duplicate.svg",
             "edit.svg",
