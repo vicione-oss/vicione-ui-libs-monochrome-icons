@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.8.0 - 2026-04-22
+
+- Update to .NET `10.0.6`
+- Added icon `drag-handle-vertical`
+
 ## 4.7.0 - 2026-03-26
 
 - Added icon `close-circle-solid`, `error-light`, `error-solid`, `warning-light` and `warning-solid`

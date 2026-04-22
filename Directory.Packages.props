@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <MonochromeIconsVersion>4.7.0</MonochromeIconsVersion>
-    <DotNetVersion>10.0.4</DotNetVersion>
+    <MonochromeIconsVersion>4.8.0</MonochromeIconsVersion>
+    <DotNetVersion>10.0.6</DotNetVersion>
   </PropertyGroup>
   <ItemGroup>
     <GlobalPackageReference Include="ViciOne.CodeAnalysis" Version="1.5.0" />
@@ -25,7 +25,7 @@
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="NTypewriter.SourceGenerator" Version="0.5.9" />
     <PackageVersion Include="Svg" Version="3.4.7" />
-    <PackageVersion Include="ViciOne.Ui.Blazor.Components" Version="5.0.1" />
+    <PackageVersion Include="ViciOne.Ui.Blazor.Components" Version="5.8.0" />
     <PackageVersion Include="ViciOne.Ui.Design" Version="2.0.2" />
     <PackageVersion Include="ViciOne.Ui.MonochromeIcons.Assets" Version="$(MonochromeIconsVersion)" />
     <PackageVersion Include="ViciOne.Ui.MonochromeIcons.Components" Version="$(MonochromeIconsVersion)" />

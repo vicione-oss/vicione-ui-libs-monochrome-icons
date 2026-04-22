@@ -59,6 +59,7 @@
     <MonochromeIconName Include="delete" />
     <MonochromeIconName Include="distribute-horizontally" />
     <MonochromeIconName Include="distribute-vertically" />
+    <MonochromeIconName Include="drag-handle-vertical" />
     <MonochromeIconName Include="dummy-icon" />
     <MonochromeIconName Include="duplicate" />
     <MonochromeIconName Include="edit" />
