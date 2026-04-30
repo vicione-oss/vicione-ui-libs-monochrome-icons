@@ -124,6 +124,7 @@
     <MonochromeIconName Include="lock" />
     <MonochromeIconName Include="minimap-light" />
     <MonochromeIconName Include="minus-slim" />
+    <MonochromeIconName Include="move" />
     <MonochromeIconName Include="move-down" />
     <MonochromeIconName Include="move-left" />
     <MonochromeIconName Include="move-right" />
