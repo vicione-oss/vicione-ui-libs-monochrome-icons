@@ -169,6 +169,7 @@ public sealed class MsBuildTargetTests
             "lock.svg",
             "minimap-light.svg",
             "minus-slim.svg",
+            "move.svg",
             "move-down.svg",
             "move-left.svg",
             "move-right.svg",

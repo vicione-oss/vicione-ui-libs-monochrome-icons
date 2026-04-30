@@ -138,6 +138,7 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.LockTextLabelsSolid,
             MonochromeIconName.MinimapLight,
             MonochromeIconName.MinusSlim,
+            MonochromeIconName.Move,
             MonochromeIconName.MoveDown,
             MonochromeIconName.MoveLeft,
             MonochromeIconName.MoveRight,

@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.9.0 - 2026-04-30
+
+- Added icon `move`
+
 ## 4.8.0 - 2026-04-22
 
 - Update to .NET `10.0.6`

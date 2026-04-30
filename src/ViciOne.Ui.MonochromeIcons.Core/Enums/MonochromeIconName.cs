@@ -131,6 +131,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName LockTextLabelsSolid = new(nameof(LockTextLabelsSolid));
     public static readonly MonochromeIconName MinimapLight = new(nameof(MinimapLight));
     public static readonly MonochromeIconName MinusSlim = new(nameof(MinusSlim));
+    public static readonly MonochromeIconName Move = new(nameof(Move));
     public static readonly MonochromeIconName MoveDown = new(nameof(MoveDown));
     public static readonly MonochromeIconName MoveLeft = new(nameof(MoveLeft));
     public static readonly MonochromeIconName MoveRight = new(nameof(MoveRight));
