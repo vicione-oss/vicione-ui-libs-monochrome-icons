@@ -88,6 +88,7 @@
     <MonochromeIconName Include="full-size-light" />
     <MonochromeIconName Include="gear-light" />
     <MonochromeIconName Include="gear-solid" />
+    <MonochromeIconName Include="general-error" />
     <MonochromeIconName Include="general-menu" />
     <MonochromeIconName Include="group-by-category" />
     <MonochromeIconName Include="hamburger-menu" />
