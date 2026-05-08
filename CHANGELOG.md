@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.10.0 - 2026-05-08
+
+- Added icon `general-error`
+
 ## 4.9.0 - 2026-04-30
 
 - Added icon `move`

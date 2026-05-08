@@ -133,6 +133,7 @@ public sealed class MsBuildTargetTests
             "full-size-light.svg",
             "gear-light.svg",
             "gear-solid.svg",
+            "general-error.svg",
             "general-menu.svg",
             "group-by-category.svg",
             "hamburger-menu.svg",

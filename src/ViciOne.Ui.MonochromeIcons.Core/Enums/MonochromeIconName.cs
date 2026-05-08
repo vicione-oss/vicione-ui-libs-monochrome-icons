@@ -95,6 +95,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName FullSizeLight = new(nameof(FullSizeLight));
     public static readonly MonochromeIconName GearLight = new(nameof(GearLight));
     public static readonly MonochromeIconName GearSolid = new(nameof(GearSolid));
+    public static readonly MonochromeIconName GeneralError = new(nameof(GeneralError));
     public static readonly MonochromeIconName GeneralMenu = new(nameof(GeneralMenu));
     public static readonly MonochromeIconName GroupByCategory = new(nameof(GroupByCategory));
     public static readonly MonochromeIconName HamburgerMenu = new(nameof(HamburgerMenu));

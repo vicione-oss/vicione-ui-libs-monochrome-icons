@@ -102,6 +102,7 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.FullSizeLight,
             MonochromeIconName.GearLight,
             MonochromeIconName.GearSolid,
+            MonochromeIconName.GeneralError,
             MonochromeIconName.GeneralMenu,
             MonochromeIconName.GroupByCategory,
             MonochromeIconName.HamburgerMenu,
