@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.11.0 - Unreleased
+
+- Update to .NET `10.0.8`
+
 ## 4.10.0 - 2026-05-08
 
 - Added icon `general-error`
