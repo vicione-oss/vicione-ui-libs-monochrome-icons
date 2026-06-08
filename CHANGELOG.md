@@ -3,6 +3,7 @@
 ## 4.11.0 - Unreleased
 
 - Update to .NET `10.0.8`
+- `MonochromeIconSize`, added `Tiny` to allow an icon size of 8px
 
 ## 4.10.0 - 2026-05-08
 

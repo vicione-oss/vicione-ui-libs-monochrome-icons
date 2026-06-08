@@ -10,6 +10,7 @@ public static class MonochromeIconSizeExtensions
 {
     private static readonly Dictionary<MonochromeIconSize, int> s_pixels = new()
     {
+        { MonochromeIconSize.Tiny, 8 },
         { MonochromeIconSize.Small, 16 },
         { MonochromeIconSize.SmallPlus2, 18 },
         { MonochromeIconSize.SmallMedium, 24 },

@@ -14,6 +14,7 @@ public class MonochromeIconSizeFactoryTests
         // Arrange
         IReadOnlyCollection<MonochromeIconSize> expected =
         [
+            MonochromeIconSize.Tiny,
             MonochromeIconSize.Small,
             MonochromeIconSize.SmallPlus2,
             MonochromeIconSize.SmallMedium,

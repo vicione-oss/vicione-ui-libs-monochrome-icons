@@ -16,7 +16,7 @@ h1 {
     padding-bottom: 16px;
     width: 98vw;
 
-    @media(max-width: 2060px) {
+    @media(max-width: 2350px) {
         --min-button-width: 150px;
         align-items: center;
         flex-direction: column;
@@ -50,7 +50,7 @@ h1 {
         grid-template-columns: max-content max-content;
         align-items: center;
 
-        @media(max-width: 2060px) {
+        @media(max-width: 2350px) {
             grid-template-columns: 150px 815px;
         }
 
@@ -63,7 +63,7 @@ h1 {
             margin-right: $gap;
             padding-right: $gap;
 
-            @media(max-width: 2060px) {
+            @media(max-width: 2350px) {
                 border-bottom: 1px solid colors.$border;
                 border-right: none;
                 margin-bottom: $gap;
