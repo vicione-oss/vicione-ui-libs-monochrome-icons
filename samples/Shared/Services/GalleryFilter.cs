@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Shared.Models;
@@ -10,11 +10,11 @@ public sealed class GalleryFilter
 {
     private string? _text;
 
-    private readonly HashSet<MonochromeIconSize> _iconSizes = [];
-    private readonly HashSet<IconStyle> _iconStyles = [];
+    private readonly HashSet<MonochromeIconSize> _sizes = [];
+    private readonly HashSet<IconStyle> _styles = [];
 
-    public IReadOnlySet<MonochromeIconSize> IconSizes => _iconSizes;
-    public IReadOnlySet<IconStyle> IconStyles => _iconStyles;
+    public IReadOnlySet<MonochromeIconSize> Sizes => _sizes;
+    public IReadOnlySet<IconStyle> Styles => _styles;
 
     public string? Text
     {
@@ -34,18 +34,18 @@ public sealed class GalleryFilter
 
     public void Toggle(IconStyle iconStyle)
     {
-        if (!_iconStyles.Remove(iconStyle))
-            _iconStyles.Add(iconStyle);
+        if (!_styles.Remove(iconStyle))
+            _styles.Add(iconStyle);
 
-        OnPropertyChanged(nameof(IconStyles));
+        OnPropertyChanged(nameof(Styles));
     }
 
     public void Toggle(MonochromeIconSize iconSize)
     {
-        if (!_iconSizes.Remove(iconSize))
-            _iconSizes.Add(iconSize);
+        if (!_sizes.Remove(iconSize))
+            _sizes.Add(iconSize);
 
-        OnPropertyChanged(nameof(IconSizes));
+        OnPropertyChanged(nameof(Sizes));
     }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

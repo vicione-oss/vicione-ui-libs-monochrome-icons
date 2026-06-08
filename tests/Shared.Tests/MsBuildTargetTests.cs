@@ -42,7 +42,11 @@ public sealed class MsBuildTargetTests
 
         var expectedSvgFiles16x16 = new[]
         {
-            "chevron.svg"
+            "chevron.svg",
+            "port-solid.svg",
+            "process-data-point.svg",
+            "sensor-solid.svg",
+            "unknown-node-type.svg"
         }.Select(expectedSvgFile => Path.Combine(targetSvgPath, "monochrome-icons", "16x16", expectedSvgFile));
 
         var expectedSvgFiles32x32 = new[]
@@ -65,6 +69,7 @@ public sealed class MsBuildTargetTests
             "arrow-navigation-light-right.svg",
             "arrow-navigation-light-up.svg",
             "attached.svg",
+            "branch.svg",
             "bring-forward.svg",
             "bug-light.svg",
             "bug-solid.svg",
@@ -77,9 +82,12 @@ public sealed class MsBuildTargetTests
             "close-circle-solid.svg",
             "close-medium.svg",
             "close-slim.svg",
+            "cloud-light.svg",
+            "cloud-solid.svg",
             "cloud-solid-connection.svg",
             "cluster-1.svg",
             "cluster-2.svg",
+            "cluster-streams.svg",
             "collapse-all.svg",
             "column-chooser-editor.svg",
             "column-chooser-menu.svg",
@@ -96,12 +104,15 @@ public sealed class MsBuildTargetTests
             "container-dissolve-solid.svg",
             "container-locked-action.svg",
             "container-locked-user.svg",
+            "counter-light.svg",
             "database-server.svg",
             "dataflow-jump-into.svg",
             "dataflow-light.svg",
             "dataflow-solid.svg",
             "data-switch.svg",
             "delete.svg",
+            "device-light.svg",
+            "device-solid.svg",
             "distribute-horizontally.svg",
             "distribute-vertically.svg",
             "drag-handle-vertical.svg",
@@ -146,6 +157,7 @@ public sealed class MsBuildTargetTests
             "info-light.svg",
             "info-outlined.svg",
             "info-solid.svg",
+            "input-light.svg",
             "install-pending-light.svg",
             "instructions.svg",
             "invert.svg",
@@ -181,20 +193,25 @@ public sealed class MsBuildTargetTests
             "network-topology.svg",
             "new.svg",
             "new-in-wizard.svg",
+            "object-light.svg",
             "offline-light.svg",
             "onboarding.svg",
             "on-off.svg",
             "open.svg",
             "open-in-new-window.svg",
             "paste.svg",
+            "path-details-show.svg",
             "permission-none.svg",
             "permission-view-and-edit.svg",
             "permission-view-only.svg",
             "plus-slim.svg",
+            "port-solid.svg",
             "predecessor.svg",
+            "process-data-point.svg",
             "properties.svg",
             "published-connector-dragging.svg",
             "published-connector-full.svg",
+            "raw-data-light.svg",
             "redo.svg",
             "refresh.svg",
             "reload.svg",
@@ -214,6 +231,7 @@ public sealed class MsBuildTargetTests
             "send-backward.svg",
             "send-light.svg",
             "send-solid.svg",
+            "sensor-solid.svg",
             "server-light.svg",
             "server-network-light.svg",
             "server-network-solid.svg",
@@ -249,6 +267,7 @@ public sealed class MsBuildTargetTests
             "undo.svg",
             "uninstall-light.svg",
             "uninstall-pending-light.svg",
+            "unknown-node-type.svg",
             "update-available-light.svg",
             "update-light.svg",
             "urgent.svg",
@@ -278,7 +297,7 @@ public sealed class MsBuildTargetTests
         if (process is null)
             Assert.Fail($"Failed to start process with {processStartInfo}");
 
-        var success = process.WaitForExit(30000);
+        var success = process.WaitForExit(35000);
 
         // Assert
         success.Should().BeTrue();

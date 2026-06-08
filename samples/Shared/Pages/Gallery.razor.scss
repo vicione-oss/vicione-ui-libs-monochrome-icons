@@ -1,5 +1,6 @@
-﻿@use "../Styles/design/colors";
+@use "../Styles/design/colors";
 @use "../Styles/functions";
+@use "../Styles/variables";
 @use "../Styles/icons/monochrome-icons" with (
     $svg-base-url: "./icons/monochrome-icons",
     $base-selector: "::deep",
@@ -15,30 +16,66 @@
     $separator-height: 1px;
 
     .gallery-item {
-        border: 2px solid colors.$border;
-        border-radius: 20px;
         display: grid;
-        grid-template-rows: 80px $separator-height 100px;
-        place-items: center;
-        text-align: center;
-        width: 120px;
+        grid-template-areas:
+            "icon-container" "separator" "icon-name";
+        grid-template-rows: var(--icon-container-height, 80px) $separator-height 100px;
+        align-items: center;
+        justify-items: center;
 
-        &.with-color {
-            color: dodgerblue;
+        border-radius: variables.$border-radius;
+        border: 1px solid colors.$border;
+
+        &.with-text {
+            width: 240px;
+
+            --icon-container-height: auto;
         }
 
-        ::deep .icon-outline {
-            outline: 1px solid colors.$border;
+        // icon container
+        $padding: 15px;
+
+        .icon-container {
+            grid-area: icon-container;
+
+            display: flex;
+
+            padding: $padding;
+
+            ::deep .with-outline {
+                outline: 1px solid colors.$border;
+            }
         }
 
+        &.colored {
+            .icon-container {
+                color: dodgerblue;
+            }
+        }
+
+        &.with-text {
+            .icon-container {
+                align-self: start;
+
+                display: block;
+            }
+        }
+
+        // separator
         .separator {
-            border: $separator-height solid colors.$border;
-            height: $separator-height;
+            grid-area: separator;
+
             width: 100%;
+            height: $separator-height;
+
+            border: $separator-height solid colors.$border;
         }
 
-        span {
-            margin: 0px 5px;
+        // icon-name
+        .icon-name {
+            grid-area: icon-name;
+
+            padding: $padding;
         }
     }
 }

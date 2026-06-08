@@ -26,27 +26,50 @@
             $important-flag: null;
 
             @if ($icon-size != variables.$default-size) {
-                // icon does not have default size, therefore we apply a size selector ...
+                // Icon does not have default size, therefore we apply a size selector
                 $size-selector: ".size-" + $icon-size;
 
                 $important-flag: "!important";
             }
 
             &.monochrome-icon-#{$icon-name}#{$size-selector} {
-                // ... state icon size explicitly to override the HTML element defaults
+                // State icon size explicitly to override the HTML element defaults
                 width: #{$icon-size}px #{$important-flag};
                 height: #{$icon-size}px #{$important-flag};
 
-                @if ($icon-scale != 1) {
-                    // scaling means overflow, hence we hide it to ensure icon flows correctly e.g. with text
-                    overflow: hidden;
-                }
-
                 &:before {
-                    @if (($size-selector and not $icon-descriptors-contain-items-descriptor-for-default-icon-size) or (not $size-selector)) {
-                        // we inject the icon as content ...
+                    $is-scaled: $icon-scale != 1;
+
+                    $include-svg: false;
+
+                    @if ($size-selector) {
+                        // We are processing a non-default size of the icon and if ...
+
+                        @if (not $is-scaled) {
+                            // ... it is not a scaled icon, then ...
+
+                            $include-svg: true; // ... we include the svg because it is physically available.
+
+                        } @else if ($icon-descriptors-contain-items-descriptor-for-default-icon-size) {
+                            // ... icon is scaled and the same icon IS included with default size, then ...
+
+                            $include-svg: false; // ... we do NOT include a svg because not physically available and CSS is expected to fallback to the default size.
+                        } @else {
+                            // ... icon is scaled and the same icon IS NOT included with default size, then ...
+
+                            $include-svg: true; // ... we expect the svg to be physically available because we cannot fallback to another one, hence include it.
+                        }
+
+                    } @else {
+                        // We are processing the default size (32px) of the icon ...
+
+                        $include-svg: true; // ... so, we include it because it is always physically available.
+                    }
+
+                    @if ($include-svg) {
+                        // We inject the icon as content ...
                         content: "";
-                        display: inline-block;
+                        display: block; // ... and configure it as block element to avoid unwanted display offset applied to inline elements ...
 
                         // ... with the actual size...
                         width: #{$icon-actualSize}px;
@@ -56,7 +79,7 @@
                         @include mixins.include-svg(variables.$svg-base-url, $icon-actualSize, $icon-name);
                     }
 
-                    @if ($icon-scale != 1) {
+                    @if ($is-scaled) {
                         // ... with scaling
                         transform-origin: top left;
                         transform: scale($icon-scale);
