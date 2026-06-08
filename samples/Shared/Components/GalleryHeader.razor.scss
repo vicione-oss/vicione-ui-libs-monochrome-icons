@@ -1,4 +1,5 @@
 @use "../Styles/design/colors";
+@use "../Styles/variables";
 
 h1 {
     text-align: center;
@@ -6,7 +7,6 @@ h1 {
 
 .header-bar {
     $gap: 16px;
-    --min-button-width: 100px;
     border-bottom: 2px solid colors.$border;
     display: flex;
     flex-direction: row;
@@ -16,8 +16,13 @@ h1 {
     padding-bottom: 16px;
     width: 98vw;
 
-    @media(max-width: 2350px) {
-        --min-button-width: 150px;
+    $wide-screen: 1875px;
+    $medium-screen: 960px;
+
+    $breakpoint-wide-to-medium: $wide-screen - 1px;
+    $breakpoint-medium-to-small: $medium-screen - 1px;
+
+    @media(max-width: $breakpoint-wide-to-medium) {
         align-items: center;
         flex-direction: column;
         justify-content: initial;
@@ -26,21 +31,20 @@ h1 {
     .select-button {
         $button-color: colors.$background-dark;
         background-color: colors.$background-light;
-        border-radius: 16px;
+        border-radius: variables.$border-radius;
         color: inherit;
         height: 32px;
-        min-width: var(--min-button-width);
         border: 1px solid colors.$background-light;
+        padding-left: 10px;
+        padding-right: 10px;
 
-        &:hover:not(.selected) {
+        &:hover {
             background-color: colors.$background-light-hover;
             cursor: pointer;
         }
 
         &.selected {
-            background-color: colors.$accent;
-            color: colors.$theme;
-            font-weight: bold;
+            color: colors.$accent;
         }
     }
 
@@ -50,12 +54,14 @@ h1 {
         grid-template-columns: max-content max-content;
         align-items: center;
 
-        @media(max-width: 2350px) {
-            grid-template-columns: 150px 815px;
+        $label-width: 100px;
+
+        @media(max-width: $breakpoint-wide-to-medium) {
+            grid-template-columns: $label-width 885px;
         }
 
-        @media(max-width: 1000px) {
-            grid-template-columns: 150px 150px;
+        @media(max-width: $breakpoint-medium-to-small) {
+            grid-template-columns: $label-width 150px;
         }
 
         &.separator {
@@ -63,7 +69,7 @@ h1 {
             margin-right: $gap;
             padding-right: $gap;
 
-            @media(max-width: 2350px) {
+            @media(max-width: $breakpoint-wide-to-medium) {
                 border-bottom: 1px solid colors.$border;
                 border-right: none;
                 margin-bottom: $gap;
@@ -78,7 +84,7 @@ h1 {
             flex-direction: row;
             gap: $gap;
 
-            @media(max-width: 1000px) {
+            @media(max-width: $breakpoint-medium-to-small) {
                 flex-direction: column;
             }
         }

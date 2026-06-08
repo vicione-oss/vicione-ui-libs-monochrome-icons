@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Components;
@@ -14,6 +14,9 @@ public sealed partial class Gallery : ComponentBase, IDisposable
 {
     private readonly IReadOnlyCollection<MonochromeIconName> _allIcons = TypeSafeEnumFactory<MonochromeIconName>.CreateAll();
     private IReadOnlyCollection<MonochromeIconName> _currentIcons = [];
+
+    private readonly string _textBeforeIcon = "This item features an eye-catching icon ";
+    private readonly string _textAfterIcon = " that immediately draws attention.";
 
     [Inject] private GalleryFilter Filter { get; set; } = default!;
     [Inject] private GalleryOptions Options { get; set; } = default!;
@@ -34,7 +37,7 @@ public sealed partial class Gallery : ComponentBase, IDisposable
 
     private async void FilterChangedAsync(string propertyName)
     {
-        if (propertyName is nameof(Filter.IconStyles) or nameof(Filter.IconSizes) or nameof(Filter.Text))
+        if (propertyName is nameof(Filter.Styles) or nameof(Filter.Sizes) or nameof(Filter.Text))
             UpdateCurrentIcons();
 
         await InvokeAsync(StateHasChanged);
@@ -47,8 +50,8 @@ public sealed partial class Gallery : ComponentBase, IDisposable
     {
         IEnumerable<MonochromeIconName> icons = _allIcons;
 
-        if (Filter.IconStyles.Count > 0)
-            icons = icons.Where(icon => FilterIconStyles(icon, Filter.IconStyles));
+        if (Filter.Styles.Count > 0)
+            icons = icons.Where(icon => FilterIconStyles(icon, Filter.Styles));
 
         var filterText = Filter.Text?.Trim();
         if (!string.IsNullOrWhiteSpace(filterText))

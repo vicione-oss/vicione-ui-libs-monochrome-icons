@@ -1,35 +1,50 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace Shared.Services;
 
 public sealed class GalleryOptions
 {
-    private bool _isIconOutlineActive;
-    private bool _areIconsColored;
+    private bool _showOutline;
+    private bool _colored;
+    private bool _withText;
 
-    public bool IsIconOutlineActive
+    public bool ShowOutline
     {
-        get => _isIconOutlineActive;
+        get => _showOutline;
         set
         {
-            if (value != _isIconOutlineActive)
+            if (value != _showOutline)
             {
-                _isIconOutlineActive = value;
+                _showOutline = value;
 
                 OnPropertyChanged();
             }
         }
     }
 
-    public bool AreIconsColored
+    public bool Colored
     {
-        get => _areIconsColored;
+        get => _colored;
         set
         {
-            if (value != _areIconsColored)
+            if (value != _colored)
             {
-                _areIconsColored = value;
+                _colored = value;
+
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public bool WithText
+    {
+        get => _withText;
+        set
+        {
+            if (value != _withText)
+            {
+                _withText = value;
 
                 OnPropertyChanged();
             }

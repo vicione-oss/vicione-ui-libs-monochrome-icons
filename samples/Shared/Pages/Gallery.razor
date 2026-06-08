@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 
 @using ViciOne.Ui.MonochromeIcons.Components
 @using ViciOne.Ui.MonochromeIcons.Core.Enums
@@ -9,8 +9,8 @@
     @{
         IEnumerable<MonochromeIconSize> iconSizes = TypeSafeEnumFactory<MonochromeIconSize>.CreateAll();
 
-        if (Filter.IconSizes.Count > 0)
-            iconSizes = iconSizes.Intersect(Filter.IconSizes);
+        if (Filter.Sizes.Count > 0)
+            iconSizes = iconSizes.Intersect(Filter.Sizes);
 
         iconSizes = iconSizes.OrderBy(s => s.ToPixels());
 
@@ -18,14 +18,34 @@
         {
             foreach (var iconSize in iconSizes)
             {
-                <div class="gallery-item @(Options.AreIconsColored ? "with-color" : null)">
+                var galleryItemCssClasses = new List<string> { "gallery-item" };
 
-                    <MonochromeIcon CssClass="@(Options.IsIconOutlineActive ? "icon-outline" : null)"
-                                    Name="@iconName"
-                                    Size="@iconSize" />
+                if (Options.Colored)
+                    galleryItemCssClasses.Add("colored");
+
+                if (Options.WithText)
+                    galleryItemCssClasses.Add("with-text");
+
+                <div class="@string.Join(" ", galleryItemCssClasses)">
+                    <div class="icon-container">
+                        @if (Options.WithText)
+                        {
+                            @_textBeforeIcon
+                        }
+
+                        <MonochromeIcon CssClass="@(Options.ShowOutline ? "with-outline" : null)" Name="@iconName" Size="@iconSize" />
+
+                        @if (Options.WithText)
+                        {
+                            @_textAfterIcon
+                        }
+                    </div>
 
                     <div class="separator"></div>
-                    <span>@iconName.ToString().ToDashCase()</span>
+
+                    <code class="icon-name">
+                        @iconName.ToString().ToDashCase()
+                    </code>
                 </div>
             }
         }

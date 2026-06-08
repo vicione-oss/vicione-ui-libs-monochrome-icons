@@ -1,7 +1,9 @@
 # Changelog
 
-## 4.11.0 - Unreleased
+## 4.11.0 - 2026-06-08
 
+- Added icon `branch`, `cloud-light`, `cloud-solid`, `cluster-streams`, `counter-light`, `device-light`, `device-solid`, `input-light`, `object-light`, `path-details-show`, `port-solid`, `process-data-point`, `raw-data-light`, `sensor-solid` and `unknown-node-type`
+- Marked `cluster-2` as obsolete
 - Update to .NET `10.0.8`
 - `MonochromeIconSize`, added `Tiny` to allow an icon size of 8px
 

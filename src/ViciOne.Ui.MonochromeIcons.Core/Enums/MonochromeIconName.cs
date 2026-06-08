@@ -26,6 +26,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName ArrowNavigationLightRight = new(nameof(ArrowNavigationLightRight));
     public static readonly MonochromeIconName ArrowNavigationLightUp = new(nameof(ArrowNavigationLightUp));
     public static readonly MonochromeIconName Attached = new(nameof(Attached));
+    public static readonly MonochromeIconName Branch = new(nameof(Branch));
     public static readonly MonochromeIconName BringForward = new(nameof(BringForward));
     public static readonly MonochromeIconName BugLight = new(nameof(BugLight));
     public static readonly MonochromeIconName BugSolid = new(nameof(BugSolid));
@@ -38,9 +39,13 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName CloseCircleSolid = new(nameof(CloseCircleSolid));
     public static readonly MonochromeIconName CloseMedium = new(nameof(CloseMedium));
     public static readonly MonochromeIconName CloseSlim = new(nameof(CloseSlim));
+    public static readonly MonochromeIconName CloudLight = new(nameof(CloudLight));
+    public static readonly MonochromeIconName CloudSolid = new(nameof(CloudSolid));
     public static readonly MonochromeIconName CloudSolidConnection = new(nameof(CloudSolidConnection));
     public static readonly MonochromeIconName Cluster1 = new(nameof(Cluster1));
+    [Obsolete("Use " + nameof(ClusterStreams) + " instead")]
     public static readonly MonochromeIconName Cluster2 = new(nameof(Cluster2));
+    public static readonly MonochromeIconName ClusterStreams = new(nameof(ClusterStreams));
     public static readonly MonochromeIconName CollapseAll = new(nameof(CollapseAll));
     public static readonly MonochromeIconName ColumnChooserEditor = new(nameof(ColumnChooserEditor));
     public static readonly MonochromeIconName ColumnChooserMenu = new(nameof(ColumnChooserMenu));
@@ -57,12 +62,15 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName ContainerDissolveSolid = new(nameof(ContainerDissolveSolid));
     public static readonly MonochromeIconName ContainerLockedAction = new(nameof(ContainerLockedAction));
     public static readonly MonochromeIconName ContainerLockedUser = new(nameof(ContainerLockedUser));
+    public static readonly MonochromeIconName CounterLight = new(nameof(CounterLight));
     public static readonly MonochromeIconName DatabaseServer = new(nameof(DatabaseServer));
     public static readonly MonochromeIconName DataflowJumpInto = new(nameof(DataflowJumpInto));
     public static readonly MonochromeIconName DataflowLight = new(nameof(DataflowLight));
     public static readonly MonochromeIconName DataflowSolid = new(nameof(DataflowSolid));
     public static readonly MonochromeIconName DataSwitch = new(nameof(DataSwitch));
     public static readonly MonochromeIconName Delete = new(nameof(Delete));
+    public static readonly MonochromeIconName DeviceLight = new(nameof(DeviceLight));
+    public static readonly MonochromeIconName DeviceSolid = new(nameof(DeviceSolid));
     public static readonly MonochromeIconName DistributeHorizontally = new(nameof(DistributeHorizontally));
     public static readonly MonochromeIconName DistributeVertically = new(nameof(DistributeVertically));
     public static readonly MonochromeIconName DragHandleVertical = new(nameof(DragHandleVertical));
@@ -108,6 +116,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName InfoLight = new(nameof(InfoLight));
     public static readonly MonochromeIconName InfoOutlined = new(nameof(InfoOutlined));
     public static readonly MonochromeIconName InfoSolid = new(nameof(InfoSolid));
+    public static readonly MonochromeIconName InputLight = new(nameof(InputLight));
     public static readonly MonochromeIconName InstallPendingLight = new(nameof(InstallPendingLight));
     public static readonly MonochromeIconName Instructions = new(nameof(Instructions));
     public static readonly MonochromeIconName Invert = new(nameof(Invert));
@@ -143,20 +152,25 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName NetworkTopology = new(nameof(NetworkTopology));
     public static readonly MonochromeIconName New = new(nameof(New));
     public static readonly MonochromeIconName NewInWizard = new(nameof(NewInWizard));
+    public static readonly MonochromeIconName ObjectLight = new(nameof(ObjectLight));
     public static readonly MonochromeIconName OfflineLight = new(nameof(OfflineLight));
     public static readonly MonochromeIconName Onboarding = new(nameof(Onboarding));
     public static readonly MonochromeIconName OnOff = new(nameof(OnOff));
     public static readonly MonochromeIconName Open = new(nameof(Open));
     public static readonly MonochromeIconName OpenInNewWindow = new(nameof(OpenInNewWindow));
     public static readonly MonochromeIconName Paste = new(nameof(Paste));
+    public static readonly MonochromeIconName PathDetailsShow = new(nameof(PathDetailsShow));
     public static readonly MonochromeIconName PermissionNone = new(nameof(PermissionNone));
     public static readonly MonochromeIconName PermissionViewAndEdit = new(nameof(PermissionViewAndEdit));
     public static readonly MonochromeIconName PermissionViewOnly = new(nameof(PermissionViewOnly));
+    public static readonly MonochromeIconName PortSolid = new(nameof(PortSolid));
     public static readonly MonochromeIconName PlusSlim = new(nameof(PlusSlim));
     public static readonly MonochromeIconName Predecessor = new(nameof(Predecessor));
+    public static readonly MonochromeIconName ProcessDataPoint = new(nameof(ProcessDataPoint));
     public static readonly MonochromeIconName Properties = new(nameof(Properties));
     public static readonly MonochromeIconName PublishedConnectorDragging = new(nameof(PublishedConnectorDragging));
     public static readonly MonochromeIconName PublishedConnectorFull = new(nameof(PublishedConnectorFull));
+    public static readonly MonochromeIconName RawDataLight = new(nameof(RawDataLight));
     public static readonly MonochromeIconName Redo = new(nameof(Redo));
     public static readonly MonochromeIconName Refresh = new(nameof(Refresh));
     public static readonly MonochromeIconName Reload = new(nameof(Reload));
@@ -177,6 +191,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName SendBackward = new(nameof(SendBackward));
     public static readonly MonochromeIconName SendLight = new(nameof(SendLight));
     public static readonly MonochromeIconName SendSolid = new(nameof(SendSolid));
+    public static readonly MonochromeIconName SensorSolid = new(nameof(SensorSolid));
     public static readonly MonochromeIconName ServerLight = new(nameof(ServerLight));
     public static readonly MonochromeIconName ServerNetworkLight = new(nameof(ServerNetworkLight));
     public static readonly MonochromeIconName ServerNetworkSolid = new(nameof(ServerNetworkSolid));
@@ -212,6 +227,7 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName Undo = new(nameof(Undo));
     public static readonly MonochromeIconName UninstallLight = new(nameof(UninstallLight));
     public static readonly MonochromeIconName UninstallPendingLight = new(nameof(UninstallPendingLight));
+    public static readonly MonochromeIconName UnknownNodeType = new(nameof(UnknownNodeType));
     public static readonly MonochromeIconName UpdateAvailableLight = new(nameof(UpdateAvailableLight));
     public static readonly MonochromeIconName UpdateLight = new(nameof(UpdateLight));
     public static readonly MonochromeIconName Urgent = new(nameof(Urgent));
