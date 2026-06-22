@@ -1,5 +1,7 @@
 # Changelog
 
+## 4.12.0 - Unreleased
+
 ## 4.11.0 - 2026-06-08
 
 - Added icon `branch`, `cloud-light`, `cloud-solid`, `cluster-streams`, `counter-light`, `device-light`, `device-solid`, `input-light`, `object-light`, `path-details-show`, `port-solid`, `process-data-point`, `raw-data-light`, `sensor-solid` and `unknown-node-type`
