@@ -26,7 +26,7 @@ include:
   - apt update && apt install -y nodejs
 
 .install_npm_packages: &install_npm_packages
-  - npm install
+  - npm ci
 
 before_script:
   - *install_nodejs
