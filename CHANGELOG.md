@@ -1,6 +1,8 @@
 # Changelog
 
-## 4.12.0 - Unreleased
+## 4.12.0 - 2026-06-29
+
+- Added icon `external-id-provider-light`, `external-id-provider-solid`, `pass-key-light` and `pass-key-solid`
 
 ## 4.11.0 - 2026-06-08
 
