@@ -82,6 +82,8 @@
     <MonochromeIconName Include="expander-light-right" />
     <MonochromeIconName Include="expander-light-top" />
     <MonochromeIconName Include="export" />
+    <MonochromeIconName Include="external-id-provider-light" />
+    <MonochromeIconName Include="external-id-provider-solid" />
     <MonochromeIconName Include="external-link" />
     <MonochromeIconName Include="favorite-light-default" />
     <MonochromeIconName Include="favorite-solid-default" />
@@ -150,6 +152,8 @@
     <MonochromeIconName Include="on-off" />
     <MonochromeIconName Include="open" />
     <MonochromeIconName Include="open-in-new-window" />
+    <MonochromeIconName Include="pass-key-light" />
+    <MonochromeIconName Include="pass-key-solid" />
     <MonochromeIconName Include="paste" />
     <MonochromeIconName Include="path-details-show" />
     <MonochromeIconName Include="permission-none" />

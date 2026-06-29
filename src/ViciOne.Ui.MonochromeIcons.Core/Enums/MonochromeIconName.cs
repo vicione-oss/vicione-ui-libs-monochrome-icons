@@ -90,6 +90,8 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName ExpanderLightRight = new(nameof(ExpanderLightRight));
     public static readonly MonochromeIconName ExpanderLightTop = new(nameof(ExpanderLightTop));
     public static readonly MonochromeIconName Export = new(nameof(Export));
+    public static readonly MonochromeIconName ExternalIdProviderLight = new(nameof(ExternalIdProviderLight));
+    public static readonly MonochromeIconName ExternalIdProviderSolid = new(nameof(ExternalIdProviderSolid));
     public static readonly MonochromeIconName ExternalLink = new(nameof(ExternalLink));
     public static readonly MonochromeIconName FavoriteLightDefault = new(nameof(FavoriteLightDefault));
     public static readonly MonochromeIconName FavoriteSolidDefault = new(nameof(FavoriteSolidDefault));
@@ -158,6 +160,8 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName OnOff = new(nameof(OnOff));
     public static readonly MonochromeIconName Open = new(nameof(Open));
     public static readonly MonochromeIconName OpenInNewWindow = new(nameof(OpenInNewWindow));
+    public static readonly MonochromeIconName PassKeyLight = new(nameof(PassKeyLight));
+    public static readonly MonochromeIconName PassKeySolid = new(nameof(PassKeySolid));
     public static readonly MonochromeIconName Paste = new(nameof(Paste));
     public static readonly MonochromeIconName PathDetailsShow = new(nameof(PathDetailsShow));
     public static readonly MonochromeIconName PermissionNone = new(nameof(PermissionNone));
