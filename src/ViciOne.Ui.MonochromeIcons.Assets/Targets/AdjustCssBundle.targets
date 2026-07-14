@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="InjectMonochromeIconAssetsIntoCssBundle" AfterTargets="BundleScopedCssFiles" Condition="'@(_ScopedCss)' != ''">
+    <InjectMonochromeIconAssetsCssImport FilePath="$(_ScopedCssProjectOutputPath)" Condition="Exists($(_ScopedCssProjectOutputPath))" />
+  </Target>
+
+  <UsingTask TaskName="InjectMonochromeIconAssetsCssImport" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <FilePath ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        var css = File.ReadAllText(FilePath);
+
+        var cssWithInjectedImports = "@import url('./styles.css');" + Environment.NewLine + css;
+
+        File.WriteAllText(FilePath, cssWithInjectedImports);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+</Project>

@@ -2,44 +2,13 @@
 
 # Brief
 
-This package provides assets for displaying monochrome icons. These assets referenced via MSBuild items are copied via MSBuild targets to locations specified by MSBuild properties. The resulting files can then be included in your asset pipeline.
+This package provides css and icon assets for displaying monochrome icons.
 
-| MSBuild target | Description |
-|-|-|
-| `BeforeMonochromeIconTargets` | Provided as entry point to define MSBuild items override MSBuild property defaults |
-| `AfterMonochromeIconTargets` | Provided as entry point for third-party targets executed after monochrome icon targets |
+The [`AdjustCssBundle.targets`](Targets/AdjustCssBundle.targets) file extends the build process for scoped CSS bundling.
 
-| MSBuild item | Description | Example |
-|-|-|-|
-| `MonochromeIcon` | Requests a set of assets for an icon specified via `Include` attributes | `<MonochromeIcon Include="refresh"> ... </MonochromeIcon>` |
+It hooks into the scoped CSS bundling step and runs after `BundleScopedCssFiles`. It automatically prepends an `@import url('./styles.css');` to the generated bundle file.
 
-| MSBuild item metadata | Description | Example |
-|-|-|-|
-| `Size` | Defines required sizes for an icon | `<MonochromeIcon Size="16;32"> ... </MonochromeIcon>`
-
-| MSBuild property | Description | Default value |
-|-|-|-|
-| `MonochromeIconSvgOutputFolder` | Location for `.svg` files in your project | `$(MSBuildProjectDirectory)/wwwroot/monochrome-icons` |
-| `MonochromeIconScssOutputFolder` | Location for `.scss` files in your project | `$(MSBuildProjectDirectory)/Styles/monochrome-icons` |
-
-# Example configuration
-
-  ``` xml
-  <Target Name="ConfigureMonochromeIcons" BeforeTargets="BeforeMonochromeIconTargets">
-    <!-- Specify required icons by icon name in dash-case and size -->
-    <ItemGroup>
-      <MonochromeIcon Include="refresh" Size="16;32" />
-      <MonochromeIcon Include="switch-off" Size="32" />
-      ...
-    </ItemGroup>
-
-    <!-- Specify target locations -->
-    <PropertyGroup>
-      <MonochromeIconSvgOutputFolder>$(MSBuildProjectDirectory)/wwwroot/icons/monochrome-icons</MonochromeIconSvgOutputFolder>
-      <MonochromeIconScssOutputFolder>$(MSBuildProjectDirectory)/Styles/icons/monochrome-icons</MonochromeIconScssOutputFolder>
-    </PropertyGroup>
-  </Target>
-  ```
+This ensures that the package’s styles are automatically included in the CSS bundle provided by the package, which itself is imported in the final CSS bundle of the consuming project, without requiring the consumer to add the import manually.
 
 # Implementation
 
@@ -62,49 +31,41 @@ flowchart LR
     CopySketchIncomingToSketchOriginal
     CreateTempDirectory
     CopySketchIncomingToTempDirectory
-    CleanIncomingDirectory
     SanitizeSvgs
     CopySanitizeFilesToSanitizeDirectory
     SyncronizeSketchSanitizedWithSketchOriginal
-    RemoveTempDirectory
     CleanWwwRootDirectory
     ImportSketch
+    CreateMonochromeIconItemsFromWwwRoot
+    CreateMonochromeIconVariantItems
+    AfterCopyMonochromeIconScss
+    AfterMonochromeIconTargets
     IncludeGeneratedStaticWebAsset
+    RemoveTempDirectory
+    CleanIncomingDirectory
     PreBuildEvent
 
     CreateTempDirectory-->CopySketchIncomingToTempDirectory
     CopySketchIncomingToTempDirectory-->SanitizeSvgs
     SanitizeSvgs-->CopySanitizeFilesToSanitizeDirectory
+
     CopySanitizeFilesToSanitizeDirectory-->CleanWwwRootDirectory
+    CopySanitizeFilesToSanitizeDirectory-. "depends on" .->SyncronizeSketchSanitizedWithSketchOriginal
+
+    CopySketchIncomingToSketchOriginal-->SyncronizeSketchSanitizedWithSketchOriginal
+
+    SyncronizeSketchSanitizedWithSketchOriginal-->ImportSketch
     CleanWwwRootDirectory-->ImportSketch
+
+    ImportSketch-->CreateMonochromeIconItemsFromWwwRoot
+    CreateMonochromeIconItemsFromWwwRoot-->CreateMonochromeIconVariantItems
+    CreateMonochromeIconVariantItems-->AfterCopyMonochromeIconScss
+    AfterCopyMonochromeIconScss-->AfterMonochromeIconTargets
+    AfterMonochromeIconTargets-->PreBuildEvent
+
     ImportSketch-->IncludeGeneratedStaticWebAsset
-    IncludeGeneratedStaticWebAsset-->RemoveTempDirectory
+    ImportSketch-->RemoveTempDirectory
 
     RemoveTempDirectory-->CleanIncomingDirectory
     CleanIncomingDirectory-->PreBuildEvent
-
-    CopySanitizeFilesToSanitizeDirectory-. "required for" .->SyncronizeSketchSanitizedWithSketchOriginal
-    SyncronizeSketchSanitizedWithSketchOriginal-->ImportSketch
-
-    CopySketchIncomingToSketchOriginal-->SyncronizeSketchSanitizedWithSketchOriginal
-```
-
-## MSBuild target execution order when building a project that has a `PackageReference` to this project
-
-```mermaid
-flowchart LR
-    BeforeMonochromeIconTargets
-    CreateMonochromeIconVariantItems
-    CopyMonochromeIconSvg
-    CopyMonochromeIconScss
-    AfterCopyMonochromeIconScss
-    PreBuildEvent
-
-    BeforeMonochromeIconTargets-->CreateMonochromeIconVariantItems
-    CreateMonochromeIconVariantItems-- for each icon variant -->CopyMonochromeIconSvg
-    CreateMonochromeIconVariantItems-->CopyMonochromeIconScss
-    CopyMonochromeIconSvg-->AfterCopyMonochromeIconScss
-    CopyMonochromeIconScss-->AfterCopyMonochromeIconScss
-    AfterCopyMonochromeIconScss-->AfterMonochromeIconTargets
-    AfterMonochromeIconTargets-->PreBuildEvent
 ```

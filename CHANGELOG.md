@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.13.0 - 2026-07-14
+
+- New icon provisioning concept: access to SVG icons now via CSS classes from the assets package instead of MSBuild-based integration in consumer repositories, runtime delivery via Blazor Static Web Assets
+
 ## 4.12.0 - 2026-06-29
 
 - Added icon `external-id-provider-light`, `external-id-provider-solid`, `pass-key-light` and `pass-key-solid`

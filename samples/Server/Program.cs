@@ -1,6 +1,7 @@
-﻿using Server;
+using Server;
 using Server.Extensions;
 using Shared;
+using ViciOne.Ui.MonochromeIcons.Assets.Extensions;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -9,6 +10,11 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 });
 
 var useWebAssembly = builder.Configuration.GetValue<bool>("RenderWasm");
+
+if (useWebAssembly)
+    builder.Services.AddUrlBasedMonochromeIconSvgMarkupProvider();
+else
+    builder.Services.AddFileSystemBasedMonochromeIconSvgMarkupProvider();
 
 var app = builder.ConfigureServices(useWebAssembly).Build();
 

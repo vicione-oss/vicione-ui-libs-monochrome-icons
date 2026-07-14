@@ -1,27 +1,28 @@
-﻿using AwesomeAssertions;
+using System.IO;
+using AwesomeAssertions;
 using ViciOne.Ui.MonochromeIcons.Assets.Extensions;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;
 using ViciOne.Ui.MonochromeIcons.Core.Extensions;
-using ViciOne.Ui.MonochromeIcons.Core.Factories;
 using Xunit;
 
 namespace ViciOne.Ui.MonochromeIcons.Assets.Tests.Extensions;
 
 public sealed class MonochromeIconNameExtensionsTests
 {
-    public static readonly TheoryData<string> IconNames = [.. TypeSafeEnumFactory<MonochromeIconName>.CreateAll().GetNames()];
-
-    [Theory]
-    [MemberData(nameof(IconNames))]
-    public void Assert_get_svg_markup_result(string iconName)
+    [Fact]
+    public void Should_return_svg_path()
     {
         // Arrange
-        var iconNameTyped = TypeSafeEnumFactory<MonochromeIconName>.Create(iconName);
+        const string ContentRoot = "foo";
+        var iconName = MonochromeIconName.Container;
+        var iconSize = MonochromeIconSize.Large;
 
         // Act
-        var svgMarkup = iconNameTyped.GetSvgMarkup(MonochromeIconSize.Medium);
+        var svgPath = iconName.GetSvgPath(ContentRoot, iconSize);
 
         // Assert
-        svgMarkup.Should().NotBeEmpty();
+        var expectedSvgPath = Path.Combine(ContentRoot, iconSize.ToFolder(), $"{iconName.ToString().ToDashCase()}.svg");
+
+        svgPath.Should().Be(expectedSvgPath);
     }
 }

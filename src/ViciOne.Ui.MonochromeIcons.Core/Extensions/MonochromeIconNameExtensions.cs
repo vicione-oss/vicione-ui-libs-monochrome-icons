@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+using System.Collections.Generic;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;
 
 namespace ViciOne.Ui.MonochromeIcons.Core.Extensions;
@@ -21,15 +20,5 @@ public static class MonochromeIconNameExtensions
             cssClasses.Add(sizeModifierCssClass);
 
         return cssClasses;
-    }
-
-    /// <summary>
-    /// Gets the file path to the SVG icon for the given <paramref name="iconName"/> and <paramref name="iconSize"/>.
-    /// </summary>
-    public static string GetSvgPath(this MonochromeIconName iconName, string contentRoot, MonochromeIconSize iconSize)
-    {
-        var path = Path.Combine(contentRoot, iconSize.ToFolder(), iconName.ToString().ToDashCase() + ".svg");
-
-        return path;
     }
 }

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Shared.Models;
 using Shared.Services;
+using ViciOne.Ui.MonochromeIcons.Assets.Services;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;
 using ViciOne.Ui.MonochromeIcons.Core.Extensions;
 using ViciOne.Ui.MonochromeIcons.Core.Factories;
@@ -14,12 +16,14 @@ public sealed partial class Gallery : ComponentBase, IDisposable
 {
     private readonly IReadOnlyCollection<MonochromeIconName> _allIcons = TypeSafeEnumFactory<MonochromeIconName>.CreateAll();
     private IReadOnlyCollection<MonochromeIconName> _currentIcons = [];
+    private Dictionary<Tuple<MonochromeIconName, MonochromeIconSize>, MarkupString>? _svgMarkupCache;
 
     private readonly string _textBeforeIcon = "This item features an eye-catching icon ";
     private readonly string _textAfterIcon = " that immediately draws attention.";
 
     [Inject] private GalleryFilter Filter { get; set; } = default!;
     [Inject] private GalleryOptions Options { get; set; } = default!;
+    [Inject] private IMonochromeIconSvgMarkupProvider MonochromeIconSvgMarkupProvider { get; set; } = default!;
 
     protected override void OnInitialized()
     {
@@ -27,6 +31,12 @@ public sealed partial class Gallery : ComponentBase, IDisposable
 
         Filter.Changed += FilterChangedAsync;
         Options.Changed += OptionsChangedAsync;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Options.UseSvgMarkup)
+            await InitializeSvgMarkupCacheAsync();
     }
 
     public void Dispose()
@@ -44,7 +54,12 @@ public sealed partial class Gallery : ComponentBase, IDisposable
     }
 
     private async void OptionsChangedAsync(string propertyName)
-        => await InvokeAsync(StateHasChanged);
+    {
+        if (propertyName == nameof(GalleryOptions.UseSvgMarkup) && Options.UseSvgMarkup && _svgMarkupCache is null)
+            await InitializeSvgMarkupCacheAsync();
+
+        await InvokeAsync(StateHasChanged);
+    }
 
     private void UpdateCurrentIcons()
     {
@@ -89,5 +104,22 @@ public sealed partial class Gallery : ComponentBase, IDisposable
         }
 
         return false;
+    }
+
+    private async Task InitializeSvgMarkupCacheAsync()
+    {
+        IEnumerable<MonochromeIconSize> iconSizes = TypeSafeEnumFactory<MonochromeIconSize>.CreateAll();
+
+        _svgMarkupCache = [];
+
+        foreach (var icon in _currentIcons)
+        {
+            foreach (var size in iconSizes)
+            {
+                var svgMarkup = await MonochromeIconSvgMarkupProvider.GetSvgMarkupAsync(icon, size);
+                if (svgMarkup != null)
+                    _svgMarkupCache[new Tuple<MonochromeIconName, MonochromeIconSize>(icon, size)] = new MarkupString(svgMarkup);
+            }
+        }
     }
 }

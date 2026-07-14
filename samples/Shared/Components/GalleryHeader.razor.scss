@@ -54,7 +54,7 @@ h1 {
         grid-template-columns: max-content max-content;
         align-items: center;
 
-        $label-width: 100px;
+        $label-width: 125px;
 
         @media(max-width: $breakpoint-wide-to-medium) {
             grid-template-columns: $label-width 885px;

@@ -1,6 +1,6 @@
 @page "/"
 
-@using ViciOne.Ui.MonochromeIcons.Components
+@using Shared.GalleryIcon.Components
 @using ViciOne.Ui.MonochromeIcons.Core.Enums
 @using ViciOne.Ui.MonochromeIcons.Core.Extensions
 @using ViciOne.Ui.MonochromeIcons.Core.Factories
@@ -18,6 +18,14 @@
         {
             foreach (var iconSize in iconSizes)
             {
+                MarkupString svgMarkup = new();
+
+                if (Options.UseSvgMarkup)
+                {
+                    if (_svgMarkupCache?.TryGetValue(new Tuple<MonochromeIconName, MonochromeIconSize>(iconName, iconSize), out svgMarkup) == false)
+                        continue;
+                }
+
                 var galleryItemCssClasses = new List<string> { "gallery-item" };
 
                 if (Options.Colored)
@@ -26,6 +34,9 @@
                 if (Options.WithText)
                     galleryItemCssClasses.Add("with-text");
 
+                if (Options.ShowOutline)
+                    galleryItemCssClasses.Add("with-outline");
+
                 <div class="@string.Join(" ", galleryItemCssClasses)">
                     <div class="icon-container">
                         @if (Options.WithText)
@@ -33,7 +44,14 @@
                             @_textBeforeIcon
                         }
 
-                        <MonochromeIcon CssClass="@(Options.ShowOutline ? "with-outline" : null)" Name="@iconName" Size="@iconSize" />
+                        @if (Options.UseSvgMarkup)
+                        {
+                            @svgMarkup
+                        }
+                        else
+                        {
+                            <GalleryIcon Name="@iconName" Size="@iconSize" />
+                        }
 
                         @if (Options.WithText)
                         {
