@@ -5,7 +5,7 @@
 @use "sass:map";
 @use "sass:math";
 
-#{variables.$base-selector} .monochrome-icon {
+.monochrome-icon {
 
     @each $icon-name, $icon-descriptors in variables.$icon-variants {
 

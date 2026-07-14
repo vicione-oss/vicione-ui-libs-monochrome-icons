@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ViciOne.Ui.MonochromeIcons.Assets\ViciOne.Ui.MonochromeIcons.Assets.csproj" />
     <ProjectReference Include="..\ViciOne.Ui.MonochromeIcons.Core\ViciOne.Ui.MonochromeIcons.Core.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Bunit" />
+    <PackageReference Include="AwesomeAssertions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ViciOne.Ui.MonochromeIcons.Assets.TestingHelpers\ViciOne.Ui.MonochromeIcons.Assets.TestingHelpers.csproj" />
+  </ItemGroup>
+
+</Project>

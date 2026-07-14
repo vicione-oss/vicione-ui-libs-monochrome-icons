@@ -29,10 +29,8 @@ This repository contains icons with monochrome characteristic. An icon has a nam
 - Open solution
 - If an icon was added / removed or renamed then ...
   - Update enum [`MonochromeIconName`](src/ViciOne.Ui.MonochromeIcons.Core/Enums/MonochromeIconName.cs)
-  - Update MSBuild item [`MonochromeIconName`](src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.targets)
 - If an icon size was added / removed then ...
   - Update enum [`MonochromeIconSize`](src/ViciOne.Ui.MonochromeIcons.Core/Enums/MonochromeIconSize.cs)
-  - Update MSBuild item [`MonochromeIconSize`](src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.targets)
 - Run `dotnet build src/ViciOne.Ui.MonochromeIcons.Assets`
 
   > This command will execute a chain of MSBuild targets to bring the files in `Sketch.Incoming` to `wwwroot`, see [`src/ViciOne.Ui.MonochromeIcons.Assets/README.md`](src/ViciOne.Ui.MonochromeIcons.Assets/README.md) for futher details.
@@ -42,7 +40,6 @@ This repository contains icons with monochrome characteristic. An icon has a nam
   > The tests provided ensure that the imported icons meet predefined specifications.
   > When a test fails, its name indicates what specific issue is detected, for example `ShouldBeMinified` means `.svg` needs to be minified. Fix the associated `.svg` file in [src/ViciOne.Ui.MonochromeIcons.Assets/Sketch](src/ViciOne.Ui.MonochromeIcons.Assets/Sketch) and re-run tests until all tests pass. This is a manual operation until [Sanitize SVGs via MSBuild task](https://git.nsc-gmbh.de/vo-ui/vo-monochrome-icons/-/issues/11) is implemented.
 
-- Add the new icon(s) to [`MsBuildTargetTests.cs`](tests/Shared.Tests/MsBuildTargetTests.cs)
 - Add the new icon(s) to [`MonochromeIconNameFactoryTests.cs`](tests/ViciOne.Ui.MonochromeIcons.Core.Tests/Factories/MonochromeIconNameFactoryTests.cs)
 - Update [`CHANGELOG.md`](CHANGELOG.md)
 - Commit changes
@@ -50,81 +47,57 @@ This repository contains icons with monochrome characteristic. An icon has a nam
 - Deploy NuGet package via the jobs provided in the merge request
 - Install the deployed package in your application and test changes
 - Complete merge request
-- [Release](https://git.nsc-gmbh.de/tooling/templates/-/tree/master/Projekteigenschaften?ref_type=heads#versionierung) package with a new version
+- [Release](https://gitlab.com/vicione-oss/tooling/templates/-/tree/master/ProjectProperties?ref_type=heads#versioning) package with a new version
 
 ## How to consume icons
 
-- Install package [`ViciOne.Ui.MonochromeIcons.Assets`](src/ViciOne.Ui.MonochromeIcons.Assets/ViciOne.Ui.MonochromeIcons.Assets.csproj)
+There are various ways to consume icons, depending on the use-case.
+
+### Render icons in Blazor
+
+- Install package [`ViciOne.Ui.MonochromeIcons.Components`](src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Components.csproj)
+
+  ``` powershell
+  Install-Package ViciOne.Ui.MonochromeIcons.Components
+  ```
+- Use component [`MonochromeIcon`](src/ViciOne.Ui.MonochromeIcons.Components/MonochromeIcon.razor.cs) to render icons
+
+  ``` xml
+  @* Foo.razor *@
+
+  @using ViciOne.Ui.MonochromeIcons.Core.Enums
+  @using ViciOne.Ui.MonochromeIcons.Components
+
+  <MonochromeIcon Name="@MonochromeIconName.Refresh" Size="@MonochromeIconSize.Small" />
+  ```
+
+### ... or use CSS classes
+
+- Install package [`ViciOne.Ui.MonochromeIcons.Assets`](src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Assets.csproj)
 
   ``` powershell
   Install-Package ViciOne.Ui.MonochromeIcons.Assets
   ```
 
-- Make package only a build dependency in your `.csproj`
+  > This step is only necessary when you don't have a reference to `ViciOne.Ui.MonochromeIcons.Components`.
 
-  ``` xml
-  <PackageReference Include="ViciOne.Ui.MonochromeIcons.Assets">
-    <PrivateAssets>all</PrivateAssets><!-- avoids include of CSS isolation bundle -->
-    <ExcludeAssets>runtime</ExcludeAssets><!-- don't depend on assembly at runtime -->
-  </PackageReference>
-  ```
+  > If your project is not using [`CSS isolation`](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation), then you need to manually reference / import the CSS styles via URL `/_content/ViciOne.Ui.MonochromeIcons.Assets/styles.css`.
 
-- Configure [targets shipped with the package](src/ViciOne.Ui.MonochromeIcons.Assets/ViciOne.Ui.MonochromeIcons.Assets.targets) in your `.csproj`
+- Now, use extension method [`GetCssClasses()`](src/ViciOne.Ui.MonochromeIcons.Core/Extensions/MonochromeIconNameExtensions.cs#L15) ...
 
-  ``` xml
-  <Target Name="ConfigureMonochromeIcons" BeforeTargets="BeforeMonochromeIconTargets">
-    <!-- Specify required icons by icon name in dash-case and size -->
-    <ItemGroup>
-      <MonochromeIcon Include="refresh" Size="16;32" />
-      <MonochromeIcon Include="switch-off" Size="32" />
-      ...
-    </ItemGroup>
+    ``` csharp
+    // Foo.cs
 
-    <!-- Specify target locations -->
-    <PropertyGroup>
-      <MonochromeIconSvgOutputFolder>$(MSBuildProjectDirectory)/wwwroot/icons/monochrome-icons</MonochromeIconSvgOutputFolder>
-      <MonochromeIconScssOutputFolder>$(MSBuildProjectDirectory)/Styles/icons/monochrome-icons</MonochromeIconScssOutputFolder>
-    </PropertyGroup>
-  </Target>
-  ```
+    using ViciOne.Ui.MonochromeIcons.Core.Enums;
+    using ViciOne.Ui.MonochromeIcons.Core.Extensions;
 
-- Include SCSS via [`@use ... with`](https://sass-lang.com/documentation/at-rules/use/#configuration)
+    var cssClass = MonochromeIconName.AlarmSolid.GetCssClasses(MonochromeIconSize.MediumLarge)
+        .ToSpaceSeparated();
+    ```
 
-  ``` scss
-  @use "../Styles/icons/monochrome-icons" with (
-    // Optional, adjust SVG output url resulting from <MonochromeIconSvgOutputFolder> specified in your .csproj
-    $svg-base-url: "./icons/monochrome-icons",
+    > The variable `cssClass` can now be used to fill the `class` attribute of an HTML element.
 
-    // Optional, adjust base selector according to your needs, pass ::deep to make styles work with CSS isolation
-    $base-selector: "::deep",
-
-    // Optional, apply a filter to ensure CSS classes for specific icon variants are generated
-    $icon-filters: [
-      (name: "refresh", size: 16 32),
-      (name: "switch-off", size: 32)
-    ]
-  );
-  ```
-
-- Optionally, but recommended, use component [`MonochromeIcon`](src/ViciOne.Ui.MonochromeIcons.Components/MonochromeIcon.razor.cs) to render icons
-
-  `.csproj`
-
-  ```
-  Install-Package ViciOne.Ui.MonochromeIcons.Components
-  ```
-
-  `.razor`
-
-  ``` xml
-  @using ViciOne.Ui.MonochromeIcons.Core.Enums
-  @using ViciOne.Ui.MonochromeIcons.Components
-
-  <MonochromeIcon Name="@MonochromeIconName.Refresh" Size="@MonochromeIconSize.Small" />
-  <MonochromeIcon Name="@MonochromeIconName.SwitchOff" />
-  ```
-
-- Alternatively, you can use CSS classes to style an HTML element
+- ... or use CSS classes directly (not recommended as code is relying on implementation details that can change in any moment)
 
   | CSS class | Description | Required
   |-|-|-|
@@ -132,21 +105,58 @@ This repository contains icons with monochrome characteristic. An icon has a nam
   | `monochrome-icon-{name}` | Name modifier to include the icon by name | Yes |
   | `size-{value}` | Size modifier to adjust the icon size, `{value}` is a value defined in `.csproj` via `Size` metadata of `MonochromeIcon` item | No, defaults to `32` |
 
-  Example
-
-  ```
+  ``` html
   <i class="monochrome-icon monochrome-icon-refresh size-16"></i>
   ```
 
-## How to work with the solution in VS
+### ... or retrieve icon SVG markup
 
-Doing a simple solution rebuild is not supported as `ViciOne.Ui.MonochromeIcons.Assets` needs to be built as a NuGet package first. So, when something is changed in the aforementioned project, then you need to apply the following steps:
+#### Install package
 
-- Rebuild `src/ViciOne.Ui.MonochromeIcons.Assets`
-- Rebuild `src/ViciOne.Ui.MonochromeIcons.Components`
-- Rebuild sample application
+- Install package [`ViciOne.Ui.MonochromeIcons.Assets`](src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Assets.csproj)
 
-  | Technology | Folder |
-  |-|-|
-  | Blazor Server | `samples/Server` |
-  | Blazor WebAssembly | `samples/Client` |
+  ``` powershell
+  Install-Package ViciOne.Ui.MonochromeIcons.Assets
+  ```
+
+  > This step is only necessary when you don't have a reference to `ViciOne.Ui.MonochromeIcons.Components` already.
+
+#### Use `IMonochromeIconSvgMarkupProvider`
+
+- Register suitable implementation for [`IMonochromeIconSvgMarkupProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IMonochromeIconSvgMarkupProvider.cs)
+
+  - **Blazor Server** applications should use [`FileSystemBasedMonochromeIconSvgMarkupProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/FileSystemBasedMonochromeIconSvgMarkupProvider.cs)
+
+    ``` csharp
+    using ViciOne.Ui.MonochromeIcons.Assets.Extensions;
+
+    services.AddFileSystemBasedMonochromeIconSvgMarkupProvider();
+    ```
+
+    > The extension method call above registers a default implementation based on content root retrieved from file `staticwebassets.runtime.json`.
+    > The default implementation can be customized by registering own implementations of [`IStaticWebAssetsRuntimeJsonBaseFilenameProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IStaticWebAssetsRuntimeJsonBaseFilenameProvider.cs), [`IStaticWebAssetsRuntimeJsonPathProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IStaticWebAssetsRuntimeJsonPathProvider.cs) and [`IFileSystemBasedContentRootProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IFileSystemBasedContentRootProvider.cs) **before** the extension method call using the [provided extension methods](src/ViciOne.Ui.MonochromeIcons.Assets/Extensions/IServiceCollectionExtensions.cs#L54-L82).
+
+  - **Blazor WebAssembly** applications should use [`UrlBasedMonochromeIconSvgMarkupProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/UrlBasedMonochromeIconSvgMarkupProvider.cs)
+
+    ``` csharp
+    using ViciOne.Ui.MonochromeIcons.Assets.Extensions;
+
+    services.AddUrlBasedMonochromeIconSvgMarkupProvider();
+    ```
+
+- Inject [`IMonochromeIconSvgMarkupProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IMonochromeIconSvgMarkupProvider.cs) and retrieve SVG markup for a specific icon and size
+
+    > Use `GetSvgMarkupAsync()` as the common API. This also works for the URL-based provider used in Blazor WebAssembly.
+
+    ``` csharp
+    // Foo.cs
+
+    using ViciOne.Ui.MonochromeIcons.Assets.Services;
+    using ViciOne.Ui.MonochromeIcons.Core.Enums;
+
+    public partial class Foo(IMonochromeIconSvgMarkupProvider monochromeIconSvgMarkupProvider)
+    {
+        private async Task<string?> GetSvgMarkupAsync(MonochromeIconName iconName, MonochromeIconSize iconSize)
+            => await monochromeIconSvgMarkupProvider.GetSvgMarkupAsync(iconName, iconSize);
+    }
+    ```

@@ -1,21 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
+  <PropertyGroup>
+    <!-- https://github.com/koenvzeijl/AspNetCore.SassCompiler/issues/160#issuecomment-2464275724 -->
+    <SassCompilerEnableWatcher>false</SassCompilerEnableWatcher>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.SassCompiler" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+  </ItemGroup>
+
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
     <ProjectReference Include="..\ViciOne.Ui.MonochromeIcons.Core\ViciOne.Ui.MonochromeIcons.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Styles\**\*.scss" Pack="true" PackagePath="scss" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="ViciOne.Ui.MonochromeIcons.Assets.targets" PackagePath="build" />
-  </ItemGroup>
-
+  <!-- Import from targets -->
+  <Import Project="Targets\GenerateCssClasses.targets" />
+  <Import Project="Targets\AdjustCssBundle.targets" />
+  
   <PropertyGroup>
     <TempDir>obj\$(Configuration)\$(TargetFramework)\TempSanitizeSvg</TempDir>
     <SketchIncomingDir>Sketch.Incoming</SketchIncomingDir>
@@ -99,11 +106,11 @@
                   // remove 'stroke' attribute
                   attribute = element.Attribute("stroke");
                   attribute?.Remove();
-                  
+
                   // remove 'fill' attribute
                   attribute = element.Attribute("fill");
                   attribute?.Remove();
-                  
+
                   // remove 'id' attribute
                   attribute = element.Attribute("id");
                   attribute?.Remove();
@@ -177,20 +184,20 @@
 
       <Code Type="Fragment" Language="cs">
         <![CDATA[
-          void DeleteEmptySubDirectories(string dir)
+        void DeleteEmptySubDirectories(string dir)
+        {
+          foreach (var subDir in Directory.GetDirectories(dir))
           {
-            foreach (var subDir in Directory.GetDirectories(dir))
-            {
-              DeleteEmptySubDirectories(subDir);
+            DeleteEmptySubDirectories(subDir);
 
-              if (Directory.GetFiles(subDir).Length == 0 && Directory.GetDirectories(subDir).Length == 0)
-              {
-                Directory.Delete(subDir, true);
-              }
+            if (Directory.GetFiles(subDir).Length == 0 && Directory.GetDirectories(subDir).Length == 0)
+            {
+              Directory.Delete(subDir, true);
             }
           }
+        }
 
-          DeleteEmptySubDirectories(RootPath);
+        DeleteEmptySubDirectories(RootPath);
         ]]>
       </Code>
     </Task>
@@ -250,7 +257,7 @@
         var basePath = SourceFolder;
         basePath = Regex.Escape(basePath).Replace("/", @"[/\\]");
         var sketchSvgFilenames = SketchSvgs.Select(s => s.GetMetadata("FullPath"));
-        
+
         foreach (var sketchSvgFilename in sketchSvgFilenames)
         {
           // https://regex101.com/r/Zrp4NI/1
@@ -271,17 +278,17 @@
               Directory.CreateDirectory(staticWebAssetDirectory);
 
             var staticWebAssetSvg = Path.Combine(staticWebAssetDirectory, staticWebAssetSvgFilename);
-            
+
             File.Copy(sketchSvgFilename, staticWebAssetSvg, true);
 
             staticWebAssetSvgs.Add(staticWebAssetSvg);
           }
-          else 
+          else
           {
             throw new NotSupportedException($"{sketchSvgFilename} does not match regular expression");
           }
         }
-        
+
         StaticWebAssetSvgs = staticWebAssetSvgs.ToArray();
         ]]>
       </Code>
@@ -306,6 +313,8 @@
 
     <Message Text="Updated static web asset: $([MSBuild]::MakeRelative($(ProjectDir), %(UpdatedStaticWebAsset.Identity)))" Importance="high" />
 
+    <Message Text="Updated static web asset count: @(UpdatedStaticWebAsset->Count())" Importance="high" />
+
     <ItemGroup>
       <!--
         Add a content item for each file in wwwwroot as @(Content) is passed to DiscoverStaticWebAssets task
@@ -317,6 +326,26 @@
     </ItemGroup>
   </Target>
 
+  <Target Name="CreateMonochromeIconItemsFromWwwRoot" DependsOnTargets="ImportSketch">
+    <ItemGroup>
+      <MonochromeIconSize Include="8" />
+      <MonochromeIconSize Include="16" />
+      <MonochromeIconSize Include="18" />
+      <MonochromeIconSize Include="24" />
+      <MonochromeIconSize Include="32" />
+      <MonochromeIconSize Include="48" />
+      <MonochromeIconSize Include="64" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MonochromeIconName Include="@(UpdatedStaticWebAsset->Metadata('Filename'))" KeepDuplicates="false" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MonochromeIcon Include="@(MonochromeIconName)" Size="@(MonochromeIconSize)" />
+    </ItemGroup>
+  </Target>
+
   <PropertyGroup>
     <ResolveStaticWebAssetsInputsDependsOn>IncludeGeneratedStaticWebAsset;$(ResolveStaticWebAssetsInputsDependsOn)</ResolveStaticWebAssetsInputsDependsOn>
   </PropertyGroup>
@@ -325,18 +354,18 @@
     <!-- Skeleton adopted from https://github.com/dotnet/aspnetcore/blob/61e60dcf9436709a63e61da35417e2c4d30466ed/src/Components/CustomElements/src/Microsoft.AspNetCore.Components.CustomElements.csproj#L21 -->
 
     <PropertyGroup>
-      <_UpdateStaticWebAssetRelativePath>$([MSBuild]::MakeRelative($(ProjectDir), %(UpdatedStaticWebAsset.Identity)))</_UpdateStaticWebAssetRelativePath>
+      <_UpdateStaticWebAssetsRelativePath>$([MSBuild]::MakeRelative($(ProjectDir), %(UpdatedStaticWebAsset.Identity)))</_UpdateStaticWebAssetsRelativePath>
     </PropertyGroup>
 
     <ItemGroup>
       <_CandidateAsset Include="%(UpdatedStaticWebAsset.Identity)" />
       <_CandidateAsset>
-        <!-- 
+        <!--
            https://regex101.com/r/PZZ45o
-           
+
            wwwroot\foo.js -> foo.js
         -->
-        <RelativePath>$([System.Text.RegularExpressions.Regex]::Replace($(_UpdateStaticWebAssetsRelativePath), '^wwwroot\\(.+)', '$1'))</RelativePath>
+        <RelativePath>$([System.Text.RegularExpressions.Regex]::Replace($(_UpdateStaticWebAssetsRelativePath), '^wwwroot[\\/](.+)', '$1'))</RelativePath>
       </_CandidateAsset>
     </ItemGroup>
 
@@ -345,12 +374,10 @@
     </PropertyGroup>
 
     <DefineStaticWebAssets SourceType="Computed" SourceId="$(PackageId)" ContentRoot="$(MSBuildProjectDirectory)\wwwroot\" BasePath="$(StaticWebAssetBasePath)" CandidateAssets="@(_CandidateAsset)">
-
       <Output TaskParameter="Assets" ItemName="_DefinedGeneratedStaticWebAsset" />
     </DefineStaticWebAssets>
 
     <DefineStaticWebAssetEndpoints CandidateAssets="@(_DefinedGeneratedStaticWebAsset)" ExistingEndpoints="@()" ContentTypeMappings="@(StaticWebAssetContentTypeMapping)">
-
       <Output TaskParameter="Endpoints" ItemName="_DefinedGeneratedStaticWebAssetEndpoint" />
     </DefineStaticWebAssetEndpoints>
 
@@ -377,4 +404,5 @@
 
     <RemoveDir Directories="%(SketchIncomingSubDirectory.Identity)" Condition="Exists(%(SketchIncomingSubDirectory.Identity))" />
   </Target>
+
 </Project>

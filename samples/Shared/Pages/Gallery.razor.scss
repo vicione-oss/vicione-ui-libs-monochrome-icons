@@ -1,11 +1,5 @@
 @use "../Styles/design/colors";
-@use "../Styles/functions";
 @use "../Styles/variables";
-@use "../Styles/icons/monochrome-icons" with (
-    $svg-base-url: "./icons/monochrome-icons",
-    $base-selector: "::deep",
-    $icon-filters: functions.get-icon-filters()
-);
 
 .gallery {
     display: flex;
@@ -41,10 +35,6 @@
             display: flex;
 
             padding: $padding;
-
-            ::deep .with-outline {
-                outline: 1px solid colors.$border;
-            }
         }
 
         &.colored {
@@ -58,6 +48,14 @@
                 align-self: start;
 
                 display: block;
+            }
+        }
+
+        &.with-outline {
+            .icon-container {
+                ::deep svg, ::deep .monochrone-icon {
+                    outline: 1px solid colors.$border;
+                }
             }
         }
 

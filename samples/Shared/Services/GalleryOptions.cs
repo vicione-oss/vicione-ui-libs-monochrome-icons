@@ -8,6 +8,7 @@ public sealed class GalleryOptions
     private bool _showOutline;
     private bool _colored;
     private bool _withText;
+    private bool _useSvgMarkupProvider;
 
     public bool ShowOutline
     {
@@ -45,6 +46,20 @@ public sealed class GalleryOptions
             if (value != _withText)
             {
                 _withText = value;
+
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public bool UseSvgMarkup
+    {
+        get => _useSvgMarkupProvider;
+        set
+        {
+            if (value != _useSvgMarkupProvider)
+            {
+                _useSvgMarkupProvider = value;
 
                 OnPropertyChanged();
             }

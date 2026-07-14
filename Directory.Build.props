@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!-- Versioning -->
     <PropertyGroup>
         <VersionWithSuffix>$([System.IO.File]::ReadAllText('$(MsBuildThisFileDirectory)VERSION').Trim())</VersionWithSuffix>
@@ -76,8 +76,6 @@
 
     <!-- Configure pack behavior for all projects in src folder -->
     <PropertyGroup Condition="$(MSBuildProjectDirectory.Contains('src'))">
-        <GeneratePackageOnBuild Condition="'$(CI)' == ''">true</GeneratePackageOnBuild>
-        <PackageOutputPath Condition="'$(CI)' == ''">$(MSBuildProjectDirectory)/../../nuget</PackageOutputPath>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
@@ -91,13 +89,8 @@
         <None Include="README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
-    <Target Name="RemoveGlobalPackage" BeforeTargets="Clean" Condition="$(MSBuildProjectDirectory.Contains('src'))">
-        <ItemGroup>
-            <LocalPackages Include="$(MSBuildProjectDirectory)/../../nuget/$(MSBuildProjectName)*.nupkg" />
-        </ItemGroup>
-
-        <Delete Files="@(LocalPackages)" />
-        <RemoveDir Directories="$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))/.nuget/packages/$(MSBuildProjectName.ToLower())" />
-    </Target>
-
+    <!-- Make internals visible to test projects -->
+    <ItemGroup Condition="$(MSBuildProjectDirectory.Contains('tests')) == false">
+      <InternalsVisibleTo Include="$(MSBuildProjectName).Tests" />
+    </ItemGroup>
 </Project>

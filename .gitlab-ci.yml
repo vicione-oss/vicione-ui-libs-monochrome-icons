@@ -5,18 +5,6 @@ include:
   - project: 'vicione-oss/tooling/templates'
     file: 'CI-Templates/v2/dotnet.yml'
 
-.clean_build_pack_install_assets: &clean_build_pack_install_assets
-  - !reference [.nuget_credentials]
-  - export PACKAGE_VERSION="$(cat VERSION)-ci${CI_PIPELINE_ID}"
-  - dotnet clean src/ViciOne.Ui.MonochromeIcons.Components -c Release
-  - dotnet clean src/ViciOne.Ui.MonochromeIcons.Assets -c Release
-  - dotnet build src/ViciOne.Ui.MonochromeIcons.Components -c Release
-  - dotnet build src/ViciOne.Ui.MonochromeIcons.Assets -c Release
-  - dotnet pack --no-build -c Release -o nuget -p:PackageVersion=${PACKAGE_VERSION} src/ViciOne.Ui.MonochromeIcons.Core
-  - dotnet pack --no-build -c Release -o nuget -p:PackageVersion=${PACKAGE_VERSION} src/ViciOne.Ui.MonochromeIcons.Components
-  - dotnet pack --no-build -c Release -o nuget -p:PackageVersion=${PACKAGE_VERSION} src/ViciOne.Ui.MonochromeIcons.Assets
-  - sed -i "s|<MonochromeIconsVersion>.*</MonochromeIconsVersion>|<MonochromeIconsVersion>${PACKAGE_VERSION}</MonochromeIconsVersion>|g" Directory.Packages.props
-
 .adjust_tests_runssettings: &adjust_tests_runssettings
   - cp -f tests/tests.runsettings ./tests.runsettings
   - sed -i "s|<ResultsDirectory>\.\./artifacts/tests</ResultsDirectory>|<ResultsDirectory>artifacts/tests</ResultsDirectory>|g" ./tests.runsettings
@@ -34,16 +22,14 @@ before_script:
 
 Build:
   extends: .dotnet-build
-  script:
-    - *clean_build_pack_install_assets
-    - dotnet build samples/Server -c Release
 
 Tests:
   extends: .dotnet-test-xunit
   variables:
     FILTER: 'Category!=Local'
   before_script:
-    - *clean_build_pack_install_assets
+    - *install_nodejs
+    - *install_npm_packages
     - *adjust_tests_runssettings
 
 Deploy Core:
@@ -90,7 +76,6 @@ Publish Pages:
     - *install_npm_packages
   script:
     - !reference [.nuget_credentials]
-    - *clean_build_pack_install_assets
     - dotnet publish samples/Client -c Release -o artifacts
     - mkdir public
     - cp -R artifacts/wwwroot/* public

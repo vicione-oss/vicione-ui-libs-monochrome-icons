@@ -6,6 +6,7 @@
     <File Path="samples/.editorconfig" />
     <Project Path="samples/Client/Client.csproj" />
     <Project Path="samples/Server/Server.csproj" />
+    <Project Path="samples/Shared.GalleryIcon/Shared.GalleryIcon.csproj" Id="1d9cbf2b-521a-43c8-b4d2-c02235129421" />
     <Project Path="samples/Shared/Shared.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
@@ -25,6 +26,7 @@
   </Folder>
   <Folder Name="/src/">
     <File Path="src/.editorconfig" />
+    <Project Path="src/ViciOne.Ui.MonochromeIcons.Assets.TestingHelpers/ViciOne.Ui.MonochromeIcons.Assets.TestingHelpers.csproj" />
     <Project Path="src/ViciOne.Ui.MonochromeIcons.Assets/ViciOne.Ui.MonochromeIcons.Assets.csproj" />
     <Project Path="src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Components.csproj" />
     <Project Path="src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.csproj" />
@@ -33,6 +35,7 @@
     <File Path="tests/.editorconfig" />
     <File Path="tests/tests.runsettings" />
     <File Path="tests/xunit.runner.json" />
+    <Project Path="tests/Shared.GalleryIcon.Tests/Shared.GalleryIcon.Tests.csproj" Id="78d1085d-d209-499f-b626-f27eae513a31" />
     <Project Path="tests/Shared.Tests/Shared.Tests.csproj" />
     <Project Path="tests/ViciOne.Ui.MonochromeIcons.Assets.Tests/ViciOne.Ui.MonochromeIcons.Assets.Tests.csproj" />
     <Project Path="tests/ViciOne.Ui.MonochromeIcons.Components.Tests/ViciOne.Ui.MonochromeIcons.Components.Tests.csproj" />

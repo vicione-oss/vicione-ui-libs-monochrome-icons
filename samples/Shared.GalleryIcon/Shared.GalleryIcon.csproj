@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ViciOne.Ui.MonochromeIcons.Components\ViciOne.Ui.MonochromeIcons.Components.csproj" />
+  </ItemGroup>
+
+</Project>

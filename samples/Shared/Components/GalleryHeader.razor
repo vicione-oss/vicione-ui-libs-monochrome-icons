@@ -55,10 +55,17 @@
         </div>
     </div>
 
-    <div class="header-section">
+    <div class="header-section separator">
         <label>With text</label>
         <div class="section-content-container">
             <Switch @bind-Value="@Options.WithText" />
+        </div>
+    </div>
+
+    <div class="header-section">
+        <label>Use SVG Markup</label>
+        <div class="section-content-container">
+            <Switch @bind-Value="@Options.UseSvgMarkup" />
         </div>
     </div>
 </div>

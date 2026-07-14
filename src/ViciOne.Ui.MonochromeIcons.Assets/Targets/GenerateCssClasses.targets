@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="CreateMonochromeIconVariantItems" BeforeTargets="PreBuildEvent" DependsOnTargets="CreateMonochromeIconItemsFromWwwRoot">
+    <PropertyGroup>
+      <StaticWebAssetsPath>$(MSBuildProjectDirectory)\wwwroot</StaticWebAssetsPath>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'@(MonochromeIcon)' != ''">
+      <!--
+        Transfrom item "MonochromeIcon" to item "IconVariant" ...
+
+        https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-items#BKMK_Transforming
+      -->
+      <IconVariant Include="%(MonochromeIcon.Size)">
+        <IconName>%(MonochromeIcon.Identity)</IconName>
+      </IconVariant>
+
+      <!--
+        ... to add metadata. We will use the metadata to do additional transforms and batching.
+
+        https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-items#BKMK_ReferencingItemMetadata
+      -->
+      <IconVariant>
+        <IconFile>%(IconName).svg</IconFile>
+        <SizeFolder>%(Identity)x%(Identity)</SizeFolder>
+      </IconVariant>
+
+      <IconVariant>
+        <RequestedFile>$(StaticWebAssetsPath)/%(IconVariant.SizeFolder)/%(IconVariant.IconFile)</RequestedFile>
+      </IconVariant>
+
+      <IconVariant>
+        <SizeFolder Condition="!Exists(%(IconVariant.RequestedFile))">32x32</SizeFolder>
+      </IconVariant>
+
+      <IconVariant>
+        <SourceFile>$(StaticWebAssetsPath)/%(IconVariant.SizeFolder)/%(IconVariant.IconFile)</SourceFile>
+      </IconVariant>
+    </ItemGroup>
+
+  </Target>
+
+  <UsingTask TaskName="EmitVariablesGeneratedScss" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <DestinationFolder ParameterType="System.String" Required="true" />
+      <IconNames ParameterType="System.String[]" Required="true" />
+      <IconVariants ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.Collections.Generic" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Linq" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+
+        var contents = new List<string>
+        {
+          "// auto-generated code",
+          "",
+          "@use \"functions\";",
+          ""
+        };
+
+        contents.Add("$icon-variants: (");
+        {
+          var iconVariants = IconVariants.ToLookup(k => k.GetMetadata("IconName"), e => new { Size = e.ItemSpec, ActualSize = e.GetMetadata("ActualSize") });
+
+          var iconVariantMapItems = new List<string>();
+
+          foreach (var iconVariant in iconVariants)
+          {
+            var iconVariantMapItem = new List<string>();
+            iconVariantMapItem.Add($"    \"{iconVariant.Key}\": [");
+            iconVariantMapItem.AddRange(iconVariant.Select(v => {
+              var keyValuePairs = new Dictionary<string, object>
+              {
+                { "size", v.Size }
+              };
+              
+              if (v.ActualSize != string.Empty)
+                keyValuePairs.Add("actualSize", v.ActualSize);
+              
+              return $"        ({string.Join(", ", keyValuePairs.Select(p => $"\"{p.Key}\": {p.Value}"))})";
+            }));
+            iconVariantMapItem.Add($"    ]");
+            
+            iconVariantMapItems.Add(string.Join(Environment.NewLine, iconVariantMapItem));
+          }
+          
+          contents.Add(string.Join("," + Environment.NewLine, iconVariantMapItems));
+
+        }
+        contents.Add(");");
+
+        contents.AddRange([
+          "",
+        ]);
+
+        File.WriteAllText(DestinationFolder + "/_variables.generated.scss",
+            string.Join(Environment.NewLine, contents));
+
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="AfterCopyMonochromeIconScss" BeforeTargets="PreBuildEvent" DependsOnTargets="CreateMonochromeIconVariantItems" Condition="'@(MonochromeIcon)' != ''">
+    <ItemGroup>
+      <IconVariant>
+        <ActualSize Condition="!Exists(%(IconVariant.RequestedFile))">32</ActualSize>
+      </IconVariant>
+    </ItemGroup>
+
+    <EmitVariablesGeneratedScss DestinationFolder="$(MSBuildProjectDirectory)/Styles" IconNames="@(MonochromeIcon)" IconVariants="@(IconVariant)" />
+
+    <PropertyGroup>
+      <_IconNames>@(MonochromeIconName->Count())</_IconNames>
+      <_IconSizes>@(MonochromeIconSize->Count())</_IconSizes>
+      <_ExpectedIconVariants>$([MSBuild]::Multiply($(_IconNames), $(_IconSizes)))</_ExpectedIconVariants>
+    </PropertyGroup>
+
+    <Message Text="Icon names: $(_IconNames)" Importance="high" />
+    <Message Text="Icon sizes: $(_IconSizes)" Importance="high" />
+    <Message Text="Icon variants: $(_IconNames) x $(_IconSizes) = @(IconVariant->Count()) (expected $(_ExpectedIconVariants))" Importance="high" />
+    <Message Text="Scaled icons: @(IconVariant->HasMetadata('ActualSize')->Count())" Importance="high" />
+  </Target>
+
+  <Target Name="AfterMonochromeIconTargets" BeforeTargets="PreBuildEvent" DependsOnTargets="AfterCopyMonochromeIconScss" />
+
+</Project>
