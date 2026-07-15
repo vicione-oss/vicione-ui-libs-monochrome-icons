@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using ViciOne.Ui.MonochromeIcons.Assets.Models;
 using ViciOne.Ui.MonochromeIcons.Assets.Services;
 
 namespace ViciOne.Ui.MonochromeIcons.Assets.Extensions;
@@ -26,6 +27,23 @@ public static class IServiceCollectionExtensions
         return services;
     }
 
+    /// <inheritdoc cref="AddFileSystemBasedMonochromeIconSvgMarkupProvider(IServiceCollection)"/>
+    /// <typeparam name="T">The type used to determine the assembly location for locating <c>staticwebassets.runtime.json</c> files.</typeparam>
+    public static IServiceCollection AddFileSystemBasedMonochromeIconSvgMarkupProvider<T>(this IServiceCollection services)
+        where T : class
+    {
+        services.AddLogging();
+
+        services.AddStaticWebAssetsRuntimeJsonPathProvider<DefaultStaticWebAssetsRuntimeJsonPathProvider<T>>();
+        services.AddStaticWebAssetsRuntimeJsonBaseFilenameProvider<DefaultStaticWebAssetsRuntimeJsonBaseFilenameProvider<T>>();
+
+        services.AddFileSystemBasedContentRootProvider<StaticWebAssetsRuntimeJsonContentRootProvider>();
+
+        services.TryAddSingleton<IMonochromeIconSvgMarkupProvider, FileSystemBasedMonochromeIconSvgMarkupProvider>();
+
+        return services;
+    }
+
     /// <summary>
     /// Adds a file system-based SVG markup provider for monochrome icons.
     /// </summary>
@@ -35,18 +53,7 @@ public static class IServiceCollectionExtensions
     /// <see cref="IMonochromeIconSvgMarkupProvider"/> registrations are preserved.
     /// </remarks>
     public static IServiceCollection AddFileSystemBasedMonochromeIconSvgMarkupProvider(this IServiceCollection services)
-    {
-        services.AddLogging();
-
-        services.AddStaticWebAssetsRuntimeJsonPathProvider<DefaultStaticWebAssetsRuntimeJsonPathProvider>();
-        services.AddStaticWebAssetsRuntimeJsonBaseFilenameProvider<DefaultStaticWebAssetsRuntimeJsonBaseFilenameProvider>();
-
-        services.AddFileSystemBasedContentRootProvider<StaticWebAssetsRuntimeJsonContentRootProvider>();
-
-        services.TryAddSingleton<IMonochromeIconSvgMarkupProvider, FileSystemBasedMonochromeIconSvgMarkupProvider>();
-
-        return services;
-    }
+        => services.AddFileSystemBasedMonochromeIconSvgMarkupProvider<StaticWebAssetsRuntime>();
 
     /// <summary>
     /// Adds a custom implementation of <see cref="IStaticWebAssetsRuntimeJsonBaseFilenameProvider"/> to the service collection.

@@ -134,7 +134,9 @@ There are various ways to consume icons, depending on the use-case.
     ```
 
     > The extension method call above registers a default implementation based on content root retrieved from file `staticwebassets.runtime.json`.
-    > The default implementation can be customized by registering own implementations of [`IStaticWebAssetsRuntimeJsonBaseFilenameProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IStaticWebAssetsRuntimeJsonBaseFilenameProvider.cs), [`IStaticWebAssetsRuntimeJsonPathProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IStaticWebAssetsRuntimeJsonPathProvider.cs) and [`IFileSystemBasedContentRootProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IFileSystemBasedContentRootProvider.cs) **before** the extension method call using the [provided extension methods](src/ViciOne.Ui.MonochromeIcons.Assets/Extensions/IServiceCollectionExtensions.cs#L54-L82).
+    > The default implementation can be customized by registering own implementations of [`IStaticWebAssetsRuntimeJsonBaseFilenameProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IStaticWebAssetsRuntimeJsonBaseFilenameProvider.cs), [`IStaticWebAssetsRuntimeJsonPathProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IStaticWebAssetsRuntimeJsonPathProvider.cs) and [`IFileSystemBasedContentRootProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/IFileSystemBasedContentRootProvider.cs) **before** the extension method call using the [provided extension methods](src/ViciOne.Ui.MonochromeIcons.Assets/Extensions/IServiceCollectionExtensions.cs#L58-L90).
+
+    > Another option, is to use the [generic variant of the extension method](src/ViciOne.Ui.MonochromeIcons.Assets/Extensions/IServiceCollectionExtensions.cs#L30-46), whitch accepts a `T` specifiying a type to determine the assembly location for locating <c>staticwebassets.runtime.json</c> files.
 
   - **Blazor WebAssembly** applications should use [`UrlBasedMonochromeIconSvgMarkupProvider`](src/ViciOne.Ui.MonochromeIcons.Assets/Services/UrlBasedMonochromeIconSvgMarkupProvider.cs)
 

@@ -14,7 +14,7 @@ var useWebAssembly = builder.Configuration.GetValue<bool>("RenderWasm");
 if (useWebAssembly)
     builder.Services.AddUrlBasedMonochromeIconSvgMarkupProvider();
 else
-    builder.Services.AddFileSystemBasedMonochromeIconSvgMarkupProvider();
+    builder.Services.AddFileSystemBasedMonochromeIconSvgMarkupProvider<Program>();
 
 var app = builder.ConfigureServices(useWebAssembly).Build();
 
