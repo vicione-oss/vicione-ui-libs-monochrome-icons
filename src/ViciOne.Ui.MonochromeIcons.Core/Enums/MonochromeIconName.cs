@@ -1,5 +1,3 @@
-using System;
-
 namespace ViciOne.Ui.MonochromeIcons.Core.Enums;
 
 /// <summary>

@@ -53,7 +53,7 @@
 
         &.with-outline {
             .icon-container {
-                ::deep svg, ::deep .monochrone-icon {
+                ::deep svg, ::deep .monochrome-icon {
                     outline: 1px solid colors.$border;
                 }
             }

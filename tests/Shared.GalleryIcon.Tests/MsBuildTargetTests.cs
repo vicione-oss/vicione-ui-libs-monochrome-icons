@@ -1,4 +1,3 @@
-using System.IO;
 using ViciOne.Ui.MonochromeIcons.Assets.TestingHelpers.Targets;
 using Xunit;
 

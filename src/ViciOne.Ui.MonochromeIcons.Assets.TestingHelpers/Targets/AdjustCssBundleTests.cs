@@ -1,7 +1,4 @@
-using System;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using AwesomeAssertions;
 
 namespace ViciOne.Ui.MonochromeIcons.Assets.TestingHelpers.Targets;

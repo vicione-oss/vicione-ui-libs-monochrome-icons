@@ -1,7 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <!--
+      Strangely, 'dotnet pack' executed in solution root includes this project even though 'IsPackable' is set to false
+      in Directory.Build.props, which results in a warning. We suppress the warning with the following property.
+    -->
+    <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <IsPublishable>true</IsPublishable>
   </PropertyGroup>
 

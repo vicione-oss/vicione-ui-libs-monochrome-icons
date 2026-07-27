@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;
 
 namespace ViciOne.Ui.MonochromeIcons.Core.Extensions;

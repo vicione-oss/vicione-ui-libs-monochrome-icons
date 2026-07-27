@@ -1,85 +1,156 @@
-default:
-  image: mcr.microsoft.com/dotnet/sdk:10.0
+### Scripts ###
+.activate_mise: &activate_mise
+  - mise install
+  - eval "$(mise env)"
+ 
+.update_nuget_source_ro: &update_nuget_source_ro
+  - dotnet nuget update source JFrogNuGetProxy --configfile NuGet.Config -u $NuGet_User_JFrog -p $NuGet_PW_JFrog --store-password-in-clear-text
+  - dotnet nuget update source JFrogViciOne --configfile NuGet.Config -u $NuGet_User_JFrog -p $NuGet_PW_JFrog --store-password-in-clear-text
 
-include:
-  - project: 'vicione-oss/tooling/templates'
-    file: 'CI-Templates/v2/dotnet.yml'
+.update_nuget_source_rw: &update_nuget_source_rw
+  - dotnet nuget update source JFrogViciOne --configfile NuGet.Config -u $NuGet_User_RW_JFrog -p $NuGet_PW_RW_JFrog --store-password-in-clear-text
 
-.adjust_tests_runssettings: &adjust_tests_runssettings
-  - cp -f tests/tests.runsettings ./tests.runsettings
-  - sed -i "s|<ResultsDirectory>\.\./artifacts/tests</ResultsDirectory>|<ResultsDirectory>artifacts/tests</ResultsDirectory>|g" ./tests.runsettings
+.rule_tag: &rule_tag
+  if: "$CI_COMMIT_TAG"
 
-.install_nodejs: &install_nodejs
-  - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-  - apt update && apt install -y nodejs
+.rule_default_branch: &rule_default_branch
+  if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+
+.rule_mr: &rule_mr
+  if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+.rule_web: &rule_web
+  if: '$CI_PIPELINE_SOURCE == "web"'
+
+.rules: &rules
+  - *rule_tag
+  - *rule_default_branch
+  - *rule_mr
+  - *rule_web
+
+.rules_manual: &rules_manual
+  - <<: *rule_tag
+    when: manual
+    allow_failure: true
+  - <<: *rule_default_branch
+    when: manual
+    allow_failure: true
+  - <<: *rule_mr
+    when: manual
+    allow_failure: true
+  - <<: *rule_web
+    when: manual
+    allow_failure: true
 
 .install_npm_packages: &install_npm_packages
-  - npm ci
+  - npm install
+  
+### Defaults ###
+variables:
+  IMAGE_NAME: registry.gitlab.com/vicione-oss/tooling/base-image:vicione-latest
+  RUNNER_TAG: saas-linux-small-amd64
 
-before_script:
-  - *install_nodejs
-  - *install_npm_packages
+stages:
+  - build
+  - test
+  - pack
+  - push
+  - publish
 
-Build:
-  extends: .dotnet-build
+Version:
+  stage: .pre
+  script:
+    - if [[ -f "VERSION" ]]; then VERSION=$(head -n 1 VERSION); fi
+    - if [[ ! -z "${CI_COMMIT_TAG}" ]]; then VERSION=$(echo $CI_COMMIT_TAG | sed 's/v//g'); fi
+    - if [[ -z "${VERSION}" ]]; then VERSION='0.1.0'; fi
+    - if [[ -z "${CI_COMMIT_TAG}" ]]; then VERSION="${VERSION}-ci${CI_PIPELINE_ID}"; fi
+    - 'echo "Version=${VERSION}" >> version.env'
+    - 'echo "PackageVersion=${VERSION}" >> version.env'
+    - cat version.env
+  artifacts:
+    reports:
+      dotenv: version.env
+  rules: *rules
 
-Tests:
-  extends: .dotnet-test-xunit
-  variables:
-    FILTER: 'Category!=Local'
-  before_script:
-    - *install_nodejs
-    - *install_npm_packages
-    - *adjust_tests_runssettings
+### CI Components ###
+include:
+  ### Restore
+  - component: $CI_SERVER_FQDN/vicione-oss/tooling/dotnet-component/dotnet-restore@v2.6.0
+    inputs:
+      image: ${IMAGE_NAME}
+      rules: *rules
+      before_script:
+        - *activate_mise
+        - *update_nuget_source_ro
+      tags:
+        - ${RUNNER_TAG}
+  ### Build
+  - component: $CI_SERVER_FQDN/vicione-oss/tooling/dotnet-component/dotnet-build@v2.6.0
+    inputs:
+      image: ${IMAGE_NAME}
+      rules: *rules
+      before_script:
+        - *activate_mise
+        - *update_nuget_source_ro
+        - *install_npm_packages
+        - 'echo "Version: ${Version:-notAssigned}"'
+      tags:
+        - ${RUNNER_TAG}
+  ### Test 
+  - component: $CI_SERVER_FQDN/vicione-oss/tooling/dotnet-component/dotnet-test@v2.6.0
+    inputs:
+      name: "dotnet Test"
+      image: ${IMAGE_NAME}
+      rules: *rules
+      before_script:
+        - cat /etc/os-release || true
+        - apt-get update
+        - apt-get install -y libgdiplus
+        - *activate_mise
+        - *update_nuget_source_ro
+        - *install_npm_packages
+      tags:
+        - ${RUNNER_TAG}
+      coverage: true
+  ### Pack
+  - component: $CI_SERVER_FQDN/vicione-oss/tooling/dotnet-component/dotnet-pack@v2.6.0
+    inputs:
+      image: ${IMAGE_NAME}
+      rules: *rules_manual
+      before_script:
+        - *activate_mise
+        - *install_npm_packages
+        - 'echo "PackageVersion: ${PackageVersion:-notAssigned}"'
+        - 'export PREVENT_BUILD_PROJECT_REFERENCES_WHEN_TENEKON_IS_USED=true'
+      tags:
+        - ${RUNNER_TAG}
+  ### Push
+  - component: $CI_SERVER_FQDN/vicione-oss/tooling/dotnet-component/dotnet-nuget-push@v2.6.0
+    inputs:
+      stage: "push"
+      image: ${IMAGE_NAME}
+      source: "JFrogViciOne"
+      filename_pattern: "*/src/*"
+      rules: *rules
+      before_script:
+        - *activate_mise
+        - *update_nuget_source_rw
+      tags:
+        - ${RUNNER_TAG}
 
-Deploy Core:
-  extends: .dotnet-deploy-nuget
-  variables:
-    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.csproj'
-    REPO: 'JFrogViciOne'
-
-Deploy Assets:
-  extends: .dotnet-deploy-nuget
-  variables:
-    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Assets/ViciOne.Ui.MonochromeIcons.Assets.csproj'
-    REPO: 'JFrogViciOne'
-
-Deploy Components:
-  extends: .dotnet-deploy-nuget
-  variables:
-    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Components.csproj'
-    REPO: 'JFrogViciOne'
-
-Release Core:
-  extends: .dotnet-release-nuget
-  variables:
-    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Core/ViciOne.Ui.MonochromeIcons.Core.csproj'
-    REPO: 'JFrogViciOne'
-
-Release Assets:
-  extends: .dotnet-release-nuget
-  variables:
-    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Assets/ViciOne.Ui.MonochromeIcons.Assets.csproj'
-    REPO: 'JFrogViciOne'
-
-Release Components:
-  extends: .dotnet-release-nuget
-  variables:
-    PROJECT: 'src/ViciOne.Ui.MonochromeIcons.Components/ViciOne.Ui.MonochromeIcons.Components.csproj'
-    REPO: 'JFrogViciOne'
-
+### GitLab Pages
 Publish Pages:
-  stage: release
+  stage: publish
+  image: ${IMAGE_NAME}
   pages: true
+  needs: ["dotnet Test"]
   before_script:
-    - *install_nodejs
+    - *activate_mise
+    - *update_nuget_source_ro
     - *install_npm_packages
   script:
-    - !reference [.nuget_credentials]
     - dotnet publish samples/Client -c Release -o artifacts
     - mkdir public
     - cp -R artifacts/wwwroot/* public
     - echo "Publish Pages on \"$CI_PAGES_URL\""
-  rules:
-    - !reference [.rules_tag_manual]
-    - !reference [.rules_default_branch]
+  rules: *rules_manual

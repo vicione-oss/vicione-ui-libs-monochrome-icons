@@ -1,7 +1,6 @@
-﻿using AwesomeAssertions;
-using Xunit;
+using AwesomeAssertions;
 using ViciOne.Ui.MonochromeIcons.Core.Extensions;
-using System.Collections.Generic;
+using Xunit;
 
 namespace ViciOne.Ui.MonochromeIcons.Core.Tests.Extensions;
 
