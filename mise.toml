@@ -1,0 +1,3 @@
+[tools]
+dotnet = "10.0.302" # Must match global.json requirement
+nodejs = "22"

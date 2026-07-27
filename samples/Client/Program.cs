@@ -1,9 +1,6 @@
-using System;
-using System.Net.Http;
 using BlazorWasm.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Shared.Extensions;
 using ViciOne.Ui.MonochromeIcons.Assets.Extensions;
 

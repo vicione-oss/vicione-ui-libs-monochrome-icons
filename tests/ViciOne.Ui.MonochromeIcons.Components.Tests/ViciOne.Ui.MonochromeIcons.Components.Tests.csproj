@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <PackageReference Include="Bunit" />
-    <PackageReference Include="AwesomeAssertions" />
   </ItemGroup>
 
   <ItemGroup>

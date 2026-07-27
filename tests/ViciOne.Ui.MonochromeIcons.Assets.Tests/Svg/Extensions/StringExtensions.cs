@@ -1,6 +1,5 @@
-﻿using Svg;
-using System.IO;
 using System.Xml;
+using Svg;
 
 namespace ViciOne.Ui.MonochromeIcons.Assets.Tests.Svg.Extensions;
 

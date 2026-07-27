@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;
 
 namespace ViciOne.Ui.MonochromeIcons.Assets.Services;

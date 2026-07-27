@@ -1,4 +1,3 @@
-using System.IO;
 using AwesomeAssertions;
 using ViciOne.Ui.MonochromeIcons.Assets.Extensions;
 using ViciOne.Ui.MonochromeIcons.Core.Enums;

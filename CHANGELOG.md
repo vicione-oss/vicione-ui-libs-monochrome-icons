@@ -1,5 +1,7 @@
 # Changelog
 
+## 4.15.0 - Unreleased
+
 ## 4.14.0 - 2026-07-15
 
 - `ViciOne.Ui.MonochromeIcons.Assets`

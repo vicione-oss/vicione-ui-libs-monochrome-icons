@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace ViciOne.Ui.MonochromeIcons.Assets.Services;
 
 internal sealed class DefaultStaticWebAssetsRuntimeJsonPathProvider<T> : IStaticWebAssetsRuntimeJsonPathProvider
