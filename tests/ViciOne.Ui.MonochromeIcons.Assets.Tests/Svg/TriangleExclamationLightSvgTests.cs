@@ -12,18 +12,17 @@ using Xunit;
 
 namespace ViciOne.Ui.MonochromeIcons.Assets.Tests.Svg;
 
-#pragma warning disable CS0618 // 'RtmWarning' is obsolete
-public sealed class RtmWarningSvgTests : IClassFixture<SvgTestFixture>
+public sealed class TriangleExclamationLightSvgTests : IClassFixture<SvgTestFixture>
 {
     public static readonly TheoryData<string> IconSizes =
         [.. TypeSafeEnumFactory<MonochromeIconSize>.CreateAll().Select(i => i.GetName())];
 
     private readonly SvgTestFixture _fixture;
 
-    public RtmWarningSvgTests(SvgTestFixture fixture)
+    public TriangleExclamationLightSvgTests(SvgTestFixture fixture)
     {
         _fixture = fixture;
-        _fixture.MonochromeIconName = MonochromeIconName.RtmWarning;
+        _fixture.MonochromeIconName = MonochromeIconName.TriangleExclamationLight;
     }
 
     [Theory, Trait("Category", "Local")]
@@ -182,4 +181,3 @@ public sealed class RtmWarningSvgTests : IClassFixture<SvgTestFixture>
         }
     }
 }
-#pragma warning restore CS0618 // 'RtmWarning' is obsolete
