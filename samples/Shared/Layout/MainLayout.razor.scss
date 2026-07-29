@@ -6,15 +6,24 @@ main {
     top: 0;
     right: 0;
     bottom: 0;
+
+    .body-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+
+        overflow: auto;
+        @include scrollbar.adjust-styles();
+    }
+
+    .version-footer {
+        text-align: center;
+
+        padding-top: 16px;
+
+        font-size: xx-small;
+    }
 }
 
-.body-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-
-    overflow: auto;
-    @include scrollbar.adjust-styles();
-}
