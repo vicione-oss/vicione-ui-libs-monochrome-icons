@@ -1,4 +1,4 @@
-﻿@using Shared.Components
+@using Shared.Components
 @using ViciOne.Ui.Blazor.Components.EditorLayout
 
 @inherits LayoutComponentBase
@@ -13,5 +13,10 @@
                 @Body
             </div>
         </Center>
+        <Bottom>
+            <div class="version-footer">
+                Version @GetVersion()
+            </div>
+        </Bottom>
     </EditorLayout>
 </main>
