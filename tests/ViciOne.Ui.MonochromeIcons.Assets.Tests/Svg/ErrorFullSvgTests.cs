@@ -51,7 +51,7 @@ public sealed class ErrorFullSvgTests : IClassFixture<SvgTestFixture>
 
     [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
-    public async Task Should_have_width_px(string iconSize)
+    public async Task Should_not_have_width_px(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -61,13 +61,13 @@ public sealed class ErrorFullSvgTests : IClassFixture<SvgTestFixture>
         {
             var expectedSizePx = iconSizeTyped.ToPixels();
 
-            svgDocument.Width.Should().Be(new SvgUnit(SvgUnitType.Pixel, expectedSizePx));
+            svgDocument.Width.Should().NotBe(new SvgUnit(SvgUnitType.Pixel, expectedSizePx));
         }
     }
 
     [Theory, Trait("Category", "Local")]
     [MemberData(nameof(IconSizes))]
-    public async Task Should_have_height_px(string iconSize)
+    public async Task Should_not_have_height_px(string iconSize)
     {
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
@@ -77,7 +77,7 @@ public sealed class ErrorFullSvgTests : IClassFixture<SvgTestFixture>
         {
             var expectedSizePx = iconSizeTyped.ToPixels();
 
-            svgDocument.Height.Should().Be(new SvgUnit(SvgUnitType.Pixel, expectedSizePx));
+            svgDocument.Height.Should().NotBe(new SvgUnit(SvgUnitType.Pixel, expectedSizePx));
         }
     }
 

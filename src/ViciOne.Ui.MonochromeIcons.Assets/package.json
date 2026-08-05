@@ -1,0 +1,7 @@
+{
+  "name": "vicione-ui-monochromeicons-assets",
+  "private": true,
+  "devDependencies": {
+    "svgo": "^4.0.1"
+  }
+}

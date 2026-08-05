@@ -1,7 +1,8 @@
-﻿{
+{
   "name": "vicione-monochrome-icon-root",
   "private": true,
   "workspaces": [
+    "src/ViciOne.Ui.MonochromeIcons.Assets",
     "samples/Shared"
   ],
   "scripts": {
