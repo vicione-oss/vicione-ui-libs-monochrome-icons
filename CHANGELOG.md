@@ -2,6 +2,8 @@
 
 ## 4.16.0 - Unreleased
 
+- File size of all icons optimized
+
 ## 4.15.0 - 2026-07-28
 
 - Renamed icon `rtm-warning` to `triangle-exclamation-light`

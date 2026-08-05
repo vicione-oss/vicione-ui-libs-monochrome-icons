@@ -18,7 +18,7 @@ Folder | Description
 -|-
 `Sketch.Incoming` | Receives extracted [contents](https://git.nsc-gmbh.de/vo-ui/vo-monochrome-icons/-/issues/13#note_146109) from a `.zip` export
 `Sketch.Original` | Copy of `Sketch.Incoming` to have the original state commited
-`Sketch.Sanitized` | Files sanitized by task `SanitizeSvgs`
+`Sketch.Sanitized` | Files sanitized by task `SanitizeSvgs`, verified as SVGO-idempotent by target `VerifySanitizedSvgs`
 `Temp` | Temporary copy of `Sketch.Incoming` for sanitizing files
 `wwwroot` | Transformed files from `Sketch.Sanitized`
 
@@ -32,8 +32,10 @@ flowchart LR
     CreateTempDirectory
     CopySketchIncomingToTempDirectory
     SanitizeSvgs
-    CopySanitizeFilesToSanitizeDirectory
+    CopySanitizedFilesToSanitizedDirectory
     SyncronizeSketchSanitizedWithSketchOriginal
+    CopySanitizedSvgsForVerification
+    VerifySanitizedSvgs
     CleanWwwRootDirectory
     ImportSketch
     CreateMonochromeIconItemsFromWwwRoot
@@ -47,14 +49,17 @@ flowchart LR
 
     CreateTempDirectory-->CopySketchIncomingToTempDirectory
     CopySketchIncomingToTempDirectory-->SanitizeSvgs
-    SanitizeSvgs-->CopySanitizeFilesToSanitizeDirectory
+    SanitizeSvgs-->CopySanitizedFilesToSanitizedDirectory
 
-    CopySanitizeFilesToSanitizeDirectory-->CleanWwwRootDirectory
-    CopySanitizeFilesToSanitizeDirectory-. "depends on" .->SyncronizeSketchSanitizedWithSketchOriginal
+    CopySanitizedFilesToSanitizedDirectory-->CleanWwwRootDirectory
+    CopySanitizedFilesToSanitizedDirectory-. "depends on" .->SyncronizeSketchSanitizedWithSketchOriginal
+    CopySanitizedFilesToSanitizedDirectory-. "depends on" .->CopySanitizedSvgsForVerification
+    CopySanitizedSvgsForVerification-->VerifySanitizedSvgs
 
     CopySketchIncomingToSketchOriginal-->SyncronizeSketchSanitizedWithSketchOriginal
 
     SyncronizeSketchSanitizedWithSketchOriginal-->ImportSketch
+    VerifySanitizedSvgs-->ImportSketch
     CleanWwwRootDirectory-->ImportSketch
 
     ImportSketch-->CreateMonochromeIconItemsFromWwwRoot
@@ -69,3 +74,10 @@ flowchart LR
     RemoveTempDirectory-->CleanIncomingDirectory
     CleanIncomingDirectory-->PreBuildEvent
 ```
+
+## MSBuild properties
+
+| MSBuild property | Description | Default value |
+|-|-|-|
+| `ShouldVerifySanitizedSvgs` | Determines whether to perform the SVGO idempotency check on sanitized SVGs. | `true` |
+

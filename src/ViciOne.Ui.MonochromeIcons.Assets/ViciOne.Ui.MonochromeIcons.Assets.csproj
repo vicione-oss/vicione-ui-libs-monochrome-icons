@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <!-- https://github.com/koenvzeijl/AspNetCore.SassCompiler/issues/160#issuecomment-2464275724 -->
@@ -22,12 +22,15 @@
   <!-- Import from targets -->
   <Import Project="Targets\GenerateCssClasses.targets" />
   <Import Project="Targets\AdjustCssBundle.targets" />
-  
+
   <PropertyGroup>
     <TempDir>obj\$(Configuration)\$(TargetFramework)\TempSanitizeSvg</TempDir>
     <SketchIncomingDir>Sketch.Incoming</SketchIncomingDir>
     <SketchOriginalDir>Sketch.Original</SketchOriginalDir>
     <SketchSanitizedDir>Sketch.Sanitized</SketchSanitizedDir>
+    <VerifySanitizeDir>obj\$(Configuration)\$(TargetFramework)\VerifySanitizeSvg</VerifySanitizeDir>
+
+    <ShouldVerifySanitizedSvgs>true</ShouldVerifySanitizedSvgs>
   </PropertyGroup>
 
   <!-- Create a temporary directory -->
@@ -62,99 +65,18 @@
 
     <Message Text="Copy @(SketchIncomingSvg) to %(TempFileForSanitize)" Importance="high" Condition="Exists(%(Identity))" />
 
-    <Copy SourceFiles="@(SketchIncomingSvg)" DestinationFiles="%(TempFileForSanitize)" Condition="Exists(%(Identity))" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(SketchIncomingSvg)" DestinationFiles="%(TempFileForSanitize)" Condition="Exists(%(Identity))">
+      <Output TaskParameter="CopiedFiles" ItemName="_TempSvgs" />
+    </Copy>
   </Target>
 
-  <!-- Remove unnecessary attributes and elements and save file back to disc -->
-  <UsingTask TaskName="RemoveUnnecessaryAttributesAndElements" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
-    <ParameterGroup>
-      <ToSanitizeSvg ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Using Namespace="System" />
-      <Using Namespace="System.Collections.Generic" />
-      <Using Namespace="System.IO" />
-      <Using Namespace="System.Linq" />
-      <Using Namespace="System.Text.RegularExpressions" />
-      <Using Namespace="System.Xml" />
-      <Using Namespace="System.Xml.Linq" />
-
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
-        var sanitizeSvgFilename = ToSanitizeSvg.GetMetadata("FullPath");
-
-        var svgXml = XDocument.Load(sanitizeSvgFilename);
-        var svgRoot = svgXml.Root;
-
-        // Remove 'version'-attribute
-        var attribute = svgRoot?.Attribute("version");
-        attribute?.Remove();
-
-        var xmlNamespace = svgRoot?.Name.Namespace;
-
-        // Remove 'title'-element
-        var titleElement = svgRoot?.Element(xmlNamespace! + "title");
-        titleElement?.Remove();
-
-        void SanitizeTags(string tagName)
-        {
-          var elements = svgRoot?.Descendants(xmlNamespace! + tagName).ToList();
-          if (elements != null)
-          {
-              foreach (var element in elements)
-              {
-                  // remove 'stroke' attribute
-                  attribute = element.Attribute("stroke");
-                  attribute?.Remove();
-
-                  // remove 'fill' attribute
-                  attribute = element.Attribute("fill");
-                  attribute?.Remove();
-
-                  // remove 'id' attribute
-                  attribute = element.Attribute("id");
-                  attribute?.Remove();
-
-                  // self-closing tag
-                  if (!element.HasElements && string.IsNullOrEmpty(element.Value))
-                  {
-                      element.ReplaceWith(new XElement(element.Name, element.Attributes()));
-                  }
-              }
-          }
-        }
-
-        SanitizeTags("g");
-        SanitizeTags("path");
-        SanitizeTags("rect");
-        SanitizeTags("polygon");
-        SanitizeTags("circle");
-
-        // Save the edited svg-file
-        var settings = new XmlWriterSettings
-        {
-            OmitXmlDeclaration = true,
-            CloseOutput = true,
-            Indent = false
-        };
-        using (var writer = XmlWriter.Create(sanitizeSvgFilename, settings))
-        {
-            svgXml.Save(writer);
-        }
-        ]]>
-      </Code>
-    </Task>
-  </UsingTask>
-
-  <!-- Call task 'RemoveUnnecessaryAttributesAndElements'  -->
-  <Target Name="SanitizeSvgs" BeforeTargets="CopySanitizeFilesToSanitizeDirectory">
-    <Message Text="Remove unnecessary attributes and elements in %(SketchIncomingSvg.TempFileForSanitize)" Importance="high" Condition="Exists(%(SketchIncomingSvg.TempFileForSanitize))" />
-
-    <RemoveUnnecessaryAttributesAndElements ToSanitizeSvg="%(SketchIncomingSvg.TempFileForSanitize)" Condition="Exists(%(SketchIncomingSvg.TempFileForSanitize))" />
+  <!-- Sanitize SVGs via SVGO -->
+  <Target Name="SanitizeSvgs" BeforeTargets="CopySanitizedFilesToSanitizedDirectory">
+    <Exec Command="npx --no-install svgo -f $(TempDir) -r" WorkingDirectory="$(MSBuildProjectDirectory)" Condition="'@(_TempSvgs)' != ''" />
   </Target>
 
   <!-- Copy sanitized files from temporary directory to folder 'Sketch.Sanitized' -->
-  <Target Name="CopySanitizeFilesToSanitizeDirectory" BeforeTargets="CleanWwwRootDirectory">
+  <Target Name="CopySanitizedFilesToSanitizedDirectory" BeforeTargets="CleanWwwRootDirectory">
     <ItemGroup>
       <SketchIncomingSvg>
         <AssociatedFileInSketchSanitized>$(SketchSanitizedDir)\%(RecursiveDir)%(Filename)%(Extension)</AssociatedFileInSketchSanitized>
@@ -204,7 +126,7 @@
   </UsingTask>
 
   <!-- Synchronize the directory 'Sketch.Sanitized' with the directory 'Sketch.Original' -->
-  <Target Name="SyncronizeSketchSanitizedWithSketchOriginal" BeforeTargets="ImportSketch" DependsOnTargets="CopySanitizeFilesToSanitizeDirectory">
+  <Target Name="SyncronizeSketchSanitizedWithSketchOriginal" BeforeTargets="ImportSketch" DependsOnTargets="CopySanitizedFilesToSanitizedDirectory">
     <ItemGroup>
       <FilesInSketchSanitized Include="$(SketchSanitizedDir)\**\*" />
     </ItemGroup>
@@ -219,6 +141,83 @@
     <Delete Files="%(FilesInSketchSanitized.Identity)" Condition="!Exists(%(FilesInSketchSanitized.AssociatedFileInSketchOriginal))" />
     <RemoveEmptyDirectories RootPath="$(SketchOriginalDir)" />
     <RemoveEmptyDirectories RootPath="$(SketchSanitizedDir)" />
+  </Target>
+
+  <!--
+    Verify that committed sanitized SVGs are already SVGO-optimized (idempotent)
+
+    The target VerifySanitizedSvgs runs SVGO over a temporary copy of the committed
+    Sketch.Sanitized SVGs and compares the result with the committed files. If SVGO
+    would change anything, the file is not properly SVGO-sanitized and the build fails.
+    This catches SVGs that were added through other issues without an initial SVGO sanitization.
+  -->
+  <UsingTask TaskName="VerifySvgoIdempotency" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <OriginalDir ParameterType="System.String" Required="true" />
+      <VerifyDir ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Linq" />
+
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        if (!Directory.Exists(OriginalDir))
+        {
+          return true;
+        }
+
+        var originalRoot = Path.GetFullPath(OriginalDir);
+        var verifyRoot = Path.GetFullPath(VerifyDir);
+
+        foreach (var originalFile in Directory.GetFiles(originalRoot, "*.svg", SearchOption.AllDirectories))
+        {
+          var relativePath = originalFile.Substring(originalRoot.Length).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+          var verifyFile = Path.Combine(verifyRoot, relativePath);
+
+          if (!File.Exists(verifyFile))
+          {
+            Log.LogError($"SVGO idempotency check failed: '{relativePath}' produced no SVGO output. Ensure the SVG is SVGO-sanitized before committing it to '{OriginalDir}'.");
+            continue;
+          }
+
+          var originalContent = File.ReadAllText(originalFile);
+          var verifyContent = File.ReadAllText(verifyFile);
+
+          if (!string.Equals(originalContent, verifyContent, StringComparison.Ordinal))
+          {
+            Log.LogError($"SVGO idempotency check failed: '{relativePath}' is not SVGO-sanitized. Run SVGO on the file and commit the optimized result to '{OriginalDir}'.");
+          }
+        }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- Copy committed sanitized SVGs to the verify directory and carry them to VerifySanitizedSvgs -->
+  <Target Name="CopySanitizedSvgsForVerification" BeforeTargets="VerifySanitizedSvgs" DependsOnTargets="CopySanitizedFilesToSanitizedDirectory" Condition="'$(ShouldVerifySanitizedSvgs)' == 'true'">
+    <ItemGroup>
+      <_SanitizedSvgToVerify Include="$(SketchSanitizedDir)\**\*.svg" />
+      <_SanitizedSvgToVerify>
+        <VerifyFile>$(VerifySanitizeDir)\%(RecursiveDir)%(Filename)%(Extension)</VerifyFile>
+      </_SanitizedSvgToVerify>
+    </ItemGroup>
+
+    <RemoveDir Directories="$(VerifySanitizeDir)" />
+    <MakeDir Directories="$(VerifySanitizeDir)" />
+
+    <Copy SourceFiles="@(_SanitizedSvgToVerify)" DestinationFiles="%(_SanitizedSvgToVerify.VerifyFile)">
+      <Output TaskParameter="CopiedFiles" ItemName="_CopiedSvgToVerify" />
+    </Copy>
+  </Target>
+
+  <Target Name="VerifySanitizedSvgs" BeforeTargets="ImportSketch">
+    <Message Text="Verify SVGO idempotency of $(SketchSanitizedDir)" Importance="high" />
+
+    <Exec Command="npx --no-install svgo -f $(VerifySanitizeDir) -r" WorkingDirectory="$(MSBuildProjectDirectory)" Condition="'@(_SanitizedSvgToVerify)' != ''" />
+
+    <VerifySvgoIdempotency OriginalDir="$(SketchSanitizedDir)" VerifyDir="$(VerifySanitizeDir)" />
   </Target>
 
   <!-- Delete all files from folder 'wwwroot' -->
