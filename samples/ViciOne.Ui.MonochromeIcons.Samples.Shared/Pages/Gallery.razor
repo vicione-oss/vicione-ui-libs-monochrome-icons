@@ -1,0 +1,71 @@
+@page "/"
+
+@using ViciOne.Ui.MonochromeIcons.Samples.Shared.GalleryIcon.Components
+@using ViciOne.Ui.MonochromeIcons.Core.Enums
+@using ViciOne.Ui.MonochromeIcons.Core.Extensions
+@using ViciOne.Ui.MonochromeIcons.Core.Factories
+
+<div class="gallery">
+    @{
+        IEnumerable<MonochromeIconSize> iconSizes = TypeSafeEnumFactory<MonochromeIconSize>.CreateAll();
+
+        if (Filter.Sizes.Count > 0)
+            iconSizes = iconSizes.Intersect(Filter.Sizes);
+
+        iconSizes = iconSizes.OrderBy(s => s.ToPixels());
+
+        foreach (var iconName in _currentIcons)
+        {
+            foreach (var iconSize in iconSizes)
+            {
+                MarkupString svgMarkup = new();
+
+                if (Options.UseSvgMarkup)
+                {
+                    if (_svgMarkupCache?.TryGetValue(new Tuple<MonochromeIconName, MonochromeIconSize>(iconName, iconSize), out svgMarkup) == false)
+                        continue;
+                }
+
+                var galleryItemCssClasses = new List<string> { "gallery-item" };
+
+                if (Options.Colored)
+                    galleryItemCssClasses.Add("colored");
+
+                if (Options.WithText)
+                    galleryItemCssClasses.Add("with-text");
+
+                if (Options.ShowOutline)
+                    galleryItemCssClasses.Add("with-outline");
+
+                <div class="@string.Join(" ", galleryItemCssClasses)">
+                    <div class="icon-container">
+                        @if (Options.WithText)
+                        {
+                            @_textBeforeIcon
+                        }
+
+                        @if (Options.UseSvgMarkup)
+                        {
+                            @svgMarkup
+                        }
+                        else
+                        {
+                            <GalleryIcon Name="@iconName" Size="@iconSize" />
+                        }
+
+                        @if (Options.WithText)
+                        {
+                            @_textAfterIcon
+                        }
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <code class="icon-name">
+                        @iconName.ToString().ToDashCase()
+                    </code>
+                </div>
+            }
+        }
+    }
+</div>

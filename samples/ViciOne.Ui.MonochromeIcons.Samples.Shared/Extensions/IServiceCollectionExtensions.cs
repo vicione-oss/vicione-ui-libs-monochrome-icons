@@ -1,0 +1,22 @@
+using Microsoft.Extensions.DependencyInjection;
+using ViciOne.Ui.MonochromeIcons.Samples.Shared.Services;
+
+namespace ViciOne.Ui.MonochromeIcons.Samples.Shared.Extensions;
+
+public static class IServiceCollectionExtensions
+{
+    public static IServiceCollection AddGalleryOptions(this IServiceCollection services)
+    {
+        services.AddScoped<GalleryFilter>();
+        services.AddScoped<GalleryOptions>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddRenderModeProvider(this IServiceCollection services, bool useWasm)
+    {
+        services.AddSingleton(new RenderModeProvider(useWasm));
+
+        return services;
+    }
+}

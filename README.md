@@ -16,8 +16,9 @@ This repository contains icons with monochrome characteristic. An icon has a nam
 
   | Technology | Command | URL |
   |-|-|-|
-  | Blazor Server | `dotnet run --project samples/Server` | `https://localhost:57018` |
-  | Blazor WebAssembly | `dotnet run --project samples/Client` | `https://localhost:54399` |
+  | Blazor Web App (Interactive Server) | `dotnet run --project samples/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebApp --launch-profile "Interactive Server"` | `https://localhost:57118` |
+  | Blazor Web App (Interactive WebAssembly) | `dotnet run --project samples/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebApp --launch-profile "Interactive WebAssembly"` | `https://localhost:57119` |
+  | Blazor WebAssembly Standalone App | `dotnet run --project samples/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebAssemblyStandaloneApp` | `https://localhost:54401` |
 
 ## How to maintain / extend the icon set
 
