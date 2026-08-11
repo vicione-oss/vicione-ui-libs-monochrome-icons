@@ -1,0 +1,22 @@
+@using ViciOne.Ui.MonochromeIcons.Samples.Shared.Components
+@using ViciOne.Ui.Blazor.Components.EditorLayout
+
+@inherits LayoutComponentBase
+
+<main>
+    <EditorLayout>
+        <Top>
+            <GalleryHeader />
+        </Top>
+        <Center>
+            <div class="body-container">
+                @Body
+            </div>
+        </Center>
+        <Bottom>
+            <div class="version-footer">
+                Version @GetVersion()
+            </div>
+        </Bottom>
+    </EditorLayout>
+</main>

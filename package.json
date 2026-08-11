@@ -1,10 +1,10 @@
 {
   "name": "vicione-monochrome-icon-root",
   "private": true,
-  "workspaces": [
-    "src/ViciOne.Ui.MonochromeIcons.Assets",
-    "samples/Shared"
-  ],
+    "workspaces": [
+        "src/ViciOne.Ui.MonochromeIcons.Assets",
+        "samples/ViciOne.Ui.MonochromeIcons.Samples.Shared"
+    ],
   "scripts": {
     "build": "npm --workspaces --if-present run build"
   }

@@ -7,10 +7,11 @@
   </Folder>
   <Folder Name="/samples/">
     <File Path="samples/.editorconfig" />
-    <Project Path="samples/Client/Client.csproj" />
-    <Project Path="samples/Server/Server.csproj" />
-    <Project Path="samples/Shared.GalleryIcon/Shared.GalleryIcon.csproj" Id="1d9cbf2b-521a-43c8-b4d2-c02235129421" />
-    <Project Path="samples/Shared/Shared.csproj" />
+    <Project Path="samples/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebApp.WebAssemblyHost/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebApp.WebAssemblyHost.csproj" />
+    <Project Path="samples/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebApp/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebApp.csproj" />
+    <Project Path="samples/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebAssemblyStandaloneApp/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebAssemblyStandaloneApp.csproj" />
+    <Project Path="samples/ViciOne.Ui.MonochromeIcons.Samples.Shared.GalleryIcon/ViciOne.Ui.MonochromeIcons.Samples.Shared.GalleryIcon.csproj" />
+    <Project Path="samples/ViciOne.Ui.MonochromeIcons.Samples.Shared/ViciOne.Ui.MonochromeIcons.Samples.Shared.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
@@ -40,10 +41,10 @@
   <Folder Name="/tests/">
     <File Path="tests/.editorconfig" />
     <File Path="tests/xunit.runner.json" />
-    <Project Path="tests/Shared.GalleryIcon.Tests/Shared.GalleryIcon.Tests.csproj" Id="78d1085d-d209-499f-b626-f27eae513a31" />
-    <Project Path="tests/Shared.Tests/Shared.Tests.csproj" />
     <Project Path="tests/ViciOne.Ui.MonochromeIcons.Assets.Tests/ViciOne.Ui.MonochromeIcons.Assets.Tests.csproj" />
     <Project Path="tests/ViciOne.Ui.MonochromeIcons.Components.Tests/ViciOne.Ui.MonochromeIcons.Components.Tests.csproj" />
     <Project Path="tests/ViciOne.Ui.MonochromeIcons.Core.Tests/ViciOne.Ui.MonochromeIcons.Core.Tests.csproj" />
+    <Project Path="tests/ViciOne.Ui.MonochromeIcons.Samples.Shared.GalleryIcon.Tests/ViciOne.Ui.MonochromeIcons.Samples.Shared.GalleryIcon.Tests.csproj" />
+    <Project Path="tests/ViciOne.Ui.MonochromeIcons.Samples.Shared.Tests/ViciOne.Ui.MonochromeIcons.Samples.Shared.Tests.csproj" />
   </Folder>
 </Solution>

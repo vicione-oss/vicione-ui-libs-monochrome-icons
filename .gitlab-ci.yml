@@ -149,7 +149,7 @@ Publish Pages:
     - *update_nuget_source_ro
     - *install_npm_packages
   script:
-    - dotnet publish samples/Client -c Release -o artifacts
+    - dotnet publish samples/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebAssemblyStandaloneApp -c Release -o artifacts
     - mkdir public
     - cp -R artifacts/wwwroot/* public
     - echo "Publish Pages on \"$CI_PAGES_URL\""
