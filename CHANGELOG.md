@@ -1,8 +1,9 @@
 # Changelog
 
-## 4.16.0 - Unreleased
+## 4.16.0 - 2026-08-17
 
 - File size of all icons optimized
+- Added icon `connector-input` and `connector-output`
 
 ## 4.15.0 - 2026-07-28
 

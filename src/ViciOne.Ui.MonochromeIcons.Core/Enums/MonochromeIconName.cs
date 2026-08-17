@@ -52,6 +52,8 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName ConnectorCancelPublication = new(nameof(ConnectorCancelPublication));
     public static readonly MonochromeIconName ConnectorDraggingConnectorIn = new(nameof(ConnectorDraggingConnectorIn));
     public static readonly MonochromeIconName ConnectorDraggingConnectorOut = new(nameof(ConnectorDraggingConnectorOut));
+    public static readonly MonochromeIconName ConnectorInput = new(nameof(ConnectorInput));
+    public static readonly MonochromeIconName ConnectorOutput = new(nameof(ConnectorOutput));
     public static readonly MonochromeIconName ConnectorPublish = new(nameof(ConnectorPublish));
     public static readonly MonochromeIconName ConnectorRemoveFromContainer = new(nameof(ConnectorRemoveFromContainer));
     public static readonly MonochromeIconName Container = new(nameof(Container));

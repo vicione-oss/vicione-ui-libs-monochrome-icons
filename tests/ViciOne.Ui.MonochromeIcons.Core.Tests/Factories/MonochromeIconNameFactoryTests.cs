@@ -60,6 +60,8 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.ConnectorCancelPublication,
             MonochromeIconName.ConnectorDraggingConnectorIn,
             MonochromeIconName.ConnectorDraggingConnectorOut,
+            MonochromeIconName.ConnectorInput,
+            MonochromeIconName.ConnectorOutput,
             MonochromeIconName.ConnectorPublish,
             MonochromeIconName.ConnectorRemoveFromContainer,
             MonochromeIconName.Container,

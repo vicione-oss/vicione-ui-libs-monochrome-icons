@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dark-theme/icon/monochrome/32x32/connector-input</title>
+    <g id="dark-theme/icon/monochrome/32x32/connector-input" stroke="none" fill="none" fill-rule="evenodd">
+        <path d="M27,4 L27,28 L13,28 L13,23.2 L15.3333333,23.2 L15.3333333,25.6 L24.6666667,25.6 L24.6666667,6.4 L15.3333333,6.4 L15.3333333,8.8 L13,8.8 L13,4 L27,4 Z M10.9849057,10 L17,15.8990856 L16.898,15.999 L17,16.1009144 L10.9849057,22 L9.18037737,20.2302743 L12.219,17.251 L3,17.2513858 L3,14.7486157 L12.219,14.748 L9.18037737,11.7697257 L10.9849057,10 Z" id="Icon" fill="#DEDEDE"></path>
+    </g>
+</svg>
