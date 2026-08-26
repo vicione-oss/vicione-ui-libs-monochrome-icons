@@ -12,7 +12,6 @@ public sealed partial class Gallery : ComponentBase, IDisposable
 {
     private readonly IReadOnlyCollection<MonochromeIconName> _allIcons = TypeSafeEnumFactory<MonochromeIconName>.CreateAll();
     private IReadOnlyCollection<MonochromeIconName> _currentIcons = [];
-    private Dictionary<Tuple<MonochromeIconName, MonochromeIconSize>, MarkupString>? _svgMarkupCache;
 
     private readonly string _textBeforeIcon = "This item features an eye-catching icon ";
     private readonly string _textAfterIcon = " that immediately draws attention.";
@@ -32,7 +31,7 @@ public sealed partial class Gallery : ComponentBase, IDisposable
     protected override async Task OnInitializedAsync()
     {
         if (Options.UseSvgMarkup)
-            await InitializeSvgMarkupCacheAsync();
+            await PreloadSvgMarkupsAsync();
     }
 
     public void Dispose()
@@ -51,8 +50,8 @@ public sealed partial class Gallery : ComponentBase, IDisposable
 
     private async void OptionsChangedAsync(string propertyName)
     {
-        if (propertyName == nameof(GalleryOptions.UseSvgMarkup) && Options.UseSvgMarkup && _svgMarkupCache is null)
-            await InitializeSvgMarkupCacheAsync();
+        if (propertyName == nameof(GalleryOptions.UseSvgMarkup) && Options.UseSvgMarkup)
+            await PreloadSvgMarkupsAsync();
 
         await InvokeAsync(StateHasChanged);
     }
@@ -102,19 +101,15 @@ public sealed partial class Gallery : ComponentBase, IDisposable
         return false;
     }
 
-    private async Task InitializeSvgMarkupCacheAsync()
+    private async Task PreloadSvgMarkupsAsync()
     {
         IEnumerable<MonochromeIconSize> iconSizes = TypeSafeEnumFactory<MonochromeIconSize>.CreateAll();
-
-        _svgMarkupCache = [];
 
         foreach (var icon in _currentIcons)
         {
             foreach (var size in iconSizes)
             {
-                var svgMarkup = await MonochromeIconSvgMarkupProvider.GetSvgMarkupAsync(icon, size);
-                if (svgMarkup != null)
-                    _svgMarkupCache[new Tuple<MonochromeIconName, MonochromeIconSize>(icon, size)] = new MarkupString(svgMarkup);
+                await MonochromeIconSvgMarkupProvider.GetSvgMarkupAsync(icon, size);
             }
         }
     }

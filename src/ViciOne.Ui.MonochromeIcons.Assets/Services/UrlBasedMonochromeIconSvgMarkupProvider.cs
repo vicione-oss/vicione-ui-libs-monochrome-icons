@@ -4,13 +4,15 @@ using ViciOne.Ui.MonochromeIcons.Core.Extensions;
 
 namespace ViciOne.Ui.MonochromeIcons.Assets.Services;
 
-internal sealed partial class UrlBasedMonochromeIconSvgMarkupProvider(HttpClient httpClient,
-    ILogger<UrlBasedMonochromeIconSvgMarkupProvider> logger)
-        : IMonochromeIconSvgMarkupProvider
+internal sealed partial class UrlBasedMonochromeIconSvgMarkupProvider(HttpClient httpClient, IMonochromeIconSvgMarkupCache svgMarkupCache,
+    ILogger<UrlBasedMonochromeIconSvgMarkupProvider> logger) : IMonochromeIconSvgMarkupProvider
 {
     public async Task<string?> GetSvgMarkupAsync(MonochromeIconName iconName, MonochromeIconSize iconSize,
         CancellationToken cancellationToken = default)
     {
+        if (svgMarkupCache.TryGet(iconName, iconSize, out var svgMarkup))
+            return svgMarkup;
+
         // Build RCL static web assets URL starting with _content/...
         var assemblyName = typeof(UrlBasedMonochromeIconSvgMarkupProvider).Assembly.GetName().Name;
         var relativeUrl = $"_content/{assemblyName}";
@@ -28,7 +30,13 @@ internal sealed partial class UrlBasedMonochromeIconSvgMarkupProvider(HttpClient
             using var response = await httpClient.GetAsync(requestUri, cancellationToken).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
-                return await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+            {
+                svgMarkup = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                if (string.IsNullOrEmpty(svgMarkup))
+                    return null;
+
+                return svgMarkupCache.Add(iconName, iconSize, svgMarkup);
+            }
         }
         catch (OperationCanceledException)
         {

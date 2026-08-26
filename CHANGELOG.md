@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.17.0 - 2026-08-26
+
+- `ViciOne.Ui.MonochromeIcons.Assets`, added SVG markup cache used in `IMonochromeIconSvgMarkupProvider` implementations
+
 ## 4.16.0 - 2026-08-17
 
 - File size of all icons optimized

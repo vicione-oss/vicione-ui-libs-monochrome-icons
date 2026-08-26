@@ -22,8 +22,11 @@
 
                 if (Options.UseSvgMarkup)
                 {
-                    if (_svgMarkupCache?.TryGetValue(new Tuple<MonochromeIconName, MonochromeIconSize>(iconName, iconSize), out svgMarkup) == false)
+                    var markup = MonochromeIconSvgMarkupProvider.GetSvgMarkup(iconName, iconSize);
+                    if (string.IsNullOrEmpty(markup))
                         continue;
+
+                    svgMarkup = new MarkupString(markup);
                 }
 
                 var galleryItemCssClasses = new List<string> { "gallery-item" };
