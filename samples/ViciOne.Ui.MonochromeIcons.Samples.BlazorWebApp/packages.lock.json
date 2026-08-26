@@ -4,17 +4,17 @@
     "net10.0": {
       "Microsoft.AspNetCore.App.Internal.Assets": {
         "type": "Direct",
-        "requested": "[10.0.10, )",
-        "resolved": "10.0.10",
-        "contentHash": "8k0KoYKvNrSqP8E3oDJMBVKavlTEE6BacdLGtEDcxv9Hz0XxWFkD6JdLJsxXUlGeAfZ6YfvWmxKenl73qeCTSA=="
+        "requested": "[10.0.11, )",
+        "resolved": "10.0.11",
+        "contentHash": "tYYYBZsuF2DSz1I3hcfB8qC4nNekIKufkYZOJ2R28fNK3PkS7fJao/mIX5H84NH94UACZQ4dhvt8GDlkrJFwLg=="
       },
       "Microsoft.AspNetCore.Components.WebAssembly.Server": {
         "type": "Direct",
-        "requested": "[10.0.8, )",
-        "resolved": "10.0.8",
-        "contentHash": "T450RZXJyy8ACXjHK+MuIyvPlZvQUVnaOKm11UPMNNy2Pp3wnm+jE6O34VVBvKwaeMUKNM32Vrw1dELIsgBKRg==",
+        "requested": "[10.0.11, )",
+        "resolved": "10.0.11",
+        "contentHash": "El0lkzjqwWVKmFC4tS0orMxysMNwElGNM1lLNYyqBh8SLsP5c+EDDrZS4FAv0bcqc+t1nxosnzqrd0ob+XASPQ==",
         "dependencies": {
-          "Microsoft.AspNetCore.Components.WebAssembly": "10.0.8"
+          "Microsoft.AspNetCore.Components.WebAssembly": "10.0.11"
         }
       },
       "Roslynator.Analyzers": {
@@ -42,8 +42,8 @@
       },
       "Microsoft.JSInterop.WebAssembly": {
         "type": "Transitive",
-        "resolved": "10.0.8",
-        "contentHash": "sXmjUtF9Kb7heF2cDuT1X8wdJQnyXXJ5wMVN52AtBKUDOzMCfSNTCWoYb3y9LH+6YBAqci8NQkYnHAV+WHC8VA=="
+        "resolved": "10.0.11",
+        "contentHash": "WtlvldXFOdft4tFW4Y3lTnRqZfGYebOBPMXZAy9Yp3gv0A88rNbDtXcuoppvqsVWe4cIG95iEXFmXB+nvuEN3Q=="
       },
       "ViciOne.Ui.Localization": {
         "type": "Transitive",
@@ -53,14 +53,14 @@
       "vicione.ui.monochromeicons.assets": {
         "type": "Project",
         "dependencies": {
-          "ViciOne.Ui.MonochromeIcons.Core": "[4.16.0, )"
+          "ViciOne.Ui.MonochromeIcons.Core": "[4.17.0, )"
         }
       },
       "vicione.ui.monochromeicons.components": {
         "type": "Project",
         "dependencies": {
-          "ViciOne.Ui.MonochromeIcons.Assets": "[4.16.0, )",
-          "ViciOne.Ui.MonochromeIcons.Core": "[4.16.0, )"
+          "ViciOne.Ui.MonochromeIcons.Assets": "[4.17.0, )",
+          "ViciOne.Ui.MonochromeIcons.Core": "[4.17.0, )"
         }
       },
       "vicione.ui.monochromeicons.core": {
@@ -69,31 +69,31 @@
       "vicione.ui.monochromeicons.samples.blazorwebapp.webassemblyhost": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.AspNetCore.Components.WebAssembly": "[10.0.8, )",
-          "ViciOne.Ui.MonochromeIcons.Samples.Shared": "[4.16.0, )"
+          "Microsoft.AspNetCore.Components.WebAssembly": "[10.0.11, )",
+          "ViciOne.Ui.MonochromeIcons.Samples.Shared": "[4.17.0, )"
         }
       },
       "vicione.ui.monochromeicons.samples.shared": {
         "type": "Project",
         "dependencies": {
           "ViciOne.Ui.Blazor.Components": "[5.14.0, )",
-          "ViciOne.Ui.MonochromeIcons.Assets": "[4.16.0, )",
-          "ViciOne.Ui.MonochromeIcons.Samples.Shared.GalleryIcon": "[4.16.0, )"
+          "ViciOne.Ui.MonochromeIcons.Assets": "[4.17.0, )",
+          "ViciOne.Ui.MonochromeIcons.Samples.Shared.GalleryIcon": "[4.17.0, )"
         }
       },
       "vicione.ui.monochromeicons.samples.shared.galleryicon": {
         "type": "Project",
         "dependencies": {
-          "ViciOne.Ui.MonochromeIcons.Components": "[4.16.0, )"
+          "ViciOne.Ui.MonochromeIcons.Components": "[4.17.0, )"
         }
       },
       "Microsoft.AspNetCore.Components.WebAssembly": {
         "type": "CentralTransitive",
-        "requested": "[10.0.8, )",
-        "resolved": "10.0.8",
-        "contentHash": "/bxlPbfqxqgWOXHab7EUblZUzoqPIF0Wa6pm6CiwVlSWERLSH9dXPgexNINbaNqEt348XM97fCv0c9r7ef2DdQ==",
+        "requested": "[10.0.11, )",
+        "resolved": "10.0.11",
+        "contentHash": "OaZ+pEJzfejOtCkmepeJYYItNu3PA6Y2EajBwS8vr30mUjCOZWjVCr2sCqUOVw7D6+wmJwpNKtHqyzbtX/F7qQ==",
         "dependencies": {
-          "Microsoft.JSInterop.WebAssembly": "10.0.8"
+          "Microsoft.JSInterop.WebAssembly": "10.0.11"
         }
       },
       "ViciOne.Ui.Blazor.Components": {

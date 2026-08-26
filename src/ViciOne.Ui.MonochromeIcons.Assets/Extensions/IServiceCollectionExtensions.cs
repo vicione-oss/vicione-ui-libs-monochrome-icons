@@ -11,6 +11,19 @@ namespace ViciOne.Ui.MonochromeIcons.Assets.Extensions;
 public static class IServiceCollectionExtensions
 {
     /// <summary>
+    /// Adds the shared cache for monochrome icon SVG markup.
+    /// </summary>
+    /// <remarks>
+    /// The cache is registered by using <c>TryAddSingleton</c>, so an existing registration is preserved.
+    /// </remarks>
+    internal static IServiceCollection AddMonochromeIconSvgMarkupCache(this IServiceCollection services)
+    {
+        services.TryAddSingleton<IMonochromeIconSvgMarkupCache, MonochromeIconSvgMarkupCache>();
+
+        return services;
+    }
+
+    /// <summary>
     /// Adds a URL-based SVG markup provider for monochrome icons.
     /// </summary>
     /// <remarks>
@@ -22,6 +35,7 @@ public static class IServiceCollectionExtensions
     {
         services.AddLogging();
 
+        services.AddMonochromeIconSvgMarkupCache();
         services.TryAddScoped<IMonochromeIconSvgMarkupProvider, UrlBasedMonochromeIconSvgMarkupProvider>();
 
         return services;
@@ -39,6 +53,7 @@ public static class IServiceCollectionExtensions
 
         services.AddFileSystemBasedContentRootProvider<StaticWebAssetsRuntimeJsonContentRootProvider>();
 
+        services.AddMonochromeIconSvgMarkupCache();
         services.TryAddSingleton<IMonochromeIconSvgMarkupProvider, FileSystemBasedMonochromeIconSvgMarkupProvider>();
 
         return services;
