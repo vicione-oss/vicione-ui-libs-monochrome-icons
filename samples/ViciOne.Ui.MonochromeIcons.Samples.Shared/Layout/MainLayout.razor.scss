@@ -17,13 +17,5 @@ main {
         overflow: auto;
         @include scrollbar.adjust-styles();
     }
-
-    .version-footer {
-        text-align: center;
-
-        padding-top: 16px;
-
-        font-size: xx-small;
-    }
 }
 

@@ -1,16 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using ViciOne.Ui.MonochromeIcons.Assets.Services;
 
 namespace ViciOne.Ui.MonochromeIcons.Samples.Shared.Layout;
 
-public sealed partial class MainLayout : LayoutComponentBase
-{
-    private static string GetVersion()
-    {
-        var assembly = typeof(IMonochromeIconSvgMarkupProvider).Assembly;
-        var assemblyName = assembly.GetName();
-        var assemblyVersion = assemblyName.Version ?? throw new InvalidDataException();
-
-        return $"{assemblyVersion.Major}.{assemblyVersion.Minor}.{assemblyVersion.Build}";
-    }
-}
+public sealed partial class MainLayout : LayoutComponentBase;

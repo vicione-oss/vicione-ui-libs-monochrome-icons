@@ -1,6 +1,8 @@
 # Changelog
 
-## 4.18.0 - Unreleased
+## 4.18.0 - 2026-09-03
+
+- Publish samples application to a dedicated URL
 
 ## 4.17.0 - 2026-08-26
 

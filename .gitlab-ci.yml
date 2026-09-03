@@ -49,6 +49,8 @@
 variables:
   IMAGE_NAME: registry.gitlab.com/vicione-oss/tooling/base-image:vicione-latest
   RUNNER_TAG: saas-linux-small-amd64
+  # Shared path prefix for tagged Pages deployments and their release links.
+  RELEASE_PAGES_PATH_PREFIX: release-$CI_COMMIT_TAG
 
 stages:
   - build
@@ -56,6 +58,7 @@ stages:
   - pack
   - push
   - publish
+  - release
 
 ### CI Components ###
 include:
@@ -133,15 +136,63 @@ include:
 Publish Pages:
   stage: publish
   image: ${IMAGE_NAME}
-  pages: true
   needs: ["dotnet Test"]
+  pages:
+    publish: public
+    path_prefix: $PAGES_PATH_PREFIX
+    expire_in: $PAGES_EXPIRE_IN
   before_script:
     - *activate_mise
     - *update_nuget_source_ro
     - *install_npm_packages
   script:
+    - apt update && apt install -y gzip brotli
+    - |
+      if [ -n "$PAGES_PATH_PREFIX" ]; then
+        BASE_PATH="/${PAGES_PATH_PREFIX}/"
+      else
+        BASE_PATH="/"
+      fi
     - dotnet publish samples/ViciOne.Ui.MonochromeIcons.Samples.BlazorWebAssemblyStandaloneApp -c Release -o artifacts
+    - sed -i "s|<base href=\"/\" />|<base href=\"${BASE_PATH}\" />|" artifacts/wwwroot/index.html
+    - gzip -9 -c artifacts/wwwroot/index.html > artifacts/wwwroot/index.html.gz
+    - brotli -f -q 11 artifacts/wwwroot/index.html -o artifacts/wwwroot/index.html.br
     - mkdir public
     - cp -R artifacts/wwwroot/* public
-    - echo "Publish Pages on \"$CI_PAGES_URL\""
-  rules: *rules_manual
+    - echo "Publish Pages on \"https://monochromeicons.pages.vicione.dev${BASE_PATH}\""
+  rules:
+    # Publish tagged releases permanently under their version path.
+    - if: "$CI_COMMIT_TAG"
+      variables:
+        PAGES_PATH_PREFIX: $RELEASE_PAGES_PATH_PREFIX
+        PAGES_EXPIRE_IN: never
+    # Publish the default branch (master) permanently as the main Pages deployment.
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      variables:
+        PAGES_PATH_PREFIX: ""
+        PAGES_EXPIRE_IN: never
+    # Provide a temporary, manually triggered preview for merge requests.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: manual
+      allow_failure: true
+      variables:
+        PAGES_PATH_PREFIX: branch-$CI_COMMIT_REF_SLUG
+        PAGES_EXPIRE_IN: 1 week
+
+### GitLab Release
+Create Release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/cli:latest
+  script:
+    - echo "Create release for ${CI_COMMIT_TAG}"
+  release:
+    tag_name: "$CI_COMMIT_TAG"
+    name: "Release $CI_COMMIT_TAG"
+    description: "Release $CI_COMMIT_TAG"
+    assets:
+      links:
+        - name: "Open sample application"
+          url: "https://monochromeicons.pages.vicione.dev/${RELEASE_PAGES_PATH_PREFIX}/"
+          link_type: other
+  rules:
+    - if: "$CI_COMMIT_TAG"
