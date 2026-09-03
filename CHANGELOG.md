@@ -1,5 +1,7 @@
 # Changelog
 
+## 4.18.0 - Unreleased
+
 ## 4.17.0 - 2026-08-26
 
 - `ViciOne.Ui.MonochromeIcons.Assets`, added SVG markup cache used in `IMonochromeIconSvgMarkupProvider` implementations
