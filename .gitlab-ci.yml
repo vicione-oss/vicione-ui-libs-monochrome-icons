@@ -187,8 +187,8 @@ Create Release:
     - echo "Create release for ${CI_COMMIT_TAG}"
   release:
     tag_name: "$CI_COMMIT_TAG"
-    name: "Release $CI_COMMIT_TAG"
-    description: "Release $CI_COMMIT_TAG"
+    name: "Version $VERSION"
+    description: "See `CHANGELOG.md`"
     assets:
       links:
         - name: "Open sample application"
