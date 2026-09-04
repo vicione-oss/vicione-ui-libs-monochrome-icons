@@ -152,15 +152,15 @@
         "dependencies": {
           "Microsoft.AspNetCore.Components.Web": "[10.0.11, )",
           "Microsoft.Extensions.Logging": "[10.0.11, )",
-          "ViciOne.Ui.MonochromeIcons.Core": "[4.18.0, )"
+          "ViciOne.Ui.MonochromeIcons.Core": "[4.19.0, )"
         }
       },
       "vicione.ui.monochromeicons.components": {
         "type": "Project",
         "dependencies": {
           "Microsoft.AspNetCore.Components.Web": "[10.0.11, )",
-          "ViciOne.Ui.MonochromeIcons.Assets": "[4.18.0, )",
-          "ViciOne.Ui.MonochromeIcons.Core": "[4.18.0, )"
+          "ViciOne.Ui.MonochromeIcons.Assets": "[4.19.0, )",
+          "ViciOne.Ui.MonochromeIcons.Core": "[4.19.0, )"
         }
       },
       "vicione.ui.monochromeicons.core": {

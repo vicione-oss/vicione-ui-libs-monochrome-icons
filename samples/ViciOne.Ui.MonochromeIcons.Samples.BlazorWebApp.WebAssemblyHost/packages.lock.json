@@ -244,15 +244,15 @@
         "dependencies": {
           "Microsoft.AspNetCore.Components.Web": "[10.0.11, )",
           "Microsoft.Extensions.Logging": "[10.0.11, )",
-          "ViciOne.Ui.MonochromeIcons.Core": "[4.18.0, )"
+          "ViciOne.Ui.MonochromeIcons.Core": "[4.19.0, )"
         }
       },
       "vicione.ui.monochromeicons.components": {
         "type": "Project",
         "dependencies": {
           "Microsoft.AspNetCore.Components.Web": "[10.0.11, )",
-          "ViciOne.Ui.MonochromeIcons.Assets": "[4.18.0, )",
-          "ViciOne.Ui.MonochromeIcons.Core": "[4.18.0, )"
+          "ViciOne.Ui.MonochromeIcons.Assets": "[4.19.0, )",
+          "ViciOne.Ui.MonochromeIcons.Core": "[4.19.0, )"
         }
       },
       "vicione.ui.monochromeicons.core": {
@@ -262,14 +262,14 @@
         "type": "Project",
         "dependencies": {
           "ViciOne.Ui.Blazor.Components": "[5.20.0, )",
-          "ViciOne.Ui.MonochromeIcons.Assets": "[4.18.0, )",
-          "ViciOne.Ui.MonochromeIcons.Samples.Shared.GalleryIcon": "[4.18.0, )"
+          "ViciOne.Ui.MonochromeIcons.Assets": "[4.19.0, )",
+          "ViciOne.Ui.MonochromeIcons.Samples.Shared.GalleryIcon": "[4.19.0, )"
         }
       },
       "vicione.ui.monochromeicons.samples.shared.galleryicon": {
         "type": "Project",
         "dependencies": {
-          "ViciOne.Ui.MonochromeIcons.Components": "[4.18.0, )"
+          "ViciOne.Ui.MonochromeIcons.Components": "[4.19.0, )"
         }
       },
       "Microsoft.AspNetCore.Components.Web": {
