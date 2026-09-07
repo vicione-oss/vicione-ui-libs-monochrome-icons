@@ -4,15 +4,15 @@
     "net10.0": {
       "Roslynator.Analyzers": {
         "type": "Direct",
-        "requested": "[4.14.1, )",
-        "resolved": "4.14.1",
-        "contentHash": "yMSjze/xMYDF6PCE60/ULWx0tttNyKAndw2KijNxbKil0FX8nvDeEneDZGma8Uifk17RlfZqIXxf1mmBmhRHjg=="
+        "requested": "[5.0.0, )",
+        "resolved": "5.0.0",
+        "contentHash": "+J5kR/naCd62IwY2BG9P0QoHnJM8liBUFFAk6jga1t9s61JC3M+ofb3AY3wc73/pdROyKFCURqctQh8WRCIT/w=="
       },
       "Roslynator.Formatting.Analyzers": {
         "type": "Direct",
-        "requested": "[4.14.1, )",
-        "resolved": "4.14.1",
-        "contentHash": "hALZsyELJXhj7WQw7Q7nLI7sELre8AlQIMyGxXpmpK+iBqShPcWHuJMGjIsTMa/bC8Q5xyQ4iFfRtm0bP1zisQ=="
+        "requested": "[5.0.0, )",
+        "resolved": "5.0.0",
+        "contentHash": "0gs34JcWtDbPjBhF93RSDRx4Cj7DVFOshMMdQR6ABJkEO1cewK2qZl2y2VnIsC0/JoWOyZVrZfVEwQK8UiNXLw=="
       },
       "ViciOne.CodeAnalysis": {
         "type": "Direct",

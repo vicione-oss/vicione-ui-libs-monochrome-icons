@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <DotNetVersion>10.0.11</DotNetVersion>
-    <RoslynatorVersion>4.14.1</RoslynatorVersion>
+    <RoslynatorVersion>5.0.0</RoslynatorVersion>
   </PropertyGroup>
   <ItemGroup>
     <GlobalPackageReference Include="ViciOne.CodeAnalysis" Version="1.5.0" />
