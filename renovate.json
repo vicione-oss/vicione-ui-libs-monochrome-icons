@@ -108,11 +108,8 @@
       "matchPackageNames": [
         "AwesomeAssertions",
         "bunit",
-        "coverlet.collector",
-        "Microsoft.NET.Test.Sdk",
         "Microsoft.Testing.Extensions.CodeCoverage",
-        "xunit.v3.mtp-v2",
-        "xunit.runner.visualstudio"
+        "xunit.v3.mtp-v2"
       ],
       "enabled": true,
       "groupName": "test tooling",

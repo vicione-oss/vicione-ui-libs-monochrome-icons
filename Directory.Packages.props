@@ -9,9 +9,8 @@
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="$(RoslynatorVersion)" />
     <GlobalPackageReference Include="Roslynator.Formatting.Analyzers" Version="$(RoslynatorVersion)" />
     <PackageVersion Include="AspNetCore.SassCompiler" Version="1.103.0" />
-    <PackageVersion Include="AwesomeAssertions" Version="9.3.0" />
-    <PackageVersion Include="bunit" Version="1.40.0" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="AwesomeAssertions" Version="9.6.0" />
+    <PackageVersion Include="bunit" Version="2.9.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Components.Web" Version="$(DotNetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(DotNetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Localization" Version="$(DotNetVersion)" />
@@ -21,13 +20,11 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(DotNetVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="$(DotNetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(DotNetVersion)" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="NTypewriter.SourceGenerator" Version="0.5.9" />
     <PackageVersion Include="Svg" Version="3.4.8" />
     <PackageVersion Include="ViciOne.Ui.Blazor.Components" Version="5.20.0" />
     <PackageVersion Include="ViciOne.Ui.Design" Version="2.5.0" />
-    <PackageVersion Include="xunit.v3.mtp-v2" Version="3.2.1" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.3.1" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="xunit.v3.mtp-v2" Version="4.0.0" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.0" />
   </ItemGroup>
 </Project>
