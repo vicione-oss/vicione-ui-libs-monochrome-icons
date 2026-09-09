@@ -28,10 +28,8 @@
   - *rule_mr
   - *rule_web
 
-.rules_manual: &rules_manual
-  - <<: *rule_tag
-    when: manual
-    allow_failure: true
+.rules_pack: &rules_pack
+  - *rule_tag
   - <<: *rule_default_branch
     when: manual
     allow_failure: true
@@ -111,7 +109,7 @@ include:
   - component: $CI_SERVER_FQDN/vicione-oss/tooling/dotnet-component/dotnet-pack@v2.7.1
     inputs:
       image: ${IMAGE_NAME}
-      rules: *rules_manual
+      rules: *rules_pack
       before_script:
         - *activate_mise
         - 'echo "PackageVersion: ${PackageVersion:-notAssigned}"'
