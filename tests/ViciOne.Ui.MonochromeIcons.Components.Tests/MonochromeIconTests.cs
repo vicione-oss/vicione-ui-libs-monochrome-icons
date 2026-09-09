@@ -17,10 +17,10 @@ public sealed class MonochromeIconTests
     public void Should_render_component()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new BunitContext();
 
         // Act
-        var renderedComponent = ctx.RenderComponent<MonochromeIcon>(b => b
+        var renderedComponent = ctx.Render<MonochromeIcon>(b => b
             .Add(p => p.Name, MonochromeIconName.Refresh));
 
         // Assert
@@ -33,10 +33,10 @@ public sealed class MonochromeIconTests
     {
         // Arrange
         var iconNameTyped = TypeSafeEnumFactory<MonochromeIconName>.Create(iconName);
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new BunitContext();
 
         // Act
-        var renderedComponent = ctx.RenderComponent<MonochromeIcon>(b => b
+        var renderedComponent = ctx.Render<MonochromeIcon>(b => b
             .Add(p => p.Name, iconNameTyped));
 
         // Assert
@@ -52,13 +52,13 @@ public sealed class MonochromeIconTests
         // Arrange
         var iconSizeTyped = TypeSafeEnumFactory<MonochromeIconSize>.Create(iconSize);
 
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new BunitContext();
 
         var sizeModifier = $"size-{iconSizeTyped.ToPixels()}";
         var shouldRenderSizeModifier = iconSizeTyped != MonochromeIconSize.Medium;
 
         // Act
-        var renderedComponent = ctx.RenderComponent<MonochromeIcon>(b => b
+        var renderedComponent = ctx.Render<MonochromeIcon>(b => b
             .Add(p => p.Name, MonochromeIconName.Refresh)
             .Add(p => p.Size, iconSizeTyped));
 
@@ -75,13 +75,13 @@ public sealed class MonochromeIconTests
     public void Should_render_css_class()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new BunitContext();
 
         const string CssClass1 = "shiny";
         const string CssClass2 = "flashy";
 
         // Act
-        var renderedComponent = ctx.RenderComponent<MonochromeIcon>(b => b
+        var renderedComponent = ctx.Render<MonochromeIcon>(b => b
             .Add(p => p.Name, MonochromeIconName.Refresh)
             .Add(p => p.CssClass, $"{CssClass1} {CssClass2}"));
 
