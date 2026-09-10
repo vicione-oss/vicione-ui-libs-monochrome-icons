@@ -1,0 +1,3 @@
+- Apply the `improve-comment-clarity` skill at `.claude/skills/improve-comment-clarity/SKILL.md`: read that file first and follow its principles and workflow exactly.
+- Scope: `${input:scope:Files, folder, or changeset to review (leave empty for the current file)}`. When the scope is empty, review the currently open file.
+- The skill is the single source of truth for what to edit, exclude, and validate.

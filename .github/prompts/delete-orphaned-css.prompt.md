@@ -1,0 +1,2 @@
+- Apply the `delete-orphaned-css` skill at `.claude/skills/delete-orphaned-css/SKILL.md`: read that file first and follow its workflow exactly.
+- The skill is the single source of truth for scanning, removal, and validation; account for both `*.razor.scss` sources and generated `*.razor.css` outputs.
