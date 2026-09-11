@@ -24,9 +24,9 @@ This repository contains icons with monochrome characteristic. An icon has a nam
 
 - As a developer, [get started](#get-started) first, then identify the icon via its name and / or size that needs maintenance / needs to be added or removed
 - Create an issue describing what needs to be done / discussed, include the icon name in the description
-- Make [Rocco Jaehnig](https://git.nsc-gmbh.de/rocco.jaehnig) the [Assignee](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#assignee)
-- [Rocco Jaehnig](https://git.nsc-gmbh.de/rocco.jaehnig) creates a `.zip` export with a [predefined structure](https://git.nsc-gmbh.de/vo-ui/vo-monochrome-icons/-/issues/13#note_146109) in Sketch containing the icon, attaches it to the issue and additionally makes a Developer the Assignee
-- As a developer, download and open the `.zip` export, extract [contents](https://git.nsc-gmbh.de/vo-ui/vo-monochrome-icons/-/issues/13#note_146109) of `dark-theme/icon/monochrome` to [`src/ViciOne.Ui.MonochromeIcons.Assets/Sketch.Incoming`](src/ViciOne.Ui.MonochromeIcons.Assets/Sketch.Incoming)
+- Make [rjae_ifm](https://gitlab.com/rjae_ifm) (UX designer) the [Assignee](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#assignee)
+- The UX designer creates a `.zip` export in Sketch containing the icon in a [predefined structure](https://gitlab.com/vicione-oss/vicione/ui-libs/monochrome-icons/-/work_items/116#note_3006882517), attaches it to the issue and then makes a developer the Assignee
+- As a developer, download and open the `.zip` export, extract contents of `dark-theme/icon/monochrome` to [`src/ViciOne.Ui.MonochromeIcons.Assets/Sketch.Incoming`](src/ViciOne.Ui.MonochromeIcons.Assets/Sketch.Incoming)
 - Open solution
 - If an icon was added / removed or renamed then ...
   - Update enum [`MonochromeIconName`](src/ViciOne.Ui.MonochromeIcons.Core/Enums/MonochromeIconName.cs)
@@ -39,7 +39,7 @@ This repository contains icons with monochrome characteristic. An icon has a nam
 - Run `dotnet test tests/ViciOne.Ui.MonochromeIcons.Assets.Tests`
 
   > The tests provided ensure that the imported icons meet predefined specifications.
-  > When a test fails, its name indicates what specific issue is detected, for example `ShouldBeMinified` means `.svg` needs to be minified. Fix the associated `.svg` file in [src/ViciOne.Ui.MonochromeIcons.Assets/Sketch](src/ViciOne.Ui.MonochromeIcons.Assets/Sketch) and re-run tests until all tests pass. This is a manual operation until [Sanitize SVGs via MSBuild task](https://git.nsc-gmbh.de/vo-ui/vo-monochrome-icons/-/issues/11) is implemented.
+  > When a test fails, its name indicates what specific issue is detected, for example `ShouldBeMinified` means `.svg` needs to be minified. Fix the affected `.svg` file, copy it back to [`src/ViciOne.Ui.MonochromeIcons.Assets/Sketch.Incoming`](src/ViciOne.Ui.MonochromeIcons.Assets/Sketch.Incoming), rebuild the assets project and re-run the tests until all tests pass.
 
 - Add the new icon(s) to [`MonochromeIconNameFactoryTests.cs`](tests/ViciOne.Ui.MonochromeIcons.Core.Tests/Factories/MonochromeIconNameFactoryTests.cs)
 - Update [`CHANGELOG.md`](CHANGELOG.md)

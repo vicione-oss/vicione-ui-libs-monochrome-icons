@@ -16,7 +16,7 @@ This ensures that the package’s styles are automatically included in the CSS b
 
 Folder | Description
 -|-
-`Sketch.Incoming` | Receives extracted [contents](https://git.nsc-gmbh.de/vo-ui/vo-monochrome-icons/-/issues/13#note_146109) from a `.zip` export
+`Sketch.Incoming` | Receives extracted [contents](https://gitlab.com/vicione-oss/vicione/ui-libs/monochrome-icons/-/work_items/116#note_3006882517) from a `.zip` export
 `Sketch.Original` | Copy of `Sketch.Incoming` to have the original state commited
 `Sketch.Sanitized` | Files sanitized by task `SanitizeSvgs`, verified as SVGO-idempotent by target `VerifySanitizedSvgs`
 `Temp` | Temporary copy of `Sketch.Incoming` for sanitizing files
