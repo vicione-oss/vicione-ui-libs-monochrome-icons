@@ -48,9 +48,6 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.CloudSolid,
             MonochromeIconName.CloudSolidConnection,
             MonochromeIconName.Cluster1,
-#pragma warning disable CS0618 // Type or member is obsolete
-            MonochromeIconName.Cluster2,
-#pragma warning restore CS0618 // Type or member is obsolete
             MonochromeIconName.ClusterStreams,
             MonochromeIconName.CollapseAll,
             MonochromeIconName.ColumnChooserEditor,

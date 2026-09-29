@@ -2,8 +2,7 @@
 
 ## 4.19.0 - Unreleased
 
-### Changed
-
+- Removed obsolete icon `cluster-2`
 - Rename the company to `ViciOne open automation gmbh` in the license and the package metadata
 
 ## 4.18.0 - 2026-09-03
