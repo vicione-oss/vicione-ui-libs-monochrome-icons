@@ -41,8 +41,6 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName CloudSolid = new(nameof(CloudSolid));
     public static readonly MonochromeIconName CloudSolidConnection = new(nameof(CloudSolidConnection));
     public static readonly MonochromeIconName Cluster1 = new(nameof(Cluster1));
-    [Obsolete("Use " + nameof(ClusterStreams) + " instead")]
-    public static readonly MonochromeIconName Cluster2 = new(nameof(Cluster2));
     public static readonly MonochromeIconName ClusterStreams = new(nameof(ClusterStreams));
     public static readonly MonochromeIconName CollapseAll = new(nameof(CollapseAll));
     public static readonly MonochromeIconName ColumnChooserEditor = new(nameof(ColumnChooserEditor));
