@@ -2,6 +2,10 @@
 
 ## 4.19.0 - Unreleased
 
+### Changed
+
+- Rename the company to `ViciOne open automation gmbh` in the license and the package metadata
+
 ## 4.18.0 - 2026-09-03
 
 - Publish samples application to a dedicated URL
