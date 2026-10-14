@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dark-theme/icon/monochrome/32x32/play/solid</title>
+    <g id="dark-theme/icon/monochrome/32x32/play/solid" stroke="none" fill="none" fill-rule="evenodd">
+        <path d="M16.4215286,8.26968601 C16.6320713,8.36876491 16.8014714,8.538165 16.9005503,8.74870767 L23.3247683,22.4001709 C23.5599295,22.8998885 23.3454642,23.4956254 22.8457466,23.7307866 C22.7125501,23.7934674 22.5671576,23.8259679 22.4199496,23.8259679 L9.57151362,23.8259679 C9.01922887,23.8259679 8.57151362,23.3782527 8.57151362,22.8259679 C8.57151362,22.6787599 8.6040142,22.5333674 8.66669492,22.4001709 L15.0909129,8.74870767 C15.3260741,8.2489901 15.9218111,8.0345248 16.4215286,8.26968601 Z" id="Icon" fill="#DEDEDE" transform="translate(15.9958, 16.0001) rotate(90) translate(-15.9958, -16.0001)"></path>
+    </g>
+</svg>

@@ -173,6 +173,8 @@ public class MonochromeIconNameFactoryTests
             MonochromeIconName.PermissionNone,
             MonochromeIconName.PermissionViewAndEdit,
             MonochromeIconName.PermissionViewOnly,
+            MonochromeIconName.PlayLight,
+            MonochromeIconName.PlaySolid,
             MonochromeIconName.PlusSlim,
             MonochromeIconName.PortSolid,
             MonochromeIconName.Predecessor,
