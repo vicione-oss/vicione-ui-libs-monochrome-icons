@@ -2,6 +2,7 @@
 
 ## 4.19.0 - Unreleased
 
+- Added icon `play-light` and `play-solid`
 - Removed obsolete icon `cluster-2`
 - Rename the company to `ViciOne open automation gmbh` in the license and the package metadata
 

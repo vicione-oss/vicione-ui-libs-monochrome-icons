@@ -165,6 +165,8 @@ public readonly record struct MonochromeIconName : ITypeSafeEnumImplementation<M
     public static readonly MonochromeIconName PermissionNone = new(nameof(PermissionNone));
     public static readonly MonochromeIconName PermissionViewAndEdit = new(nameof(PermissionViewAndEdit));
     public static readonly MonochromeIconName PermissionViewOnly = new(nameof(PermissionViewOnly));
+    public static readonly MonochromeIconName PlayLight = new(nameof(PlayLight));
+    public static readonly MonochromeIconName PlaySolid = new(nameof(PlaySolid));
     public static readonly MonochromeIconName PortSolid = new(nameof(PortSolid));
     public static readonly MonochromeIconName PlusSlim = new(nameof(PlusSlim));
     public static readonly MonochromeIconName Predecessor = new(nameof(Predecessor));
